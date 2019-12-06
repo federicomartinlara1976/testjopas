@@ -16,8 +16,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<chronoslibs.version>1.0.5-SNAPSHOT</chronoslibs.version>
 	</properties>
 
 	<dependencies>
@@ -26,6 +27,30 @@
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>net.bounceme.chronos.chronoslibs</groupId>
+			<artifactId>chronos-net-utils</artifactId>
+			<version>${chronoslibs.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.bounceme.chronos.chronoslibs</groupId>
+			<artifactId>chronos-calc-utils</artifactId>
+			<version>${chronoslibs.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>net.bounceme.chronos.chronoslibs</groupId>
+			<artifactId>chronos-jsf-3-components</artifactId>
+			<version>${chronoslibs.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.primefaces.themes</groupId>
+			<artifactId>all-themes</artifactId>
+			<version>1.0.10</version>
 		</dependency>
 	</dependencies>
 

@@ -1,0 +1,8 @@
+*/target/*
+*/.factorypath
+.project
+.classpath
+.settings
+.clover
+/.tern-project
+/target/
