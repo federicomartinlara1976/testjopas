@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.1"
+	xmlns="http:/faces//faces/java.sun.com/faces/xml/faces/ns/faces/javaee"
+	xmlns:xi="http:/faces//faces/www.w3.org/faces/2001/faces/XInclude"
+	xmlns:xsi="http:/faces//faces/www.w3.org/faces/2001/faces/XMLSchema-instance"
+	xsi:schemaLocation="http:/faces//faces/java.sun.com/faces/xml/faces/ns/faces/javaee http:/faces//faces/java.sun.com/faces/xml/faces/ns/faces/javaee/faces/web-facesconfig_2_1.xsd">
+	
+	<application>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+		
+		<locale-config>
+			<default-locale>es</default-locale>
+			<supported-locale>en</supported-locale>
+			<supported-locale>es</supported-locale>
+			<supported-locale>fr</supported-locale>
+			<supported-locale>pt</supported-locale>
+		</locale-config>
+	
+		<resource-bundle>
+			<base-name>net.bounceme.chronos.testjopas.MessageBundle</base-name>
+			<var>res</var>
+		</resource-bundle>
+		
+	</application>
+	
+</faces-config>

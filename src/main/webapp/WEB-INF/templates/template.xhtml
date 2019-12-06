@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:chr="http://chronos.componentes.jsf/composite">
+<h:head>
+	<ui:insert name="ads"></ui:insert>
+
+	<title>#{appBean.name}</title>
+	<ui:include src="head.xhtml" />
+	
+	<ui:insert name="styles"></ui:insert>
+
+	<chr:widthpercent />
+</h:head>
+
+<h:body role="document">
+	<f:view>
+		<h:form prependId="false">
+		    
+		    <p:growl id="messages" showDetail="true" sticky="true" />  
+
+			<p:outputPanel id="layoutWrapper" layout="block"
+				styleClass="layout-wrapper menu-layout-static">
+				<p:outputPanel layout="block" styleClass="topbar clearfix">
+					
+				</p:outputPanel>
+
+				<p:outputPanel id="layoutMain" layout="block"
+					styleClass="layout-main">
+
+					<p:outputPanel id="layoutContent" layout="block"
+						styleClass="layout-content">
+						<ui:insert name="content"></ui:insert>
+					</p:outputPanel>
+
+				</p:outputPanel>
+
+				<ui:include src="footer.xhtml" />
+			</p:outputPanel>
+
+			<ui:include src="wait.xhtml" />
+		</h:form>
+	</f:view>
+
+</h:body>
+</html>
