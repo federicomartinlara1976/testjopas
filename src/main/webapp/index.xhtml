@@ -6,6 +6,10 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:chronos="http://chronos.componentes.jsf/composite"
 	template="/WEB-INF/templates/template.xhtml">
+	
+	<ui:define name="title">
+		<chronos:title type="3" value="#{res['app.title']}" />	
+	</ui:define>
 
 	<ui:define name="content">
 		

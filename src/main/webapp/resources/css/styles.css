@@ -276,6 +276,16 @@ footer span {
 	margin-top: 0.5em;
 }
 
+.topbar-left .description,
+.topbar-left .version {
+	color: #fff;
+	display:block
+}
+
+.topbar-left .version {
+	font-size: 12px;
+}
+
 .topbar-left img {
 	margin-top: -6px;
 	float:left;
