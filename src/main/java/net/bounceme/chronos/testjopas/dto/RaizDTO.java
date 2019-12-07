@@ -12,12 +12,14 @@ public class RaizDTO implements Serializable {
 	
 	private BigDecimal puntoInicial;
 	
+	private BigDecimal primeraAproximacion;
+	
 	private BigDecimal tolerancia;
 	
 	private Integer iteraciones;
 
 	public RaizDTO() {
-		// TODO Auto-generated constructor stub
+		iteraciones = 1;
 	}
 
 	/**
@@ -60,5 +62,19 @@ public class RaizDTO implements Serializable {
 	 */
 	public void setIteraciones(Integer iteraciones) {
 		this.iteraciones = iteraciones;
+	}
+
+	/**
+	 * @return the primeraAproximacion
+	 */
+	public BigDecimal getPrimeraAproximacion() {
+		return primeraAproximacion;
+	}
+
+	/**
+	 * @param primeraAproximacion the primeraAproximacion to set
+	 */
+	public void setPrimeraAproximacion(BigDecimal primeraAproximacion) {
+		this.primeraAproximacion = primeraAproximacion;
 	}
 }

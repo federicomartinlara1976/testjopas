@@ -7,33 +7,48 @@
 
 	<table class="c100">
 		<tbody>
-		<tr>
-			<td class="c20">
-				<h:outputLabel value="#{res['raiz.puntoInicial']}"
-					for="puntoInicial" styleClass="label"/>
-			</td>
-			<td>
-				<p:inputNumber id="puntoInicial" value="#{raizBean.raizDTO.puntoInicial}" styleClass="c100"/>
-			</td>
-		</tr>
+			<tr>
+				<td class="c20"><h:outputLabel
+						value="#{res['raiz.puntoInicial']}" for="puntoInicial"
+						styleClass="label" /></td>
+				<td><p:inputNumber id="puntoInicial"
+						value="#{raizBean.raizDTO.puntoInicial}" styleClass="c100" /></td>
+			</tr>
+		</tbody>
+	</table>
 
-		<tr>
-			<td class="c20">
-				<h:outputLabel value="#{res['raiz.tolerancia']}" for="tolerancia" styleClass="label"/>
-			</td>
-			<td>
-				<p:inputNumber id="tolerancia" value="#{raizBean.raizDTO.tolerancia}" styleClass="c100"/>
-			</td>
-		</tr>
+	<p:outputPanel layout="block" rendered="#{sessionBean.opcion eq 'secante'}">
+		<table class="c100">
+			<tbody>
+				<tr>
+					<td class="c20"><h:outputLabel
+							value="#{res['raiz.primeraAproximacion']}"
+							for="primeraAproximacion" styleClass="label" /></td>
+					<td><p:inputNumber id="primeraAproximacion"
+							value="#{raizBean.raizDTO.primeraAproximacion}" styleClass="c100" />
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</p:outputPanel>
 
-		<tr>
-			<td class="c20">
-				<h:outputLabel value="#{res['raiz.iteraciones']}" for="iteraciones" styleClass="label"/>
-			</td>
-			<td>
-				<p:spinner id="iteraciones" value="#{raizBean.raizDTO.iteraciones}"/>
-			</td>
-		</tr>
+	<table class="c100">
+		<tbody>
+			<tr>
+				<td class="c20"><h:outputLabel
+						value="#{res['raiz.tolerancia']}" for="tolerancia"
+						styleClass="label" /></td>
+				<td><p:inputNumber id="tolerancia"
+						value="#{raizBean.raizDTO.tolerancia}" styleClass="c100" /></td>
+			</tr>
+
+			<tr>
+				<td class="c20"><h:outputLabel
+						value="#{res['raiz.iteraciones']}" for="iteraciones"
+						styleClass="label" /></td>
+				<td><p:spinner id="iteraciones"
+						value="#{raizBean.raizDTO.iteraciones}" min="1" max="100" /></td>
+			</tr>
 		</tbody>
 	</table>
 
