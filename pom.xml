@@ -28,6 +28,12 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>net.bounceme.chronos.chronoslibs</groupId>
+			<artifactId>chronos-logger-utils</artifactId>
+			<version>${chronoslibs.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>net.bounceme.chronos.chronoslibs</groupId>
@@ -51,6 +57,13 @@
 			<groupId>org.primefaces.themes</groupId>
 			<artifactId>all-themes</artifactId>
 			<version>1.0.10</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.graylog2</groupId>
+			<artifactId>gelfj</artifactId>
+			<version>1.1.14</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 
