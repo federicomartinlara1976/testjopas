@@ -7,15 +7,17 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
+import net.bounceme.chronos.testjopas.dto.RaizDTO;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 
 /**
  * The Class SessionBean.
  */
-@ManagedBean(name = TestJopasBean.NAME)
+@ManagedBean(name = RaizBean.NAME)
 @ViewScoped
-public class TestJopasBean extends BaseBean implements Serializable {
+public class RaizBean extends BaseBean implements Serializable {
 
 	/**
 	 * 
@@ -23,16 +25,23 @@ public class TestJopasBean extends BaseBean implements Serializable {
 	private static final long serialVersionUID = 2350030970399677473L;
 	
 	/** The Constant NAME. */
-	public static final String NAME = "testjopasBean";
+	public static final String NAME = "raizBean";
 	
 	/** The session bean. */
 	@ManagedProperty(value="#{appBean}")
 	private AppBean appBean;
 	
+	private RaizDTO raizDTO;
+	
 	@PostConstruct
 	public void initialize() {
 		try {
+			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper().getSessionAttribute("path"); 
+			
 			appBean.getJopasService().resetPath();
+			appBean.getJopasService().addPath(paths.value());
+			
+			raizDTO = new RaizDTO();
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
@@ -50,5 +59,19 @@ public class TestJopasBean extends BaseBean implements Serializable {
 	 */
 	public void setAppBean(AppBean appBean) {
 		this.appBean = appBean;
+	}
+
+	/**
+	 * @return the raizDTO
+	 */
+	public RaizDTO getRaizDTO() {
+		return raizDTO;
+	}
+
+	/**
+	 * @param raizDTO the raizDTO to set
+	 */
+	public void setRaizDTO(RaizDTO raizDTO) {
+		this.raizDTO = raizDTO;
 	}
 }
