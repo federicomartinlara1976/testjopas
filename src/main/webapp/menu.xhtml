@@ -19,43 +19,48 @@
 			<p:tab title="#{res['menu.raiz']}">
 				<ul class="list-group">
 					<li class="list-group-item"><h:commandLink
-							action="#{sessionBean.navegar('raiz')}" ajax="false"
-							disabled="#{sessionBean.currentPage eq 'raiz'}">
+						actionListener="#{sessionBean.setParam('opcion', 'newton')}"
+						action="#{sessionBean.navegar('raiz')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'raiz' and sessionBean.opcion eq 'newton'}">
 							<i class="fa fa-book"></i>
 							<span><h:outputText value="#{res['menu.raiz.newton']}" /></span>
-						</h:commandLink></li>
+					</h:commandLink></li>
 					<li class="list-group-item"><h:commandLink
-							action="#{sessionBean.navegar('raiz')}" ajax="false"
-							disabled="#{sessionBean.currentPage eq 'raiz'}">
+						actionListener="#{sessionBean.setParam('opcion', 'secante')}"
+						action="#{sessionBean.navegar('raiz')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'raiz' and sessionBean.opcion eq 'secante'}">
 							<i class="fa fa-book"></i>
 							<span><h:outputText value="#{res['menu.raiz.secante']}" /></span>
-						</h:commandLink></li>
+					</h:commandLink></li>
 				</ul>
 			</p:tab>
 			<p:tab title="#{res['menu.interpolacion']}">
 				<ul class="list-group">
 					<li class="list-group-item"><h:commandLink
-							action="#{sessionBean.navegar('interpolacion')}" ajax="false"
-							disabled="#{sessionBean.currentPage eq 'interpolacion'}">
+						actionListener="#{sessionBean.setParam('opcion', 'funcion')}"	
+						action="#{sessionBean.navegar('interpolacion')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'interpolacion' and sessionBean.opcion eq 'funcion'}">
 							<i class="fa fa-users"></i>
 							<span><h:outputText value="#{res['menu.interpolacion.funcion']}" /></span>
-						</h:commandLink></li>
+					</h:commandLink></li>
 					<li class="list-group-item"><h:commandLink
-							action="#{sessionBean.navegar('interpolacion')}" ajax="false"
-							disabled="#{sessionBean.currentPage eq 'interpolacion'}">
+						actionListener="#{sessionBean.setParam('opcion', 'tabla')}"
+						action="#{sessionBean.navegar('interpolacion')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'interpolacion' and sessionBean.opcion eq 'tabla'}">
 							<i class="fa fa-users"></i>
 							<span><h:outputText value="#{res['menu.interpolacion.tabla']}" /></span>
-						</h:commandLink></li>
+					</h:commandLink></li>
 				</ul>
 			</p:tab>
 			<p:tab title="#{res['menu.integracion']}">
 				<ul class="list-group">
 					<li class="list-group-item"><h:commandLink
-							action="#{sessionBean.navegar('integracion')}" ajax="false"
-							disabled="#{sessionBean.currentPage eq 'integracion'}">
+						actionListener="#{sessionBean.setParam('opcion', 'simpson')}"
+						action="#{sessionBean.navegar('integracion')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'integracion' and sessionBean.opcion eq 'simpson'}">
 							<i class="fa fa-users"></i>
 							<span><h:outputText value="#{res['menu.integracion.simpson']}" /></span>
-						</h:commandLink></li>
+					</h:commandLink></li>
 				</ul>
 			</p:tab>
 		</p:accordionPanel>

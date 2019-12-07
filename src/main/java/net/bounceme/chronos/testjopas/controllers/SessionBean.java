@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 
 /**
@@ -80,7 +81,27 @@ public class SessionBean extends BaseBean implements Serializable {
 	 * @return
 	 */
 	public String navegar(String page) {
+		if (!"inicio".equals(page)) {
+			TestJopasConstantes.Paths paths = TestJopasConstantes.Paths.valueOf(TestJopasConstantes.Paths.class, page);
+			this.getJsfHelper().setSessionAttribute(paths, "path");
+		}
+		
 		this.currentPage = page;
 		return page;
+	}
+	
+	/**
+	 * @param nombre
+	 * @param valor
+	 */
+	public void setParam(String nombre, String valor) {
+		this.getJsfHelper().setSessionAttribute(valor, nombre);
+	}
+	
+	/**
+	 * @return
+	 */
+	public String getOpcion() {
+		return (String) this.getJsfHelper().getSessionAttribute("opcion");
 	}
 }

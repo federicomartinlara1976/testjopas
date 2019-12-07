@@ -16,7 +16,21 @@
 	</ui:define>
 
 	<ui:define name="content">
-		
+		<p:outputPanel layout="block" styleClass="acerca ui-g dashboard">
+			<p:outputPanel layout="block" styleClass="ui-g-12">
+				<p:outputPanel layout="block"
+					styleClass="jumbotron ui-g-12 box shadow overview-box overview-box-1">
+					<p class="description">
+						<h:outputText value="#{res['menu.raiz']}" />
+					</p>
+					<hr class="my-4" />
+					<h1>
+						<h:outputText value="#{res['menu.raiz.newton']}" rendered="#{sessionBean.opcion eq 'newton'}"/>
+						<h:outputText value="#{res['menu.raiz.secante']}" rendered="#{sessionBean.opcion eq 'secante'}"/>
+					</h1>
+				</p:outputPanel>
+			</p:outputPanel>
+		</p:outputPanel>	
 	</ui:define>
 
 </ui:composition>

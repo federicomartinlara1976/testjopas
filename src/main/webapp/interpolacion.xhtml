@@ -16,7 +16,21 @@
 	</ui:define>
 
 	<ui:define name="content">
-		
+		<p:outputPanel layout="block" styleClass="acerca ui-g dashboard">
+			<p:outputPanel layout="block" styleClass="ui-g-12">
+				<p:outputPanel layout="block"
+					styleClass="jumbotron ui-g-12 box shadow overview-box overview-box-1">
+					<p class="description">
+						<h:outputText value="#{res['menu.interpolacion']}" />
+					</p>
+					<hr class="my-4" />
+					<h1>
+						<h:outputText value="#{res['menu.interpolacion.funcion']}" rendered="#{sessionBean.opcion eq 'funcion'}"/>
+						<h:outputText value="#{res['menu.interpolacion.tabla']}" rendered="#{sessionBean.opcion eq 'tabla'}"/>
+					</h1>
+				</p:outputPanel>
+			</p:outputPanel>
+		</p:outputPanel>	
 	</ui:define>
 
 </ui:composition>
