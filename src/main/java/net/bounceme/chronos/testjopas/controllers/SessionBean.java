@@ -37,6 +37,7 @@ public class SessionBean extends BaseBean implements Serializable {
 	@PostConstruct
 	public void initialize() {
 		lang = FacesContext.getCurrentInstance().getApplication().getDefaultLocale();
+		currentPage = "inicio";
 	}
 
 	/**
