@@ -19,6 +19,9 @@ public class RaizDTO implements Serializable {
 	private Integer iteraciones;
 
 	public RaizDTO() {
+		puntoInicial = BigDecimal.ZERO;
+		primeraAproximacion = BigDecimal.ZERO;
+		tolerancia = BigDecimal.ZERO;
 		iteraciones = 1;
 	}
 

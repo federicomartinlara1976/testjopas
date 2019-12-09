@@ -35,6 +35,16 @@
 				<p:outputPanel layout="block"
 					styleClass="ui-g-12 box shadow overview-box">
 					<ui:include src="/raiz/datos-entrada.xhtml" />
+					
+					<p:outputPanel layout="block" id="botonera"
+						styleClass="botonera ui-g-12 ui-md-12 ui-lg-12">
+
+						<p:commandButton id="calcular" value="#{res['raiz.calcular']}"
+							actionListener="#{raizBean.calcular}" process="@form" ajax="true" update="messages"
+							styleClass="btn btn-primary ui-g-2 ui-md-2 ui-lg-2"
+							icon="fa fa-save" />
+
+					</p:outputPanel>
 				</p:outputPanel>
 			</p:outputPanel>
 		</p:outputPanel>	

@@ -8,10 +8,10 @@
 	<table class="c100">
 		<tbody>
 			<tr>
-				<td class="c20"><h:outputLabel
+				<td class="c20"><strong><h:outputLabel
 						value="#{res['raiz.puntoInicial']}" for="puntoInicial"
-						styleClass="label" /></td>
-				<td><p:inputNumber id="puntoInicial"
+						styleClass="label" /></strong></td>
+				<td><p:inputNumber id="puntoInicial" decimalPlaces="6"
 						value="#{raizBean.raizDTO.puntoInicial}" styleClass="c100" /></td>
 			</tr>
 		</tbody>
@@ -21,10 +21,10 @@
 		<table class="c100">
 			<tbody>
 				<tr>
-					<td class="c20"><h:outputLabel
+					<td class="c20"><strong><h:outputLabel
 							value="#{res['raiz.primeraAproximacion']}"
-							for="primeraAproximacion" styleClass="label" /></td>
-					<td><p:inputNumber id="primeraAproximacion"
+							for="primeraAproximacion" styleClass="label" /></strong></td>
+					<td><p:inputNumber id="primeraAproximacion" decimalPlaces="6"
 							value="#{raizBean.raizDTO.primeraAproximacion}" styleClass="c100" />
 					</td>
 				</tr>
@@ -35,17 +35,17 @@
 	<table class="c100">
 		<tbody>
 			<tr>
-				<td class="c20"><h:outputLabel
+				<td class="c20"><strong><h:outputLabel
 						value="#{res['raiz.tolerancia']}" for="tolerancia"
-						styleClass="label" /></td>
-				<td><p:inputNumber id="tolerancia"
+						styleClass="label" /></strong></td>
+				<td><p:inputNumber id="tolerancia" decimalPlaces="6"
 						value="#{raizBean.raizDTO.tolerancia}" styleClass="c100" /></td>
 			</tr>
 
 			<tr>
-				<td class="c20"><h:outputLabel
+				<td class="c20"><strong><h:outputLabel
 						value="#{res['raiz.iteraciones']}" for="iteraciones"
-						styleClass="label" /></td>
+						styleClass="label" /></strong></td>
 				<td><p:spinner id="iteraciones"
 						value="#{raizBean.raizDTO.iteraciones}" min="1" max="100" /></td>
 			</tr>
