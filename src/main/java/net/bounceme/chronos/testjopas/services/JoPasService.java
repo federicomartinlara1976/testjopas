@@ -59,7 +59,7 @@ public class JoPasService {
 		checkIsInitialized();
 		
 		StringBuilder sbComando = new StringBuilder();
-		sbComando.append("restoredefaultpath()");
+		sbComando.append("restoredefaultpath();");
 		execute(sbComando);
 	}
 	

@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
+import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.dto.InterpolacionDTO;
 import net.bounceme.chronos.testjopas.dto.RaizDTO;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
@@ -39,7 +40,9 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 		try {
 			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper().getSessionAttribute("path"); 
 			
+			appBean.getJopasService().clearEnvironment();
 			appBean.getJopasService().resetPath();
+			appBean.getJopasService().addPath(Paths.funciones.value());
 			appBean.getJopasService().addPath(paths.value());
 			
 			interpolacionDTO = new InterpolacionDTO();

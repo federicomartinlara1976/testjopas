@@ -9,12 +9,10 @@ public class TestJopasConstantes extends Constantes {
 	 */
 	public enum Paths {
 		
-		/** The es. */
 		raiz("F:/usuarios/frederik/octave/met-num/raiz"), 
-		/** The en. */
 		interpolacion("F:/usuarios/frederik/octave/met-num/interpolacion"), 
-		/** The fr. */
-		integracion("F:/usuarios/frederik/octave/met-num/integracion");
+		integracion("F:/usuarios/frederik/octave/met-num/integracion"),
+		funciones("F:/usuarios/frederik/octave/funciones");
 
 		/** The path. */
 		private String path;

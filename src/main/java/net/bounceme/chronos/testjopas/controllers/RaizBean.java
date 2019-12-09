@@ -7,9 +7,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import org.apache.commons.lang3.StringUtils;
-
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
+import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.dto.RaizDTO;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
@@ -47,6 +46,7 @@ public class RaizBean extends BaseBean implements Serializable {
 
 			appBean.getJopasService().clearEnvironment();
 			appBean.getJopasService().resetPath();
+			appBean.getJopasService().addPath(Paths.funciones.value());
 			appBean.getJopasService().addPath(paths.value());
 
 			raizDTO = new RaizDTO();
