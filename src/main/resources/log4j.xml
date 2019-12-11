@@ -43,6 +43,11 @@
 		<level value="DEBUG" />
 		<appender-ref ref="GRAYLOG_JOPAS" />
 	</logger>
+	
+	<!-- <logger name="net.bounceme.chronos.utils.jopas">
+		<level value="DEBUG" />
+		<appender-ref ref="GRAYLOG_JOPAS" />
+	</logger> -->
 
 	<!-- Root Logger -->
 	<root>
