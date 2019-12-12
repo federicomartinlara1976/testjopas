@@ -18,118 +18,117 @@ public class JoPasService {
 	/** The logger. */
 	private Log logger;
 
-	private JopasInterpreter jopas;
-
-	private boolean initialized;
-
 	/**
 	 * Initialize.
 	 */
 	@PostConstruct
 	public void initialize() {
-		try {
-			logger = LogFactory.getInstance().getLogger(JoPasService.class, "LOG4J");
-			jopas = new JopasInterpreter();
-			jopas.loadVersion();
-			
-			initialized = true;
-			logger.debug("Interprete de Octave iniciado");
-		} catch (JopasException e) {
-			logger.error("Error al inicializar interprete de Octave", e);
-			initialized = false;
-		}
+		logger = LogFactory.getInstance().getLogger(JoPasService.class, "LOG4J");
 	}
 
 	/**
 	 * @param path
 	 * @throws ServiceException
 	 */
-	public void addPath(String path) throws ServiceException {
-		checkIsInitialized();
-
-		StringBuilder sbComando = new StringBuilder();
-		sbComando.append("addpath('").append(path).append("')");
-		execute(sbComando);
-	}
-
-	/**
-	 * @throws ServiceException
-	 */
-	public void resetPath() throws ServiceException {
-		checkIsInitialized();
-		
-		StringBuilder sbComando = new StringBuilder();
-		sbComando.append("restoredefaultpath();");
-		execute(sbComando);
-	}
+	public void addPath(JopasInterpreter jopas, String path) throws ServiceException {
+		try {
+			jopas.checkIsInitialized();
 	
-	/**
-	 * @throws ServiceException
-	 */
-	public void clearEnvironment() throws ServiceException {
-		checkIsInitialized();
-		
-		StringBuilder sbComando = new StringBuilder();
-		sbComando.append("clear()");
-		execute(sbComando);
-	}
-	
-	/**
-	 * @throws ServiceException
-	 */
-	public void execute(String cmd) throws ServiceException {
-		checkIsInitialized();
-		
-		StringBuilder sbComando = new StringBuilder();
-		sbComando.append(cmd);
-		execute(sbComando);
-	}
-	
-	/**
-	 * @param name
-	 * @param value
-	 */
-	public void passVariable(String name, BigDecimal value) throws ServiceException {
-		checkIsInitialized();
-		
-		logger.debug("Pasando variable %s con valor %.6f", name, value.doubleValue());
-		jopas.load(value, name);
-	}
-	
-	/**
-	 * @param name
-	 * @param value
-	 */
-	public void passVariable(String name, Integer value) throws ServiceException {
-		checkIsInitialized();
-		
-		logger.debug("Pasando variable %s con valor %d", name, value);
-		jopas.load(value, name);
-	}
-
-	/**
-	 * @return the initialized
-	 */
-	public boolean isInitialized() {
-		return initialized;
+			StringBuilder sbComando = new StringBuilder();
+			sbComando.append("addpath('").append(path).append("')");
+			jopas.execute(sbComando);
+		} catch (Exception e) {
+			throw new ServiceException(e);
+		}
 	}
 
 	/**
 	 * @throws ServiceException
 	 */
-	private void checkIsInitialized() throws ServiceException {
-		if (!initialized) {
-			logger.error("Servicio no inicializado");
-			throw new ServiceException("Servicio no inicializado");
+	public void resetPath(JopasInterpreter jopas) throws ServiceException {
+		try {
+			jopas.checkIsInitialized();
+	
+			StringBuilder sbComando = new StringBuilder();
+			sbComando.append("restoredefaultpath();");
+			jopas.execute(sbComando);
+		} catch (Exception e) {
+			throw new ServiceException(e);
 		}
 	}
 	
 	/**
-	 * @param sbComando
+	 * @throws ServiceException
 	 */
-	private void execute(StringBuilder sbComando) {
-		logger.debug("Ejecutar comando: %s", sbComando.toString());
-
-		jopas.execute(sbComando.toString());
+	public void clearEnvironment(JopasInterpreter jopas) throws ServiceException {
+		try {
+			jopas.checkIsInitialized();
+	
+			StringBuilder sbComando = new StringBuilder();
+			sbComando.append("clear()");
+			jopas.execute(sbComando);
+		} catch (Exception e) {
+			throw new ServiceException(e);
+		}
+	}
+	
+	/**
+	 * @throws ServiceException
+	 */
+	public void execute(JopasInterpreter jopas, String cmd) throws ServiceException {
+		try {
+			jopas.checkIsInitialized();
+	
+			StringBuilder sbComando = new StringBuilder();
+			sbComando.append(cmd);
+	
+			logger.debug("Ejecutar comando: %s", sbComando.toString());
+			jopas.execute(sbComando);
+		} catch (Exception e) {
+			throw new ServiceException(e);
+		}
+	}
+	
+	/**
+	 * @param name
+	 * @param value
+	 */
+	public void passVariable(JopasInterpreter jopas, String name, BigDecimal value) throws ServiceException {
+		try {
+			jopas.checkIsInitialized();
+	
+			logger.debug("Pasando variable %s con valor %.6f", name, value.doubleValue());
+			jopas.load(value, name);
+		} catch (Exception e) {
+			throw new ServiceException(e);
+		}
+	}
+	
+	/**
+	 * @param name
+	 * @param value
+	 */
+	public void passVariable(JopasInterpreter jopas, String name, Integer value) throws ServiceException {
+		try {
+			jopas.checkIsInitialized();
+	
+			logger.debug("Pasando variable %s con valor %.6f", name, value.doubleValue());
+			jopas.load(value, name);
+		} catch (Exception e) {
+			throw new ServiceException(e);
+		}
+	}
+	
+	/**
+	 * @param name
+	 * @param value
+	 */
+	public void terminate(JopasInterpreter jopas) throws ServiceException {
+		try {
+			jopas.checkIsInitialized();
+			jopas.terminate();
+		} catch (Exception e) {
+			throw new ServiceException(e);
+		}
 	}
 }
