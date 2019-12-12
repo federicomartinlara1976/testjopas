@@ -23,11 +23,25 @@ public class AppBean extends BaseBean {
 	
 	@Autowired
 	private transient JoPasService jopasService;
+	
+	private JopasFactory jopasFactory;
+	
+	public AppBean() {
+		super();
+		jopasFactory = JopasFactory.getInstance();
+	}
 
 	/**
 	 * @return the jopasService
 	 */
 	public JoPasService getJopasService() {
 		return jopasService;
+	}
+
+	/**
+	 * @return
+	 */
+	public JopasFactory getJopasFactory() {
+		return jopasFactory;
 	}
 }

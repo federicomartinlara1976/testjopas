@@ -44,10 +44,10 @@ public class RaizBean extends BaseBean implements Serializable {
 			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
 					.getSessionAttribute("path");
 
-			appBean.getJopasService().clearEnvironment();
-			appBean.getJopasService().resetPath();
-			appBean.getJopasService().addPath(Paths.funciones.value());
-			appBean.getJopasService().addPath(paths.value());
+			appBean.getJopasService().clearEnvironment(sessionBean.getJopasInterpreter());
+			appBean.getJopasService().resetPath(sessionBean.getJopasInterpreter());
+			appBean.getJopasService().addPath(sessionBean.getJopasInterpreter(), Paths.funciones.value());
+			appBean.getJopasService().addPath(sessionBean.getJopasInterpreter(), paths.value());
 
 			raizDTO = new RaizDTO();
 		} catch (ServiceException e) {
@@ -57,12 +57,12 @@ public class RaizBean extends BaseBean implements Serializable {
 
 	public void calcular() {
 		try {
-			appBean.getJopasService().passVariable("puntoInicial", raizDTO.getPuntoInicial());
-			appBean.getJopasService().passVariable("tolerancia", raizDTO.getTolerancia());
-			appBean.getJopasService().passVariable("iteraciones", raizDTO.getIteraciones());
+			appBean.getJopasService().passVariable(sessionBean.getJopasInterpreter(), "puntoInicial", raizDTO.getPuntoInicial());
+			appBean.getJopasService().passVariable(sessionBean.getJopasInterpreter(), "tolerancia", raizDTO.getTolerancia());
+			appBean.getJopasService().passVariable(sessionBean.getJopasInterpreter(), "iteraciones", raizDTO.getIteraciones());
 	
 			if ("secante".equals(sessionBean.getOpcion())) {
-				appBean.getJopasService().passVariable("primeraAproximacion", raizDTO.getPrimeraAproximacion());
+				appBean.getJopasService().passVariable(sessionBean.getJopasInterpreter(), "primeraAproximacion", raizDTO.getPrimeraAproximacion());
 			}
 			
 			// Ejecuta el comando
@@ -74,7 +74,7 @@ public class RaizBean extends BaseBean implements Serializable {
 				cmd = "[x,sol,ni,error]=secante(puntoInicial, primeraAproximacion, tolerancia, iteraciones)";
 			}
 			
-			appBean.getJopasService().execute(cmd);
+			appBean.getJopasService().execute(sessionBean.getJopasInterpreter(), cmd);
 			
 		} catch (ServiceException e) {
 			this.addErrorMessage(e);

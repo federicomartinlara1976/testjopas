@@ -4,12 +4,8 @@ import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
-import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 
 /**
  * The Class SessionBean.
@@ -31,12 +27,21 @@ public class SessionBean extends BaseBean implements Serializable {
 	
 	private String prevPage;
 	
+	private JopasInterpreter jopasInterpreter;
+	
+	/** The session bean. */
+	@ManagedProperty(value="#{appBean}")
+	private AppBean appBean;
+	
 	/**
 	 * Initialize.
 	 */
 	@PostConstruct
 	public void initialize() {
 		lang = FacesContext.getCurrentInstance().getApplication().getDefaultLocale();
+		
+		jopasInterpreter = appBean.getJopasFactory().newInstance();
+		
 		currentPage = "inicio";
 	}
 
@@ -76,6 +81,20 @@ public class SessionBean extends BaseBean implements Serializable {
 	public void setPrevPage(String prevPage) {
 		this.prevPage = prevPage;
 	}
+	
+	/**
+	 * @return the appBean
+	 */
+	public AppBean getAppBean() {
+		return appBean;
+	}
+
+	/**
+	 * @param appBean the appBean to set
+	 */
+	public void setAppBean(AppBean appBean) {
+		this.appBean = appBean;
+	}
 
 	/**
 	 * @param page
@@ -104,5 +123,15 @@ public class SessionBean extends BaseBean implements Serializable {
 	 */
 	public String getOpcion() {
 		return (String) this.getJsfHelper().getSessionAttribute("opcion");
+	}
+	
+	
+	public JopasInterpreter getJopasInterpreter() {
+		return jopasInterpreter;
+	}
+
+	@Override
+	protected void finalize() {
+		appBean.getJopasService().terminate(jopasInterpreter);
 	}
 }
