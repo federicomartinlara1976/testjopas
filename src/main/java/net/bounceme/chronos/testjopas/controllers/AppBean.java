@@ -6,6 +6,7 @@ import javax.faces.bean.ManagedBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import net.bounceme.chronos.testjopas.services.JoPasService;
+import net.bounceme.chronos.utils.jopas.JopasFactory;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 
 /**

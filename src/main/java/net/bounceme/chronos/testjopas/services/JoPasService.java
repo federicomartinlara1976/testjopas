@@ -36,7 +36,7 @@ public class JoPasService {
 	
 			StringBuilder sbComando = new StringBuilder();
 			sbComando.append("addpath('").append(path).append("')");
-			jopas.execute(sbComando);
+			jopas.execute(sbComando.toString());
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -51,7 +51,7 @@ public class JoPasService {
 	
 			StringBuilder sbComando = new StringBuilder();
 			sbComando.append("restoredefaultpath();");
-			jopas.execute(sbComando);
+			jopas.execute(sbComando.toString());
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -66,7 +66,7 @@ public class JoPasService {
 	
 			StringBuilder sbComando = new StringBuilder();
 			sbComando.append("clear()");
-			jopas.execute(sbComando);
+			jopas.execute(sbComando.toString());
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -83,7 +83,7 @@ public class JoPasService {
 			sbComando.append(cmd);
 	
 			logger.debug("Ejecutar comando: %s", sbComando.toString());
-			jopas.execute(sbComando);
+			jopas.execute(sbComando.toString());
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}

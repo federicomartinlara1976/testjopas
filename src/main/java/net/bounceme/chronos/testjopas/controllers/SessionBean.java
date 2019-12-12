@@ -4,8 +4,15 @@ import java.io.Serializable;
 import java.util.Locale;
 
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
+import net.bounceme.chronos.testjopas.exceptions.ServiceException;
+import net.bounceme.chronos.utils.jopas.JopasInterpreter;
+import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 
 /**
  * The Class SessionBean.
@@ -27,7 +34,7 @@ public class SessionBean extends BaseBean implements Serializable {
 	
 	private String prevPage;
 	
-	private JopasInterpreter jopasInterpreter;
+	private transient JopasInterpreter jopasInterpreter;
 	
 	/** The session bean. */
 	@ManagedProperty(value="#{appBean}")
@@ -132,6 +139,8 @@ public class SessionBean extends BaseBean implements Serializable {
 
 	@Override
 	protected void finalize() {
-		appBean.getJopasService().terminate(jopasInterpreter);
+		try {
+			appBean.getJopasService().terminate(jopasInterpreter);
+		} catch (ServiceException e) {}
 	}
 }
