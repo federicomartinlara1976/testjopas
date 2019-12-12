@@ -29,9 +29,13 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	/** The Constant NAME. */
 	public static final String NAME = "interpolacionBean";
 	
-	/** The session bean. */
+	/** The app bean. */
 	@ManagedProperty(value="#{appBean}")
 	private AppBean appBean;
+	
+	/** The app bean. */
+	@ManagedProperty(value="#{sessionBean}")
+	private SessionBean sessionBean;
 	
 	private InterpolacionDTO interpolacionDTO;
 	
@@ -40,10 +44,10 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 		try {
 			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper().getSessionAttribute("path"); 
 			
-			appBean.getJopasService().clearEnvironment();
-			appBean.getJopasService().resetPath();
-			appBean.getJopasService().addPath(Paths.funciones.value());
-			appBean.getJopasService().addPath(paths.value());
+			appBean.getJopasService().clearEnvironment(sessionBean.getJopasInterpreter());
+			appBean.getJopasService().resetPath(sessionBean.getJopasInterpreter());
+			appBean.getJopasService().addPath(sessionBean.getJopasInterpreter(), Paths.funciones.value());
+			appBean.getJopasService().addPath(sessionBean.getJopasInterpreter(), paths.value());
 			
 			interpolacionDTO = new InterpolacionDTO();
 		} catch (ServiceException e) {
@@ -63,6 +67,15 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	 */
 	public void setAppBean(AppBean appBean) {
 		this.appBean = appBean;
+	}
+	
+
+	public SessionBean getSessionBean() {
+		return sessionBean;
+	}
+
+	public void setSessionBean(SessionBean sessionBean) {
+		this.sessionBean = sessionBean;
 	}
 
 	/**
