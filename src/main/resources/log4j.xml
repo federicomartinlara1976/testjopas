@@ -39,15 +39,20 @@
 	</appender>
 
 	<!-- Application Loggers -->
+	<logger name="net.bounceme.chronos.testjopas.controllers">
+		<level value="DEBUG" />
+		<appender-ref ref="GRAYLOG_JOPAS" />
+	</logger>
+	
 	<logger name="net.bounceme.chronos.testjopas.services">
 		<level value="DEBUG" />
 		<appender-ref ref="GRAYLOG_JOPAS" />
 	</logger>
 	
-	<!-- <logger name="net.bounceme.chronos.utils.jopas">
+	<logger name="net.bounceme.chronos.utils.jopas">
 		<level value="DEBUG" />
 		<appender-ref ref="GRAYLOG_JOPAS" />
-	</logger> -->
+	</logger>
 
 	<!-- Root Logger -->
 	<root>

@@ -1,16 +1,20 @@
 package net.bounceme.chronos.testjopas.controllers;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import net.bounceme.chronos.logger.Log;
+import net.bounceme.chronos.logger.LogFactory;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.dto.RaizDTO;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
+import net.bounceme.chronos.utils.jopas.Vector;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 
 /**
@@ -27,6 +31,9 @@ public class RaizBean extends BaseBean implements Serializable {
 
 	/** The Constant NAME. */
 	public static final String NAME = "raizBean";
+	
+	/** The logger. */
+	private Log logger;
 
 	/** The appBean bean. */
 	@ManagedProperty(value = "#{appBean}")
@@ -41,6 +48,8 @@ public class RaizBean extends BaseBean implements Serializable {
 	@PostConstruct
 	public void initialize() {
 		try {
+			logger = LogFactory.getInstance().getLogger(RaizBean.class, "LOG4J");
+			
 			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
 					.getSessionAttribute("path");
 
@@ -76,7 +85,33 @@ public class RaizBean extends BaseBean implements Serializable {
 			
 			appBean.getJopasService().execute(sessionBean.getJopasInterpreter(), cmd);
 			
-		} catch (ServiceException e) {
+			//String error = sessionBean.getJopasInterpreter().getString("error");
+			Integer ni;
+			Vector iteraciones;
+			BigDecimal sol;
+			
+			try {
+				ni = sessionBean.getJopasInterpreter().getInteger("ni");
+				logger.info("Iteraciones realizadas: %d", ni);
+			} catch (Exception e) {
+				logger.error("ERROR:", e);
+			}
+			
+			try {
+				iteraciones = sessionBean.getJopasInterpreter().getVector("x");
+				logger.info("iteraciones: %s", iteraciones.toString());
+			} catch (Exception e) {
+				logger.error("ERROR:", e);
+			}
+			
+			try {
+				sol = sessionBean.getJopasInterpreter().getReal("sol");
+				logger.info("Solución: %f", sol);
+			} catch (Exception e) {
+				logger.error("ERROR:", e);
+			}
+		} catch (Exception e) {
+			logger.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
 	}

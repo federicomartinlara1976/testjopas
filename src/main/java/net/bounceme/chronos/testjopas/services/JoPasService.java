@@ -112,7 +112,7 @@ public class JoPasService {
 		try {
 			jopas.checkIsInitialized();
 	
-			logger.debug("Pasando variable %s con valor %.6f", name, value.doubleValue());
+			logger.debug("Pasando variable %s con valor %d", name, value);
 			jopas.load(value, name);
 		} catch (Exception e) {
 			throw new ServiceException(e);
