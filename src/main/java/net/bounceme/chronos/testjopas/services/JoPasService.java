@@ -12,14 +12,18 @@ import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.utils.jopas.JopasException;
 import net.bounceme.chronos.utils.jopas.JopasInterpreter;
 
-/**
-  * TODO - Desacoplar de JoPas
-  */
 @Service
-public class JoPasService {
+public class JoPasService implements Service {
 
 	/** The logger. */
 	private Log logger;
+	
+	private JopasInterpreter jopas;
+	
+	public JoPasService(JopasInterpreter jopas) {
+		super();
+		this.jopas = jopas;
+	}
 
 	/**
 	 * Initialize.
@@ -33,13 +37,13 @@ public class JoPasService {
 	 * @param path
 	 * @throws ServiceException
 	 */
-	public void addPath(JopasInterpreter jopas, String path) throws ServiceException {
+	public void addPath(String path) throws ServiceException {
 		try {
 			jopas.checkIsInitialized();
 	
 			StringBuilder sbComando = new StringBuilder();
 			sbComando.append("addpath('").append(path).append("')");
-			jopas.execute(sbComando.toString());
+			jopas.execute(sbComando);
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -48,13 +52,13 @@ public class JoPasService {
 	/**
 	 * @throws ServiceException
 	 */
-	public void resetPath(JopasInterpreter jopas) throws ServiceException {
+	public void resetPath() throws ServiceException {
 		try {
 			jopas.checkIsInitialized();
 	
 			StringBuilder sbComando = new StringBuilder();
 			sbComando.append("restoredefaultpath();");
-			jopas.execute(sbComando.toString());
+			jopas.execute(sbComando);
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -63,13 +67,13 @@ public class JoPasService {
 	/**
 	 * @throws ServiceException
 	 */
-	public void clearEnvironment(JopasInterpreter jopas) throws ServiceException {
+	public void clearEnvironment() throws ServiceException {
 		try {
 			jopas.checkIsInitialized();
 	
 			StringBuilder sbComando = new StringBuilder();
 			sbComando.append("clear()");
-			jopas.execute(sbComando.toString());
+			jopas.execute(sbComando);
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -78,7 +82,7 @@ public class JoPasService {
 	/**
 	 * @throws ServiceException
 	 */
-	public void execute(JopasInterpreter jopas, String cmd) throws ServiceException {
+	public void execute(String cmd) throws ServiceException {
 		try {
 			jopas.checkIsInitialized();
 	
@@ -86,7 +90,7 @@ public class JoPasService {
 			sbComando.append(cmd);
 	
 			logger.debug("Ejecutar comando: %s", sbComando.toString());
-			jopas.execute(sbComando.toString());
+			jopas.execute(sbComando);
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -96,7 +100,7 @@ public class JoPasService {
 	 * @param name
 	 * @param value
 	 */
-	public void passVariable(JopasInterpreter jopas, String name, BigDecimal value) throws ServiceException {
+	public void passVariable(String name, BigDecimal value) throws ServiceException {
 		try {
 			jopas.checkIsInitialized();
 	
@@ -111,11 +115,11 @@ public class JoPasService {
 	 * @param name
 	 * @param value
 	 */
-	public void passVariable(JopasInterpreter jopas, String name, Integer value) throws ServiceException {
+	public void passVariable(String name, Integer value) throws ServiceException {
 		try {
 			jopas.checkIsInitialized();
 	
-			logger.debug("Pasando variable %s con valor %d", name, value);
+			logger.debug("Pasando variable %s con valor %.6f", name, value.doubleValue());
 			jopas.load(value, name);
 		} catch (Exception e) {
 			throw new ServiceException(e);
@@ -126,7 +130,7 @@ public class JoPasService {
 	 * @param name
 	 * @param value
 	 */
-	public void terminate(JopasInterpreter jopas) throws ServiceException {
+	public void terminate() throws ServiceException {
 		try {
 			jopas.checkIsInitialized();
 			jopas.terminate();
