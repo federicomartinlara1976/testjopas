@@ -12,6 +12,9 @@ import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.utils.jopas.JopasException;
 import net.bounceme.chronos.utils.jopas.JopasInterpreter;
 
+/**
+  * TODO - Desacoplar de JoPas
+  */
 @Service
 public class JoPasService {
 
