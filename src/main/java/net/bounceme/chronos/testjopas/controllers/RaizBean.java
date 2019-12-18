@@ -44,24 +44,27 @@ public class RaizBean extends BaseBean implements Serializable {
 	private SessionBean sessionBean;
 
 	private RaizDTO raizDTO;
+	
+	private BigDecimal sol;
 
 	@PostConstruct
 	public void initialize() {
-//		try {
+		try {
 			logger = LogFactory.getInstance().getLogger(RaizBean.class, "LOG4J");
 			
-//			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
-//					.getSessionAttribute("path");
+			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
+					.getSessionAttribute("path");
 
-			//appBean.getCalcService().clearEnvironment();
-			//appBean.getCalcService().resetPath();
-			//appBean.getCalcService().addPath(Paths.funciones.value());
-			//appBean.getCalcService().addPath(paths.value());
+			appBean.getCalcService().clearEnvironment();
+			appBean.getCalcService().resetPath();
+			appBean.getCalcService().addPath(Paths.funciones.value());
+			appBean.getCalcService().addPath(paths.value());
 
 			raizDTO = new RaizDTO();
-//		} catch (ServiceException e) {
-//			e.printStackTrace();
-//		}
+			sol = null;
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void calcular() {
@@ -88,7 +91,8 @@ public class RaizBean extends BaseBean implements Serializable {
 			//String error = sessionBean.getJopasInterpreter().getString("error");
 			Integer ni;
 			Vector iteraciones;
-			BigDecimal sol;
+			
+			sol = appBean.getCalcService().get("sol");
 			
 //			try {
 //				ni = sessionBean.getJopasInterpreter().getInteger("ni");
@@ -157,4 +161,13 @@ public class RaizBean extends BaseBean implements Serializable {
 	public void setRaizDTO(RaizDTO raizDTO) {
 		this.raizDTO = raizDTO;
 	}
+
+	/**
+	 * @return the sol
+	 */
+	public BigDecimal getSol() {
+		return sol;
+	}
+	
+	
 }

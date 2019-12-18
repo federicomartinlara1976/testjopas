@@ -4,5 +4,9 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
+	
+	<p:outputPanel layout="block" rendered="#{raizBean.sol != null}">
+		<p>Solucion: <strong><h:outputText value="#{raizBean.sol}"/></strong></p>
+	</p:outputPanel>
 
 </ui:composition>

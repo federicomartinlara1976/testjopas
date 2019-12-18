@@ -1,6 +1,8 @@
 package net.bounceme.chronos.testjopas.services;
 
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -137,5 +139,15 @@ public class JoPasService implements CalcService {
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
+	}
+
+	@Override
+	public List<String> getVars() {
+		return Collections.emptyList();
+	}
+
+	@Override
+	public BigDecimal get(String name) {
+		return BigDecimal.ZERO;
 	}
 }

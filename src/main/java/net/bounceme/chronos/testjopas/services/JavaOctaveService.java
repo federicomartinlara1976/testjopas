@@ -1,6 +1,8 @@
 package net.bounceme.chronos.testjopas.services;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -8,12 +10,12 @@ import org.springframework.stereotype.Service;
 
 import dk.ange.octave.OctaveEngine;
 import dk.ange.octave.OctaveEngineFactory;
-import dk.ange.octave.type.Octave;
+import dk.ange.octave.OctaveUtils;
 import dk.ange.octave.type.OctaveDouble;
-import dk.ange.octave.type.OctaveInt;
 import net.bounceme.chronos.logger.Log;
 import net.bounceme.chronos.logger.LogFactory;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
+import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToBigDecimal;
 
 @Service("javaOctaveService")
 public class JavaOctaveService implements CalcService {
@@ -23,9 +25,12 @@ public class JavaOctaveService implements CalcService {
 	
 	private OctaveEngine octave;
 	
+	private OctaveDoubleToBigDecimal assembler;
+	
 	public JavaOctaveService() {
 		super();
 		this.octave = new OctaveEngineFactory().getScriptEngine();
+		assembler = new OctaveDoubleToBigDecimal();
 	}
 
 	/**
@@ -98,8 +103,7 @@ public class JavaOctaveService implements CalcService {
 	public void passVariable(String name, BigDecimal value) throws ServiceException {
 		try {
 			logger.debug("Pasando variable %s con valor %.6f", name, value.doubleValue());
-			OctaveDouble octaveDouble = Octave.scalar(value.doubleValue());
-			octave.put(name, octaveDouble);
+			octave.eval(name + " = " + value.toString());
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -112,8 +116,7 @@ public class JavaOctaveService implements CalcService {
 	public void passVariable(String name, Integer value) throws ServiceException {
 		try {
 			logger.debug("Pasando variable %s con valor %.6f", name, value.doubleValue());
-			OctaveInt octaveInt = intScalar(value);
-			octave.put(name, octaveInt);
+			octave.eval(name + " = " + value.toString());
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -130,8 +133,15 @@ public class JavaOctaveService implements CalcService {
 			throw new ServiceException(e);
 		}
 	}
+
+	@Override
+	public List<String> getVars() {
+		return new ArrayList<>(OctaveUtils.listVars(octave));
+	}
 	
-	private OctaveInt intScalar(final Integer i) {
-        return new OctaveInt(new int[] { i }, 1, 1);
-    }
+	@Override
+	public BigDecimal get(String name) {
+		OctaveDouble value = octave.get(OctaveDouble.class, name);
+		return assembler.assemble(value);
+	}
 }
