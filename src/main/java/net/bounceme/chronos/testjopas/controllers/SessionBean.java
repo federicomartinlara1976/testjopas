@@ -34,8 +34,6 @@ public class SessionBean extends BaseBean implements Serializable {
 	
 	private String prevPage;
 	
-	private transient JopasInterpreter jopasInterpreter;
-	
 	/** The session bean. */
 	@ManagedProperty(value="#{appBean}")
 	private AppBean appBean;
@@ -46,8 +44,6 @@ public class SessionBean extends BaseBean implements Serializable {
 	@PostConstruct
 	public void initialize() {
 		lang = FacesContext.getCurrentInstance().getApplication().getDefaultLocale();
-		
-		jopasInterpreter = appBean.getJopasFactory().newInstance();
 		
 		currentPage = "inicio";
 	}
@@ -130,17 +126,5 @@ public class SessionBean extends BaseBean implements Serializable {
 	 */
 	public String getOpcion() {
 		return (String) this.getJsfHelper().getSessionAttribute("opcion");
-	}
-	
-	
-	public JopasInterpreter getJopasInterpreter() {
-		return jopasInterpreter;
-	}
-
-	@Override
-	protected void finalize() {
-		try {
-			appBean.getJopasService().terminate(jopasInterpreter);
-		} catch (ServiceException e) {}
 	}
 }

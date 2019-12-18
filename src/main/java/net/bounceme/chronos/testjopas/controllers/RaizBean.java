@@ -47,31 +47,31 @@ public class RaizBean extends BaseBean implements Serializable {
 
 	@PostConstruct
 	public void initialize() {
-		try {
+//		try {
 			logger = LogFactory.getInstance().getLogger(RaizBean.class, "LOG4J");
 			
-			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
-					.getSessionAttribute("path");
+//			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
+//					.getSessionAttribute("path");
 
-			appBean.getJopasService().clearEnvironment(sessionBean.getJopasInterpreter());
-			appBean.getJopasService().resetPath(sessionBean.getJopasInterpreter());
-			appBean.getJopasService().addPath(sessionBean.getJopasInterpreter(), Paths.funciones.value());
-			appBean.getJopasService().addPath(sessionBean.getJopasInterpreter(), paths.value());
+			//appBean.getCalcService().clearEnvironment();
+			//appBean.getCalcService().resetPath();
+			//appBean.getCalcService().addPath(Paths.funciones.value());
+			//appBean.getCalcService().addPath(paths.value());
 
 			raizDTO = new RaizDTO();
-		} catch (ServiceException e) {
-			e.printStackTrace();
-		}
+//		} catch (ServiceException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	public void calcular() {
 		try {
-			appBean.getJopasService().passVariable(sessionBean.getJopasInterpreter(), "puntoInicial", raizDTO.getPuntoInicial());
-			appBean.getJopasService().passVariable(sessionBean.getJopasInterpreter(), "tolerancia", raizDTO.getTolerancia());
-			appBean.getJopasService().passVariable(sessionBean.getJopasInterpreter(), "iteraciones", raizDTO.getIteraciones());
+			appBean.getCalcService().passVariable("puntoInicial", raizDTO.getPuntoInicial());
+			appBean.getCalcService().passVariable("tolerancia", raizDTO.getTolerancia());
+			appBean.getCalcService().passVariable("iteraciones", raizDTO.getIteraciones());
 	
 			if ("secante".equals(sessionBean.getOpcion())) {
-				appBean.getJopasService().passVariable(sessionBean.getJopasInterpreter(), "primeraAproximacion", raizDTO.getPrimeraAproximacion());
+				appBean.getCalcService().passVariable("primeraAproximacion", raizDTO.getPrimeraAproximacion());
 			}
 			
 			// Ejecuta el comando
@@ -83,33 +83,33 @@ public class RaizBean extends BaseBean implements Serializable {
 				cmd = "[x,sol,ni,error]=secante(puntoInicial, primeraAproximacion, tolerancia, iteraciones)";
 			}
 			
-			appBean.getJopasService().execute(sessionBean.getJopasInterpreter(), cmd);
+			appBean.getCalcService().execute(cmd);
 			
 			//String error = sessionBean.getJopasInterpreter().getString("error");
 			Integer ni;
 			Vector iteraciones;
 			BigDecimal sol;
 			
-			try {
-				ni = sessionBean.getJopasInterpreter().getInteger("ni");
-				logger.info("Iteraciones realizadas: %d", ni);
-			} catch (Exception e) {
-				logger.error("ERROR:", e);
-			}
-			
-			try {
-				iteraciones = sessionBean.getJopasInterpreter().getVector("x");
-				logger.info("iteraciones: %s", iteraciones.toString());
-			} catch (Exception e) {
-				logger.error("ERROR:", e);
-			}
-			
-			try {
-				sol = sessionBean.getJopasInterpreter().getReal("sol");
-				logger.info("Solución: %f", sol);
-			} catch (Exception e) {
-				logger.error("ERROR:", e);
-			}
+//			try {
+//				ni = sessionBean.getJopasInterpreter().getInteger("ni");
+//				logger.info("Iteraciones realizadas: %d", ni);
+//			} catch (Exception e) {
+//				logger.error("ERROR:", e);
+//			}
+//			
+//			try {
+//				iteraciones = sessionBean.getJopasInterpreter().getVector("x");
+//				logger.info("iteraciones: %s", iteraciones.toString());
+//			} catch (Exception e) {
+//				logger.error("ERROR:", e);
+//			}
+//			
+//			try {
+//				sol = sessionBean.getJopasInterpreter().getReal("sol");
+//				logger.info("Solución: %f", sol);
+//			} catch (Exception e) {
+//				logger.error("ERROR:", e);
+//			}
 		} catch (Exception e) {
 			logger.error("ERROR:", e);
 			this.addErrorMessage(e);

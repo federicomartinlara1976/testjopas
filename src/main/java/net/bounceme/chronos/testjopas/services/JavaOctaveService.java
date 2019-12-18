@@ -6,23 +6,26 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
+import dk.ange.octave.OctaveEngine;
+import dk.ange.octave.OctaveEngineFactory;
+import dk.ange.octave.type.Octave;
+import dk.ange.octave.type.OctaveDouble;
+import dk.ange.octave.type.OctaveInt;
 import net.bounceme.chronos.logger.Log;
 import net.bounceme.chronos.logger.LogFactory;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
-import net.bounceme.chronos.utils.jopas.JopasFactory;
-import net.bounceme.chronos.utils.jopas.JopasInterpreter;
 
-@Service("joPasService")
-public class JoPasService implements CalcService {
+@Service("javaOctaveService")
+public class JavaOctaveService implements CalcService {
 
 	/** The logger. */
 	private Log logger;
 	
-	private JopasInterpreter jopas;
+	private OctaveEngine octave;
 	
-	public JoPasService() {
+	public JavaOctaveService() {
 		super();
-		this.jopas = JopasFactory.getInstance().newInstance();
+		this.octave = new OctaveEngineFactory().getScriptEngine();
 	}
 
 	/**
@@ -30,7 +33,7 @@ public class JoPasService implements CalcService {
 	 */
 	@PostConstruct
 	public void initialize() {
-		logger = LogFactory.getInstance().getLogger(JoPasService.class, "LOG4J");
+		logger = LogFactory.getInstance().getLogger(JavaOctaveService.class, "LOG4J");
 	}
 
 	/**
@@ -39,11 +42,9 @@ public class JoPasService implements CalcService {
 	 */
 	public void addPath(String path) throws ServiceException {
 		try {
-			jopas.checkIsInitialized();
-	
 			StringBuilder sbComando = new StringBuilder();
 			sbComando.append("addpath('").append(path).append("')");
-			jopas.execute(sbComando.toString());
+			octave.eval(sbComando.toString());
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -54,11 +55,9 @@ public class JoPasService implements CalcService {
 	 */
 	public void resetPath() throws ServiceException {
 		try {
-			jopas.checkIsInitialized();
-	
 			StringBuilder sbComando = new StringBuilder();
 			sbComando.append("restoredefaultpath();");
-			jopas.execute(sbComando.toString());
+			octave.eval(sbComando.toString());
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -69,11 +68,9 @@ public class JoPasService implements CalcService {
 	 */
 	public void clearEnvironment() throws ServiceException {
 		try {
-			jopas.checkIsInitialized();
-	
 			StringBuilder sbComando = new StringBuilder();
 			sbComando.append("clear()");
-			jopas.execute(sbComando.toString());
+			octave.eval(sbComando.toString());
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -84,13 +81,11 @@ public class JoPasService implements CalcService {
 	 */
 	public void execute(String cmd) throws ServiceException {
 		try {
-			jopas.checkIsInitialized();
-	
 			StringBuilder sbComando = new StringBuilder();
 			sbComando.append(cmd);
 	
 			logger.debug("Ejecutar comando: %s", sbComando.toString());
-			jopas.execute(sbComando.toString());
+			octave.eval(sbComando.toString());
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -102,10 +97,9 @@ public class JoPasService implements CalcService {
 	 */
 	public void passVariable(String name, BigDecimal value) throws ServiceException {
 		try {
-			jopas.checkIsInitialized();
-	
 			logger.debug("Pasando variable %s con valor %.6f", name, value.doubleValue());
-			jopas.load(value, name);
+			OctaveDouble octaveDouble = Octave.scalar(value.doubleValue());
+			octave.put(name, octaveDouble);
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -117,10 +111,9 @@ public class JoPasService implements CalcService {
 	 */
 	public void passVariable(String name, Integer value) throws ServiceException {
 		try {
-			jopas.checkIsInitialized();
-	
 			logger.debug("Pasando variable %s con valor %.6f", name, value.doubleValue());
-			jopas.load(value, name);
+			OctaveInt octaveInt = intScalar(value);
+			octave.put(name, octaveInt);
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
@@ -132,10 +125,13 @@ public class JoPasService implements CalcService {
 	 */
 	public void terminate() throws ServiceException {
 		try {
-			jopas.checkIsInitialized();
-			jopas.terminate();
+			octave.close();
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
 	}
+	
+	private OctaveInt intScalar(final Integer i) {
+        return new OctaveInt(new int[] { i }, 1, 1);
+    }
 }

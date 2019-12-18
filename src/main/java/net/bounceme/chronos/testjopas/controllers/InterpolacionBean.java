@@ -44,10 +44,10 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 		try {
 			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper().getSessionAttribute("path"); 
 			
-			appBean.getJopasService().clearEnvironment(sessionBean.getJopasInterpreter());
-			appBean.getJopasService().resetPath(sessionBean.getJopasInterpreter());
-			appBean.getJopasService().addPath(sessionBean.getJopasInterpreter(), Paths.funciones.value());
-			appBean.getJopasService().addPath(sessionBean.getJopasInterpreter(), paths.value());
+			appBean.getCalcService().clearEnvironment();
+			appBean.getCalcService().resetPath();
+			appBean.getCalcService().addPath(Paths.funciones.value());
+			appBean.getCalcService().addPath(paths.value());
 			
 			interpolacionDTO = new InterpolacionDTO();
 		} catch (ServiceException e) {

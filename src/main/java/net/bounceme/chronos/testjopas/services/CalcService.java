@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 
-public interface Service {
+public interface CalcService {
 	/**
 	 * @param path
 	 * @throws ServiceException
