@@ -50,6 +50,7 @@
 			
 			<p:outputPanel id="resultados" layout="block" styleClass="ui-g-12">
 				<p:outputPanel layout="block"
+					rendered="#{raizBean.sol != null}"
 					styleClass="ui-g-12 box shadow overview-box">
 					<ui:include src="/raiz/datos-salida.xhtml" />
 				</p:outputPanel>
