@@ -147,7 +147,7 @@ public class JoPasService implements CalcService {
 	}
 
 	@Override
-	public BigDecimal get(String name) {
+	public BigDecimal getScalar(String name) {
 		return BigDecimal.ZERO;
 	}
 }
