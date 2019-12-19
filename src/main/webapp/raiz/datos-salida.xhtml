@@ -7,6 +7,13 @@
 	
 	<p:outputPanel layout="block" rendered="#{raizBean.sol != null}">
 		<p>Solucion: <strong><h:outputText value="#{raizBean.sol}"/></strong></p>
+		<p>Iteraciones realizadas: <strong><h:outputText value="#{raizBean.iteraciones}"/></strong></p>
+		
+		<p:dataTable var="valor" value="#{raizBean.valores}">
+		    <p:column headerText="Valor">
+			<h:outputText value="#{valor}" />
+		    </p:column>
+		</p:dataTable>
 	</p:outputPanel>
 
 </ui:composition>
