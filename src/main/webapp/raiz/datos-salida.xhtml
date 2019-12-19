@@ -5,11 +5,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<p>Solucion: <strong><h:outputText value="#{raizBean.sol}"/></strong></p>
-	<p>Iteraciones realizadas: <strong><h:outputText value="#{raizBean.iteraciones}"/></strong></p>
+	<p><h:outputText value="#{res['raiz.solucion']}"/><strong><h:outputText value="#{raizBean.sol}"/></strong></p>
+	<p><h:outputText value="#{res['raiz.itRealizadas']}"/><strong><h:outputText value="#{raizBean.iteraciones}"/></strong></p>
 		
 	<p:dataTable var="valor" value="#{raizBean.valores}">
-	    <p:column headerText="Valor">
+	    <p:column headerText="<h:outputText value="#{res['raiz.valorIteracion']}"/>">
 		<h:outputText value="#{valor}" />
 	    </p:column>
 	</p:dataTable>
