@@ -46,6 +46,10 @@ public class RaizBean extends BaseBean implements Serializable {
 	private RaizDTO raizDTO;
 	
 	private BigDecimal sol;
+	
+	private Integer iteraciones;
+	
+	private BigDecimal[] valores;
 
 	@PostConstruct
 	public void initialize() {
@@ -169,5 +173,11 @@ public class RaizBean extends BaseBean implements Serializable {
 		return sol;
 	}
 	
+	public BigDecimal[] getValores() {
+		return valores;
+	}
 	
+	public Integer getIteraciones() {
+		return iteraciones;
+	}
 }
