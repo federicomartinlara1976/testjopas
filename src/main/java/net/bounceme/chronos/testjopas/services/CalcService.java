@@ -54,5 +54,5 @@ public interface CalcService {
 	 * @param name
 	 * @return
 	 */
-	BigDecimal get(String name);
+	BigDecimal getScalar(String name);
 }
