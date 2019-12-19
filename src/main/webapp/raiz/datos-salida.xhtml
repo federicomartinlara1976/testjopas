@@ -9,7 +9,7 @@
 	<p><h:outputText value="#{res['raiz.itRealizadas']}"/><strong><h:outputText value="#{raizBean.iteraciones}"/></strong></p>
 		
 	<p:dataTable var="valor" value="#{raizBean.valores}">
-	    <p:column headerText="<h:outputText value="#{res['raiz.valorIteracion']}"/>">
+	    <p:column headerText="#{res['raiz.valorIteracion']}">
 		<h:outputText value="#{valor}" />
 	    </p:column>
 	</p:dataTable>
