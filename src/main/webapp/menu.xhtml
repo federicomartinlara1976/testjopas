@@ -63,14 +63,14 @@
 					</h:commandLink></li>
 				</ul>
 			</p:tab>
-			<p:tab title="Algebra linear">
+			<p:tab title="#{res['menu.algebra']}">
 				<ul class="list-group">
 					<li class="list-group-item"><h:commandLink
 						actionListener="#{sessionBean.setParam('opcion', 'sistemas')}"
 						action="#{sessionBean.navegar('algebra')}" ajax="false"
 						disabled="#{sessionBean.currentPage eq 'algebra' and sessionBean.opcion eq 'sistemas'}">
 							<i class="fa fa-users"></i>
-							<span><h:outputText value="Resolver sistema de ecuaciones" /></span>
+							<span><h:outputText value="#{res['menu.algebra.sistema']}" /></span>
 					</h:commandLink></li>
 				</ul>
 			</p:tab>

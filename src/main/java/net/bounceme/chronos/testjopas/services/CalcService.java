@@ -55,4 +55,16 @@ public interface CalcService {
 	 * @return
 	 */
 	BigDecimal getScalar(String name);
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	Integer getIntScalar(String name);
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	BigDecimal[] getArray(String name);
 }

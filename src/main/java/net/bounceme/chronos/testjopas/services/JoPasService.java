@@ -150,4 +150,14 @@ public class JoPasService implements CalcService {
 	public BigDecimal getScalar(String name) {
 		return BigDecimal.ZERO;
 	}
+
+	@Override
+	public Integer getIntScalar(String name) {
+		return 0;
+	}
+
+	@Override
+	public BigDecimal[] getArray(String name) {
+		return new BigDecimal[0];
+	}
 }

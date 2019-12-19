@@ -64,10 +64,10 @@ public class RaizBean extends BaseBean implements Serializable {
 			appBean.getCalcService().addPath(Paths.funciones.value());
 			appBean.getCalcService().addPath(paths.value());
 
-			raizDTO = new RaizDTO();
-			sol = null;
+			reset();
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			logger.error("ERROR:", e);
+			this.addErrorMessage(e);
 		}
 	}
 
@@ -93,35 +93,21 @@ public class RaizBean extends BaseBean implements Serializable {
 			appBean.getCalcService().execute(cmd);
 			
 			//String error = sessionBean.getJopasInterpreter().getString("error");
-			Integer ni;
-			Vector iteraciones;
-			
-			sol = appBean.getCalcService().get("sol");
-			
-//			try {
-//				ni = sessionBean.getJopasInterpreter().getInteger("ni");
-//				logger.info("Iteraciones realizadas: %d", ni);
-//			} catch (Exception e) {
-//				logger.error("ERROR:", e);
-//			}
-//			
-//			try {
-//				iteraciones = sessionBean.getJopasInterpreter().getVector("x");
-//				logger.info("iteraciones: %s", iteraciones.toString());
-//			} catch (Exception e) {
-//				logger.error("ERROR:", e);
-//			}
-//			
-//			try {
-//				sol = sessionBean.getJopasInterpreter().getReal("sol");
-//				logger.info("Solución: %f", sol);
-//			} catch (Exception e) {
-//				logger.error("ERROR:", e);
-//			}
+			sol = appBean.getCalcService().getScalar("sol");
+			iteraciones = appBean.getCalcService().getIntScalar("ni");
+			valores = appBean.getCalcService().getArray("x");
+
 		} catch (Exception e) {
 			logger.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
+	}
+	
+	public void reset() {
+		raizDTO = new RaizDTO();
+		sol = null;
+		iteraciones = null;
+		valores = new BigDecimal[0];
 	}
 
 	/**

@@ -15,7 +15,9 @@ import dk.ange.octave.type.OctaveDouble;
 import net.bounceme.chronos.logger.Log;
 import net.bounceme.chronos.logger.LogFactory;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
+import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToArray;
 import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToBigDecimal;
+import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToInteger;
 
 @Service("javaOctaveService")
 public class JavaOctaveService implements CalcService {
@@ -25,12 +27,18 @@ public class JavaOctaveService implements CalcService {
 	
 	private OctaveEngine octave;
 	
-	private OctaveDoubleToBigDecimal assembler;
+	private OctaveDoubleToBigDecimal doubleToBigDecimal;
+	
+	private OctaveDoubleToInteger octaveIntToInteger;
+	
+	private OctaveDoubleToArray octaveDoubleToArray;
 	
 	public JavaOctaveService() {
 		super();
 		this.octave = new OctaveEngineFactory().getScriptEngine();
-		assembler = new OctaveDoubleToBigDecimal();
+		doubleToBigDecimal = new OctaveDoubleToBigDecimal();
+		octaveIntToInteger = new OctaveDoubleToInteger();
+		octaveDoubleToArray = new OctaveDoubleToArray();
 	}
 
 	/**
@@ -142,6 +150,18 @@ public class JavaOctaveService implements CalcService {
 	@Override
 	public BigDecimal getScalar(String name) {
 		OctaveDouble value = octave.get(OctaveDouble.class, name);
-		return assembler.assemble(value);
+		return doubleToBigDecimal.assemble(value);
+	}
+
+	@Override
+	public Integer getIntScalar(String name) {
+		OctaveDouble value = octave.get(OctaveDouble.class, name);
+		return octaveIntToInteger.assemble(value);
+	}
+
+	@Override
+	public BigDecimal[] getArray(String name) {
+		OctaveDouble value = octave.get(OctaveDouble.class, name);
+		return octaveDoubleToArray.assemble(value);
 	}
 }
