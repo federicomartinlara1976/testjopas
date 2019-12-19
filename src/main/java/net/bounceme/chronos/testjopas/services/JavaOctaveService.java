@@ -140,7 +140,7 @@ public class JavaOctaveService implements CalcService {
 	}
 	
 	@Override
-	public BigDecimal get(String name) {
+	public BigDecimal getScalar(String name) {
 		OctaveDouble value = octave.get(OctaveDouble.class, name);
 		return assembler.assemble(value);
 	}
