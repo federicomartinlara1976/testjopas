@@ -160,4 +160,9 @@ public class JoPasService implements CalcService {
 	public BigDecimal[] getArray(String name) {
 		return new BigDecimal[0];
 	}
+	
+	@Override
+	public String getString(String name) {
+		return StringUtils.EMPTY;
+	}
 }
