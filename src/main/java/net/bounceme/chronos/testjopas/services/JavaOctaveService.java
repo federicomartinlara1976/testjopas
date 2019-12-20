@@ -18,6 +18,7 @@ import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToArray;
 import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToBigDecimal;
 import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToInteger;
+import net.bounceme.chronos.utils.calc.converters.OctaveStringToString;
 
 @Service("javaOctaveService")
 public class JavaOctaveService implements CalcService {
@@ -33,12 +34,15 @@ public class JavaOctaveService implements CalcService {
 	
 	private OctaveDoubleToArray octaveDoubleToArray;
 	
+	private OctaveStringToString octaveStringToString;
+	
 	public JavaOctaveService() {
 		super();
-		this.octave = new OctaveEngineFactory().getScriptEngine();
+		octave = new OctaveEngineFactory().getScriptEngine();
 		doubleToBigDecimal = new OctaveDoubleToBigDecimal();
 		octaveIntToInteger = new OctaveDoubleToInteger();
 		octaveDoubleToArray = new OctaveDoubleToArray();
+		octaveStringToString = new OctaveStringToString();
 	}
 
 	/**
@@ -163,5 +167,11 @@ public class JavaOctaveService implements CalcService {
 	public BigDecimal[] getArray(String name) {
 		OctaveDouble value = octave.get(OctaveDouble.class, name);
 		return octaveDoubleToArray.assemble(value);
+	}
+	
+	@Override
+	public String getString(String name) {
+		OctaveString value = octave.get(OctaveString.class, name);
+		return octaveStringToString.assemble(value);
 	}
 }
