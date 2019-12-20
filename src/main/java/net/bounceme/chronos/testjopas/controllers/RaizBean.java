@@ -8,13 +8,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.commons.lang3.StringUtils;
+
 import net.bounceme.chronos.logger.Log;
 import net.bounceme.chronos.logger.LogFactory;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.dto.RaizDTO;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
-import net.bounceme.chronos.utils.jopas.Vector;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 
 /**

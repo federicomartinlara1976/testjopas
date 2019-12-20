@@ -12,6 +12,7 @@ import dk.ange.octave.OctaveEngine;
 import dk.ange.octave.OctaveEngineFactory;
 import dk.ange.octave.OctaveUtils;
 import dk.ange.octave.type.OctaveDouble;
+import dk.ange.octave.type.OctaveString;
 import net.bounceme.chronos.logger.Log;
 import net.bounceme.chronos.logger.LogFactory;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
