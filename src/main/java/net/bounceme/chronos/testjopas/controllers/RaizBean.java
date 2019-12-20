@@ -113,9 +113,11 @@ public class RaizBean extends BaseBean implements Serializable {
 	
 	public void reset() {
 		raizDTO = new RaizDTO();
+		
 		sol = null;
 		iteraciones = null;
 		valores = new BigDecimal[0];
+		error = StringUtils.EMPTY;
 	}
 
 	/**
