@@ -50,6 +50,8 @@ public class RaizBean extends BaseBean implements Serializable {
 	private Integer iteraciones;
 	
 	private BigDecimal[] valores;
+	
+	private String error;
 
 	@PostConstruct
 	public void initialize() {
@@ -92,10 +94,15 @@ public class RaizBean extends BaseBean implements Serializable {
 			
 			appBean.getCalcService().execute(cmd);
 			
-			//String error = sessionBean.getJopasInterpreter().getString("error");
-			sol = appBean.getCalcService().getScalar("sol");
-			iteraciones = appBean.getCalcService().getIntScalar("ni");
-			valores = appBean.getCalcService().getArray("x");
+			error = appBean.getCalcService().getString("error");
+			if (StringUtils.isNotBlank(error)) {
+				throw new Exception(error);
+			}
+			else {
+				sol = appBean.getCalcService().getScalar("sol");
+				iteraciones = appBean.getCalcService().getIntScalar("ni");
+				valores = appBean.getCalcService().getArray("x");
+			}
 
 		} catch (Exception e) {
 			logger.error("ERROR:", e);
