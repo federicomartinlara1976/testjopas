@@ -94,6 +94,7 @@ public class RaizBean extends BaseBean implements Serializable {
 			
 			appBean.getCalcService().execute(cmd);
 			
+			// Las variables de salida son las que están definidas entre [] en el comando
 			error = appBean.getCalcService().getString("error");
 			if (StringUtils.isNotBlank(error)) {
 				throw new Exception(error);
