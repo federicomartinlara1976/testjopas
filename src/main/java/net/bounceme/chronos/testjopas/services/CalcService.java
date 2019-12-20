@@ -67,4 +67,10 @@ public interface CalcService {
 	 * @return
 	 */
 	BigDecimal[] getArray(String name);
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	String getString(String name);
 }
