@@ -49,10 +49,14 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 			appBean.getCalcService().addPath(Paths.funciones.value());
 			appBean.getCalcService().addPath(paths.value());
 			
-			interpolacionDTO = new InterpolacionDTO();
+			reset();
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void reset() {
+		interpolacionDTO = new InterpolacionDTO();
 	}
 
 	/**
