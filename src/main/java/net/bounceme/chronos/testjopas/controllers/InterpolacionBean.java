@@ -1,16 +1,19 @@
 package net.bounceme.chronos.testjopas.controllers;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.commons.lang3.StringUtils;
+
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.dto.InterpolacionDTO;
-import net.bounceme.chronos.testjopas.dto.RaizDTO;
+import net.bounceme.chronos.testjopas.dto.PuntoDTO;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 
@@ -55,8 +58,20 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 		}
 	}
 	
+	public void calcular() {
+	}
+	
 	public void reset() {
 		interpolacionDTO = new InterpolacionDTO();
+	}
+	
+	public void cambiarPuntos() {
+		interpolacionDTO.setPuntos(new PuntoDTO[interpolacionDTO.getNumeroPuntos()]);
+		
+		// inicializa puntos
+		for(int i=0;i<interpolacionDTO.getNumeroPuntos();i++) {
+			interpolacionDTO.getPuntos()[i] = new PuntoDTO();
+		}
 	}
 
 	/**

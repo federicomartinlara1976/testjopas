@@ -13,10 +13,15 @@ public class InterpolacionDTO implements Serializable {
 	private BigDecimal puntoInterpolar;
 	
 	private Integer numeroPuntos;
+	
+	private PuntoDTO[] puntos;
 
 	public InterpolacionDTO() {
 		puntoInterpolar = BigDecimal.ZERO;
 		numeroPuntos = 1;
+		puntos = new PuntoDTO[numeroPuntos];
+		
+		puntos[0] = new PuntoDTO();
 	}
 
 	/**
@@ -45,5 +50,19 @@ public class InterpolacionDTO implements Serializable {
 	 */
 	public void setNumeroPuntos(Integer numeroPuntos) {
 		this.numeroPuntos = numeroPuntos;
+	}
+
+	/**
+	 * @return the puntos
+	 */
+	public PuntoDTO[] getPuntos() {
+		return puntos;
+	}
+
+	/**
+	 * @param puntos the puntos to set
+	 */
+	public void setPuntos(PuntoDTO[] puntos) {
+		this.puntos = puntos;
 	}
 }

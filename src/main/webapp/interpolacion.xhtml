@@ -31,10 +31,25 @@
 				</p:outputPanel>
 			</p:outputPanel>
 			
-			<p:outputPanel layout="block" styleClass="ui-g-12">
+			<p:outputPanel id="datosEntrada" layout="block" styleClass="ui-g-12">
 				<p:outputPanel layout="block"
 					styleClass="ui-g-12 box shadow overview-box">
 					<ui:include src="/interpolacion/datos-entrada.xhtml" />
+					
+					<p:outputPanel layout="block" id="botonera"
+						styleClass="botonera ui-g-12 ui-md-12 ui-lg-12">
+
+						<p:commandButton id="calcular" value="#{res['interpolacion.calcular']}"
+							actionListener="#{interpolacionBean.calcular}" process="@form" ajax="true" update="messages"
+							styleClass="btn btn-primary ui-g-2 ui-md-2 ui-lg-2"
+							icon="fa fa-save" />
+							
+						<p:commandButton id="reset" value="#{res['interpolacion.reset']}"
+							actionListener="#{interpolacionBean.reset}" process="@form" ajax="true" update="datosEntrada"
+							styleClass="btn btn-danger ui-g-2 ui-md-2 ui-lg-2"
+							icon="fa fa-refresh" />
+
+					</p:outputPanel>
 				</p:outputPanel>
 			</p:outputPanel>
 		</p:outputPanel>	

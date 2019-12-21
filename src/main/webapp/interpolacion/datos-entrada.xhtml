@@ -21,10 +21,31 @@
 				<td>
 					<p:spinner id="numeroPuntos" value="#{interpolacionBean.interpolacionDTO.numeroPuntos}"
 						min="1" max="100">
-                		<p:ajax process="@this" />
+                		<p:ajax process="@this" listener="#{interpolacionBean.cambiarPuntos}" update="panelPuntos"/>
             		</p:spinner></td>
 			</tr>
 		</tbody>
 	</table>
+	
+	<p:outputPanel id="panelPuntos" layout="block" rendered="#{interpolacionBean.interpolacionDTO.numeroPuntos gt 0}">
+		<table class="c100">
+			<thead>
+				<tr>
+					<th><h:outputText value="#{res['interpolacion.indice']}"/></th>
+					<th><h:outputText value="#{res['interpolacion.valor']}"/></th>
+					<th><h:outputText value="#{res['interpolacion.fx']}" rendered="#{sessionBean.opcion eq 'funcion'}"/></th>
+				</tr>
+			</thead>
+			<tbody>
+				<ui:repeat var="punto" value="#{interpolacionBean.interpolacionDTO.puntos}" varStatus="st">
+				<tr>
+					<td><h:outputText value="#{res['interpolacion.punto']}"/> #{st.index+1}</td>
+					<td><p:inputNumber id="puntoInicial" decimalPlaces="6"
+						value="#{interpolacionBean.interpolacionDTO.puntos[st.index].valor}" styleClass="c100" /></td>
+				</tr>
+				</ui:repeat>
+			</tbody>
+		</table>
+	</p:outputPanel>
 
 </ui:composition>
