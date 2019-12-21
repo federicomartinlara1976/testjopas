@@ -14,6 +14,16 @@
 				<td><p:inputNumber id="puntoInterpolar"
 						value="#{interpolacionBean.interpolacionDTO.puntoInterpolar}" styleClass="c100" /></td>
 			</tr>
+			<tr>
+				<td class="c20"><h:outputLabel
+						value="#{res['interpolacion.numeroPuntos']}" for="numeroPuntos"
+						styleClass="label" /></td>
+				<td>
+					<p:spinner id="numeroPuntos" value="#{interpolacionBean.interpolacionDTO.numeroPuntos}"
+						min="1" max="100">
+                		<p:ajax process="@this" />
+            		</p:spinner></td>
+			</tr>
 		</tbody>
 	</table>
 

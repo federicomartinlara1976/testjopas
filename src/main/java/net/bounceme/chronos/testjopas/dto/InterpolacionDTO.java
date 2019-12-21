@@ -11,9 +11,12 @@ public class InterpolacionDTO implements Serializable {
 	private static final long serialVersionUID = 4783998953563598183L;
 	
 	private BigDecimal puntoInterpolar;
+	
+	private Integer numeroPuntos;
 
 	public InterpolacionDTO() {
-		// TODO Auto-generated constructor stub
+		puntoInterpolar = BigDecimal.ZERO;
+		numeroPuntos = 1;
 	}
 
 	/**
@@ -28,5 +31,19 @@ public class InterpolacionDTO implements Serializable {
 	 */
 	public void setPuntoInterpolar(BigDecimal puntoInterpolar) {
 		this.puntoInterpolar = puntoInterpolar;
+	}
+
+	/**
+	 * @return the numeroPuntos
+	 */
+	public Integer getNumeroPuntos() {
+		return numeroPuntos;
+	}
+
+	/**
+	 * @param numeroPuntos the numeroPuntos to set
+	 */
+	public void setNumeroPuntos(Integer numeroPuntos) {
+		this.numeroPuntos = numeroPuntos;
 	}
 }
