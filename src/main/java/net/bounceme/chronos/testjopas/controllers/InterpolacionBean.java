@@ -10,6 +10,8 @@ import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.lang3.StringUtils;
 
+import net.bounceme.chronos.logger.Log;
+import net.bounceme.chronos.logger.LogFactory;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.dto.InterpolacionDTO;
@@ -28,49 +30,74 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 2350030970399677473L;
-	
+
 	/** The Constant NAME. */
 	public static final String NAME = "interpolacionBean";
-	
+
+	/** The logger. */
+	private Log logger;
+
 	/** The app bean. */
-	@ManagedProperty(value="#{appBean}")
+	@ManagedProperty(value = "#{appBean}")
 	private AppBean appBean;
-	
+
 	/** The app bean. */
-	@ManagedProperty(value="#{sessionBean}")
+	@ManagedProperty(value = "#{sessionBean}")
 	private SessionBean sessionBean;
-	
+
 	private InterpolacionDTO interpolacionDTO;
-	
+
 	@PostConstruct
 	public void initialize() {
 		try {
-			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper().getSessionAttribute("path"); 
-			
+			logger = LogFactory.getInstance().getLogger(InterpolacionBean.class, "LOG4J");
+
+			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
+					.getSessionAttribute("path");
+
 			appBean.getCalcService().clearEnvironment();
 			appBean.getCalcService().resetPath();
 			appBean.getCalcService().addPath(Paths.funciones.value());
 			appBean.getCalcService().addPath(paths.value());
-			
+
 			reset();
 		} catch (ServiceException e) {
-			e.printStackTrace();
+			logger.error("ERROR:", e);
+			this.addErrorMessage(e);
 		}
 	}
-	
+
 	public void calcular() {
 	}
-	
+
 	public void reset() {
 		interpolacionDTO = new InterpolacionDTO();
 	}
-	
+
 	public void cambiarPuntos() {
 		interpolacionDTO.setPuntos(new PuntoDTO[interpolacionDTO.getNumeroPuntos()]);
-		
+
 		// inicializa puntos
-		for(int i=0;i<interpolacionDTO.getNumeroPuntos();i++) {
+		for (int i = 0; i < interpolacionDTO.getNumeroPuntos(); i++) {
 			interpolacionDTO.getPuntos()[i] = new PuntoDTO();
+		}
+	}
+
+	public void calcularValor(Integer index) {
+		try {
+			if ("funcion".equals(sessionBean.getOpcion())) {
+				BigDecimal punto = interpolacionDTO.getPuntos()[index].getPunto();
+				appBean.getCalcService().passVariable("x", punto);
+
+				String cmd = "y=f(x)";
+				appBean.getCalcService().execute(cmd);
+
+				BigDecimal y = appBean.getCalcService().getScalar("y");
+				interpolacionDTO.getPuntos()[index].setValor(y);
+			}
+		} catch (ServiceException e) {
+			logger.error("ERROR:", e);
+			this.addErrorMessage(e);
 		}
 	}
 
@@ -87,7 +114,6 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	public void setAppBean(AppBean appBean) {
 		this.appBean = appBean;
 	}
-	
 
 	public SessionBean getSessionBean() {
 		return sessionBean;

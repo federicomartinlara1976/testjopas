@@ -28,20 +28,41 @@
 	</table>
 	
 	<p:outputPanel id="panelPuntos" layout="block" rendered="#{interpolacionBean.interpolacionDTO.numeroPuntos gt 0}">
-		<table class="c100">
+		<table class="c50">
 			<thead>
 				<tr>
 					<th><h:outputText value="#{res['interpolacion.indice']}"/></th>
-					<th><h:outputText value="#{res['interpolacion.valor']}"/></th>
-					<th><h:outputText value="#{res['interpolacion.fx']}" rendered="#{sessionBean.opcion eq 'funcion'}"/></th>
+					<th><h:outputText value="#{res['interpolacion.x']}"/></th>
+					<th>
+						<h:outputText value="#{res['interpolacion.fx']}" rendered="#{sessionBean.opcion eq 'funcion'}"/>
+						<h:outputText value="#{res['interpolacion.valor']}" rendered="#{sessionBean.opcion eq 'tabla'}"/>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
 				<ui:repeat var="punto" value="#{interpolacionBean.interpolacionDTO.puntos}" varStatus="st">
 				<tr>
 					<td><h:outputText value="#{res['interpolacion.punto']}"/> #{st.index+1}</td>
-					<td><p:inputNumber id="puntoInicial" decimalPlaces="6"
-						value="#{interpolacionBean.interpolacionDTO.puntos[st.index].valor}" styleClass="c100" /></td>
+					<td>
+						<p:inputNumber decimalPlaces="6"
+							value="#{interpolacionBean.interpolacionDTO.puntos[st.index].punto}" 
+							rendered="#{sessionBean.opcion eq 'funcion'}"
+							styleClass="c100">
+							<p:ajax event="blur" listener="#{interpolacionBean.calcularValor(st.index)}" update="panelPuntos"/>
+						</p:inputNumber>
+						
+						<p:inputNumber decimalPlaces="6"
+							value="#{interpolacionBean.interpolacionDTO.puntos[st.index].punto}" 
+							rendered="#{sessionBean.opcion eq 'tabla'}"
+							styleClass="c100"/>
+					</td>
+					<td>
+						<h:outputText value="#{interpolacionBean.interpolacionDTO.puntos[st.index].valor}" rendered="#{sessionBean.opcion eq 'funcion'}"/>
+						<p:inputNumber decimalPlaces="6"
+							value="#{interpolacionBean.interpolacionDTO.puntos[st.index].valor}" 
+							rendered="#{sessionBean.opcion eq 'tabla'}"
+							styleClass="c100"/>	
+					</td>
 				</tr>
 				</ui:repeat>
 			</tbody>
