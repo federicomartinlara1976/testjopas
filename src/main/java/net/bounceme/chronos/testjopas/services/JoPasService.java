@@ -166,4 +166,22 @@ public class JoPasService implements CalcService {
 	public String getString(String name) {
 		return StringUtils.EMPTY;
 	}
+
+	@Override
+	public void passVariable(String name, BigDecimal[] value) throws ServiceException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void passVariable(String name, BigDecimal[][] value) throws ServiceException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public BigDecimal[][] getMatrix(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

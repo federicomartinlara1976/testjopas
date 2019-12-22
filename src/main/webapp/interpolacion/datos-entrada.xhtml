@@ -31,7 +31,7 @@
 		<table class="c50">
 			<thead>
 				<tr>
-					<th><h:outputText value="#{res['interpolacion.indice']}"/></th>
+					<th></th>
 					<th><h:outputText value="#{res['interpolacion.x']}"/></th>
 					<th>
 						<h:outputText value="#{res['interpolacion.fx']}" rendered="#{sessionBean.opcion eq 'funcion'}"/>
@@ -48,7 +48,7 @@
 							value="#{interpolacionBean.interpolacionDTO.puntos[st.index].punto}" 
 							rendered="#{sessionBean.opcion eq 'funcion'}"
 							styleClass="c100">
-							<p:ajax event="blur" listener="#{interpolacionBean.calcularValor(st.index)}" update="panelPuntos"/>
+							<p:ajax event="change" listener="#{interpolacionBean.calcularValor(st.index)}" update="panelPuntos"/>
 						</p:inputNumber>
 						
 						<p:inputNumber decimalPlaces="6"

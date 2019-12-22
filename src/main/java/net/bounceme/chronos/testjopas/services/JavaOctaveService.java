@@ -19,7 +19,9 @@ import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToArray;
 import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToBigDecimal;
 import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToInteger;
+import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToMatrix;
 import net.bounceme.chronos.utils.calc.converters.OctaveStringToString;
+import net.bounceme.chronos.utils.jopas.Vector;
 
 @Service("javaOctaveService")
 public class JavaOctaveService implements CalcService {
@@ -35,6 +37,8 @@ public class JavaOctaveService implements CalcService {
 	
 	private OctaveDoubleToArray octaveDoubleToArray;
 	
+	private OctaveDoubleToMatrix octaveDoubleToMatrix;
+	
 	private OctaveStringToString octaveStringToString;
 	
 	public JavaOctaveService() {
@@ -43,6 +47,7 @@ public class JavaOctaveService implements CalcService {
 		doubleToBigDecimal = new OctaveDoubleToBigDecimal();
 		octaveIntToInteger = new OctaveDoubleToInteger();
 		octaveDoubleToArray = new OctaveDoubleToArray();
+		octaveDoubleToMatrix = new OctaveDoubleToMatrix();
 		octaveStringToString = new OctaveStringToString();
 	}
 
@@ -135,6 +140,18 @@ public class JavaOctaveService implements CalcService {
 		}
 	}
 	
+	@Override
+	public void passVariable(String name, BigDecimal[] value) throws ServiceException {
+		try {
+			Vector vector = new Vector(name, value);
+			String cmdVar = vector.toString();
+			logger.debug("Pasando variable %s", cmdVar);
+			octave.eval(cmdVar);
+		} catch (Exception e) {
+			throw new ServiceException(e);
+		}
+	}
+	
 	/**
 	 * @param name
 	 * @param value
@@ -171,8 +188,20 @@ public class JavaOctaveService implements CalcService {
 	}
 	
 	@Override
+	public BigDecimal[][] getMatrix(String name) {
+		OctaveDouble value = octave.get(OctaveDouble.class, name);
+		return octaveDoubleToMatrix.assemble(value);
+	}
+	
+	@Override
 	public String getString(String name) {
 		OctaveString value = octave.get(OctaveString.class, name);
 		return octaveStringToString.assemble(value);
+	}
+
+	@Override
+	public void passVariable(String name, BigDecimal[][] value) throws ServiceException {
+		// TODO Auto-generated method stub
+		
 	}
 }

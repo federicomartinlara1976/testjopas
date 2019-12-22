@@ -46,6 +46,10 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	private SessionBean sessionBean;
 
 	private InterpolacionDTO interpolacionDTO;
+	
+	private BigDecimal sp;
+	
+	private BigDecimal[][] dd;
 
 	@PostConstruct
 	public void initialize() {
@@ -68,10 +72,39 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	}
 
 	public void calcular() {
+		try {
+			if ("funcion".equals(sessionBean.getOpcion())) {
+				appBean.getCalcService().passVariable("puntoInterpolar", interpolacionDTO.getPuntoInterpolar());
+				
+				BigDecimal[] valores = toArrayPuntos(interpolacionDTO);
+				appBean.getCalcService().passVariable("x", valores);
+				
+				String cmd = "[Y,DD,SP]=interpoladorFuncion(puntoInterpolar, x)";
+				appBean.getCalcService().execute(cmd);
+				
+				sp = appBean.getCalcService().getScalar("SP");
+				logger.debug("SP: %.6f", sp);
+				
+				dd = appBean.getCalcService().getMatrix("DD");
+				logger.debug("DD: %s", dd.toString());
+			}
+		} catch (ServiceException e) {
+			logger.error("ERROR:", e);
+			this.addErrorMessage(e);
+		}
+	}
+
+	private BigDecimal[] toArrayPuntos(InterpolacionDTO interpolacionDTO) {
+		BigDecimal[] valores = new BigDecimal[interpolacionDTO.getNumeroPuntos()];
+		for (int i=0;i<interpolacionDTO.getNumeroPuntos();i++) {
+			valores[i] = interpolacionDTO.getPuntos()[i].getPunto();
+		}
+		return valores;
 	}
 
 	public void reset() {
 		interpolacionDTO = new InterpolacionDTO();
+		sp = null;
 	}
 
 	public void cambiarPuntos() {
@@ -93,7 +126,9 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 				appBean.getCalcService().execute(cmd);
 
 				BigDecimal y = appBean.getCalcService().getScalar("y");
-				interpolacionDTO.getPuntos()[index].setValor(y);
+				if (y != null) {
+					interpolacionDTO.getPuntos()[index].setValor(y);
+				}
 			}
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
@@ -135,5 +170,19 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	 */
 	public void setInterpolacionDTO(InterpolacionDTO interpolacionDTO) {
 		this.interpolacionDTO = interpolacionDTO;
+	}
+	
+	/**
+	 * @return the sp
+	 */
+	public BigDecimal getSp() {
+		return sp;
+	}
+
+	/**
+	 * @return the dd
+	 */
+	public BigDecimal[][] getDd() {
+		return dd;
 	}
 }

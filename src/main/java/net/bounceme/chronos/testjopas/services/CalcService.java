@@ -37,6 +37,18 @@ public interface CalcService {
 	 * @param name
 	 * @param value
 	 */
+	void passVariable(String name, BigDecimal[] value) throws ServiceException;
+	
+	/**
+	 * @param name
+	 * @param value
+	 */
+	void passVariable(String name, BigDecimal[][] value) throws ServiceException;
+	
+	/**
+	 * @param name
+	 * @param value
+	 */
 	void passVariable(String name, Integer value) throws ServiceException;
 	
 	/**
@@ -67,6 +79,12 @@ public interface CalcService {
 	 * @return
 	 */
 	BigDecimal[] getArray(String name);
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	BigDecimal[][] getMatrix(String name);
 	
 	/**
 	 * @param name
