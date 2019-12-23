@@ -86,7 +86,7 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 			if ("tabla".equals(sessionBean.getOpcion())) {
 				BigDecimal[] valores = toArrayValores(interpolacionDTO);
 				appBean.getCalcService().passVariable("y", valores);
-				cmd = "[Y,DD,SP]=interpoladorTabla(puntoInterpolar, x, y)";
+				cmd = "[Y,DD,SP]=interpoladorTablaValores(puntoInterpolar, x, y)";
 			}
 			
 			appBean.getCalcService().execute(cmd);
