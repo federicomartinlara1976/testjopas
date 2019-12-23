@@ -50,6 +50,8 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	private BigDecimal sp;
 	
 	private BigDecimal[][] dd;
+	
+	private BigDecimal[] y;
 
 	@PostConstruct
 	public void initialize() {
@@ -94,8 +96,10 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 			sp = appBean.getCalcService().getScalar("SP");
 			logger.debug("SP: %.6f", sp);
 				
+			y = appBean.getCalcService().getArray("Y");
+			
 			dd = appBean.getCalcService().getMatrix("DD");
-			logger.debug("DD: %s", dd.toString());
+		
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
 			this.addErrorMessage(e);
@@ -198,5 +202,12 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	 */
 	public BigDecimal[][] getDd() {
 		return dd;
+	}
+
+	/**
+	 * @return the y
+	 */
+	public BigDecimal[] getY() {
+		return y;
 	}
 }

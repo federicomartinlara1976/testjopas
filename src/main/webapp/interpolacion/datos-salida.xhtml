@@ -7,7 +7,21 @@
 	
 	<p><h:outputText value="#{res['interpolacion.sp']}"/><strong><h:outputText value="#{interpolacionBean.sp}"/></strong></p>
 	
-	<h3><h:outputText value="Tabla de diferencias divididas"/></h3>
+	<h3><h:outputText value="#{res['interpolacion.y']}"/></h3>
+	
+	<table class="c100">
+		<tbody>
+			<tr>
+				<ui:repeat value="#{interpolacionBean.y}" var="item">
+				<td>
+					<h:outputText value="#{item}"/>
+				</td>
+				</ui:repeat>
+			</tr>
+		</tbody>
+	</table>
+	
+	<h3><h:outputText value="#{res['interpolacion.tabla']}"/></h3>
 	
 	<table class="c100">
 		<tbody>
