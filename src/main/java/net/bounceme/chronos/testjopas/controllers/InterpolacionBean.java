@@ -134,17 +134,15 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 
 	public void calcularValor(Integer index) {
 		try {
-			if ("funcion".equals(sessionBean.getOpcion())) {
-				BigDecimal punto = interpolacionDTO.getPuntos()[index].getPunto();
-				appBean.getCalcService().passVariable("x", punto);
+			BigDecimal punto = interpolacionDTO.getPuntos()[index].getPunto();
+			appBean.getCalcService().passVariable("x", punto);
 
-				String cmd = "y=f(x)";
-				appBean.getCalcService().execute(cmd);
+			String cmd = "y=f(x)";
+			appBean.getCalcService().execute(cmd);
 
-				BigDecimal y = appBean.getCalcService().getScalar("y");
-				if (y != null) {
-					interpolacionDTO.getPuntos()[index].setValor(y);
-				}
+			BigDecimal y = appBean.getCalcService().getScalar("y");
+			if (y != null) {
+				interpolacionDTO.getPuntos()[index].setValor(y);
 			}
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
