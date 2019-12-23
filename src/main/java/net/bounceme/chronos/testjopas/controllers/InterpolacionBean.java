@@ -73,21 +73,29 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 
 	public void calcular() {
 		try {
+			String cmd;
+			appBean.getCalcService().passVariable("puntoInterpolar", interpolacionDTO.getPuntoInterpolar());
+			
+			BigDecimal[] puntos = toArrayPuntos(interpolacionDTO);
+			appBean.getCalcService().passVariable("x", puntos);
+			
 			if ("funcion".equals(sessionBean.getOpcion())) {
-				appBean.getCalcService().passVariable("puntoInterpolar", interpolacionDTO.getPuntoInterpolar());
-				
-				BigDecimal[] valores = toArrayPuntos(interpolacionDTO);
-				appBean.getCalcService().passVariable("x", valores);
-				
-				String cmd = "[Y,DD,SP]=interpoladorFuncion(puntoInterpolar, x)";
-				appBean.getCalcService().execute(cmd);
-				
-				sp = appBean.getCalcService().getScalar("SP");
-				logger.debug("SP: %.6f", sp);
-				
-				dd = appBean.getCalcService().getMatrix("DD");
-				logger.debug("DD: %s", dd.toString());
+				cmd = "[Y,DD,SP]=interpoladorFuncion(puntoInterpolar, x)";
 			}
+			
+			if ("tabla".equals(sessionBean.getOpcion())) {
+				BigDecimal[] valores = toArrayValores(interpolacionDTO);
+				appBean.getCalcService().passVariable("y", valores);
+				cmd = "[Y,DD,SP]=interpoladorTabla(puntoInterpolar, x, y)";
+			}
+			
+			appBean.getCalcService().execute(cmd);
+				
+			sp = appBean.getCalcService().getScalar("SP");
+			logger.debug("SP: %.6f", sp);
+				
+			dd = appBean.getCalcService().getMatrix("DD");
+			logger.debug("DD: %s", dd.toString());
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
 			this.addErrorMessage(e);
@@ -95,9 +103,17 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	}
 
 	private BigDecimal[] toArrayPuntos(InterpolacionDTO interpolacionDTO) {
+		BigDecimal[] puntos = new BigDecimal[interpolacionDTO.getNumeroPuntos()];
+		for (int i=0;i<interpolacionDTO.getNumeroPuntos();i++) {
+			puntos[i] = interpolacionDTO.getPuntos()[i].getPunto();
+		}
+		return puntos;
+	}
+	
+	private BigDecimal[] toArrayValores(InterpolacionDTO interpolacionDTO) {
 		BigDecimal[] valores = new BigDecimal[interpolacionDTO.getNumeroPuntos()];
 		for (int i=0;i<interpolacionDTO.getNumeroPuntos();i++) {
-			valores[i] = interpolacionDTO.getPuntos()[i].getPunto();
+			valores[i] = interpolacionDTO.getPuntos()[i].getValor();
 		}
 		return valores;
 	}
