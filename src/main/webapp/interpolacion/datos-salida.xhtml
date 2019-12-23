@@ -11,11 +11,11 @@
 	
 	<table class="c100">
 		<tbody>
-			<ui:repeat value="#{interpolacionBean.dd}" var="fila" varStatus="stFilas">
+			<ui:repeat value="#{interpolacionBean.dd}" var="fila">
 			<tr>
-				<ui:repeat value="#{interpolacionBean.dd[stFilas.index]}" var="columna" varStatus="stColumnas">
+				<ui:repeat value="#{fila}" var="columna">
 				<td>
-					<h:outputText value="#{interpolacionBean.dd[stFilas.index][stColumnas.index]}"/>
+					<h:outputText value="#{columna}"/>
 				</td>
 				</ui:repeat>
 			</tr>
