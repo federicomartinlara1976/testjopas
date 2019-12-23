@@ -1,9 +1,7 @@
-function [Y,DD,SP]=interpoladorTablaValores(puntoInterpolar, X)
-  Y = zeros(size(X));
+function [Y,DD,SP]=interpoladorTablaValores(puntoInterpolar, X, Y)
   DD = zeros(size(X), size(X)-1);
   
   for i=1:size(X)
-    Y(i) = X(i);
     DD(i,1) = Y(i);
   end
   
