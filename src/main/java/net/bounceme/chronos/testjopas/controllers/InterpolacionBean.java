@@ -73,7 +73,7 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 
 	public void calcular() {
 		try {
-			String cmd;
+			String cmd = StringUtils.EMPTY;
 			appBean.getCalcService().passVariable("puntoInterpolar", interpolacionDTO.getPuntoInterpolar());
 			
 			BigDecimal[] puntos = toArrayPuntos(interpolacionDTO);
