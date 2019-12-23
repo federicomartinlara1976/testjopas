@@ -8,5 +8,19 @@
 	<p><h:outputText value="#{res['interpolacion.sp']}"/><strong><h:outputText value="#{interpolacionBean.sp}"/></strong></p>
 	
 	<h3><h:outputText value="Tabla de diferencias divididas"/></h3>
+	
+	<table class="c100">
+		<tbody>
+			<ui:repeat value="#{interpolacionBean.dd}" var="fila" varStatus="stFilas">
+			<tr>
+				<ui:repeat value="#{interpolacionBean.dd[stFilas.index]}" var="columna" varStatus="stColumnas">
+				<td>
+					<h:outputText value="#{interpolacionBean.dd[stFilas.index][stColumnas.index]}"/>
+				</td>
+				</ui:repeat>
+			</tr>
+			</ui:repeat>
+		</tbody>
+	</table>
 
 </ui:composition>
