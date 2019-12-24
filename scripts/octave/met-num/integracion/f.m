@@ -1,3 +1,3 @@
 function y = f(x) 
-	y = x + log(x);
+	y = exp(sqrt(x^2+1));
 endfunction
