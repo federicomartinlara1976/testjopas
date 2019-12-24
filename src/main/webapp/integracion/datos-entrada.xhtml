@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<table class="c100">
+		<tbody>
+			<tr>
+				<td class="c20"><strong><h:outputLabel
+						value="#{res['integracion.a']}" for="limiteIzquierdo"
+						styleClass="label" /></strong></td>
+				<td><p:inputNumber id="limiteIzquierdo" decimalPlaces="6"
+						value="#{integracionBean.integracionDTO.a}" styleClass="c100" /></td>
+			</tr>
+			<tr>
+				<td class="c20"><strong><h:outputLabel
+						value="#{res['integracion.b']}" for="limiteDerecho"
+						styleClass="label" /></strong></td>
+				<td><p:inputNumber id="limiteDerecho" decimalPlaces="6"
+						value="#{integracionBean.integracionDTO.b}" styleClass="c100" /></td>
+			</tr>
+			<tr>
+				<td class="c20"><strong><h:outputLabel
+						value="#{res['integracion.tolerancia']}" for="tolerancia"
+						styleClass="label" /></strong></td>
+				<td><p:inputNumber id="tolerancia" decimalPlaces="6"
+						value="#{integracionBean.integracionDTO.tolerancia}" styleClass="c100" /></td>
+			</tr>
+		</tbody>
+	</table>
+
+</ui:composition>

@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p><h:outputText value="#{res['integracion.valor']}"/><strong><h:outputText value="#{integracionBean.valor}"/></strong></p>
+	
+	<h3><h:outputText value="#{res['integracion.valores']}"/></h3>
+	
+	<table class="c100">
+		<tbody>
+			<tr>
+				<ui:repeat value="#{integracionBean.valores}" var="item">
+				<td>
+					<h:outputText value="#{item}"/>
+				</td>
+				</ui:repeat>
+			</tr>
+		</tbody>
+	</table>
+
+</ui:composition>
