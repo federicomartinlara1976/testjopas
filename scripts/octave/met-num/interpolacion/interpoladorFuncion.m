@@ -1,6 +1,6 @@
 function [Y,DD,SP]=interpoladorFuncion(puntoInterpolar, X)
   Y = zeros(size(X));
-  DD = zeros(size(X), size(X)-1);
+  DD = zeros(size(X), size(X));
   
   for i=1:size(X)
     Y(i) = f(X(i));
@@ -16,7 +16,7 @@ function [Y,DD,SP]=interpoladorFuncion(puntoInterpolar, X)
   SP = DD(1,1);
   PP = 1;
   
-  for i=2:size(X)-1
+  for i=2:size(X)
     PP = PP*(puntoInterpolar-X(i-1));
     SP = SP + DD(1,i)*PP;
   end
