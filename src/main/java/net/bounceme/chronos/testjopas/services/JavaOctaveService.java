@@ -21,7 +21,8 @@ import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToBigDecimal;
 import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToInteger;
 import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToMatrix;
 import net.bounceme.chronos.utils.calc.converters.OctaveStringToString;
-import net.bounceme.chronos.utils.jopas.Vector;
+import net.bounceme.chronos.utils.calc.dto.MatrixDTO;
+import net.bounceme.chronos.utils.calc.dto.VectorDTO;
 
 @Service("javaOctaveService")
 public class JavaOctaveService implements CalcService {
@@ -143,8 +144,23 @@ public class JavaOctaveService implements CalcService {
 	@Override
 	public void passVariable(String name, BigDecimal[] value) throws ServiceException {
 		try {
-			Vector vector = new Vector(name, value);
-			String cmdVar = vector.toString();
+			VectorDTO vectorDTO = new VectorDTO(name, value);
+			String cmdVar = vectorDTO.toString();
+			logger.debug("Pasando variable %s", cmdVar);
+			octave.eval(cmdVar);
+		} catch (Exception e) {
+			throw new ServiceException(e);
+		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see net.bounceme.chronos.testjopas.services.CalcService#passVariable(java.lang.String, java.math.BigDecimal[][])
+	 */
+	@Override
+	public void passVariable(String name, BigDecimal[][] value) throws ServiceException {
+		try {
+			MatrixDTO matrixDTO = new MatrixDTO(name, value);
+			String cmdVar = matrixDTO.toString();
 			logger.debug("Pasando variable %s", cmdVar);
 			octave.eval(cmdVar);
 		} catch (Exception e) {
@@ -197,11 +213,5 @@ public class JavaOctaveService implements CalcService {
 	public String getString(String name) {
 		OctaveString value = octave.get(OctaveString.class, name);
 		return octaveStringToString.assemble(value);
-	}
-
-	@Override
-	public void passVariable(String name, BigDecimal[][] value) throws ServiceException {
-		// TODO Auto-generated method stub
-		
 	}
 }

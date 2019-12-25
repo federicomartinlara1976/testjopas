@@ -8,6 +8,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.commons.lang3.StringUtils;
+
 import net.bounceme.chronos.logger.Log;
 import net.bounceme.chronos.logger.LogFactory;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
@@ -43,6 +45,8 @@ public class AlgebraBean extends BaseBean implements Serializable {
 	private SessionBean sessionBean;
 
 	private AlgebraDTO algebraDTO;
+	
+	private BigDecimal[] c;
 
 	@PostConstruct
 	public void initialize() {
@@ -65,11 +69,23 @@ public class AlgebraBean extends BaseBean implements Serializable {
 	}
 
 	public void calcular() {
-		
+		try {
+			appBean.getCalcService().passVariable("A", algebraDTO.getMatrizCoeficientes());
+			appBean.getCalcService().passVariable("b", algebraDTO.getTerminos());
+			
+			String cmd = "c=A\\b";
+			appBean.getCalcService().execute(cmd);
+				
+			c = appBean.getCalcService().getArray("c");
+		} catch (ServiceException e) {
+			logger.error("ERROR:", e);
+			this.addErrorMessage(e);
+		}
 	}
 
 	public void reset() {
 		algebraDTO = new AlgebraDTO();
+		c = null;
 	}
 	
 	public void cambiarCoeficientes() {
@@ -113,5 +129,10 @@ public class AlgebraBean extends BaseBean implements Serializable {
 		this.algebraDTO = algebraDTO;
 	}
 
-	
+	/**
+	 * @return the c
+	 */
+	public BigDecimal[] getC() {
+		return c;
+	}
 }

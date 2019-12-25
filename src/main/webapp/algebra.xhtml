@@ -53,9 +53,9 @@
 			
 			<p:outputPanel id="resultados" layout="block" styleClass="ui-g-12">
 				<p:outputPanel layout="block"
-					rendered="#{interpolacionBean.sp != null}"
+					rendered="#{algebraBean.c != null}"
 					styleClass="ui-g-12 box shadow overview-box">
-					
+					<ui:include src="/algebra/datos-salida.xhtml" />
 				</p:outputPanel>
 			</p:outputPanel>
 		</p:outputPanel>	

@@ -513,3 +513,7 @@ footer span {
 .tecnologia img {
 	margin-right: 0.5em;
 }
+
+.sistema .ui-inputfield {
+	width: 50px;
+}

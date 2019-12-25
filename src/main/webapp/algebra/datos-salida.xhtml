@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h3><h:outputText value="#{res['algebra.soluciones']}"/></h3>
+	
+	<table class="c100">
+		<tbody>
+			<ui:repeat value="#{algebraBean.c}" var="item" varStatus="st">
+			<tr>
+				<td>
+					<h:outputText value="x"/><h:outputText value="#{st.index+1}"/>
+				</td>
+				<td><h:outputText value="="/></td>
+				<td>
+					<h:outputText value="#{item}"/>
+				</td>
+			</tr>
+			</ui:repeat>
+		</tbody>
+	</table>
+
+</ui:composition>
