@@ -21,6 +21,7 @@
 	</table>
 	
 	<p:outputPanel id="panelCoeficientes" layout="block" rendered="#{algebraBean.algebraDTO.numeroCoeficientes gt 0}">
+		<h3><h:outputText value="#{res['algebra.sistema']}"/></h3>
 		<table class="c100 sistema">
 			<tbody>
 			<ui:repeat value="#{algebraBean.algebraDTO.matrizCoeficientes}" var="fila" varStatus="stf">

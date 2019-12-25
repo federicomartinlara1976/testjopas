@@ -74,8 +74,7 @@ public class AlgebraBean extends BaseBean implements Serializable {
 	
 	public void cambiarCoeficientes() {
 		Integer n = algebraDTO.getNumeroCoeficientes();
-		algebraDTO.setMatrizCoeficientes(new BigDecimal[n][n]);
-		algebraDTO.setTerminos(new BigDecimal[n]);
+		algebraDTO = new AlgebraDTO(n);
 	}
 
 	/**

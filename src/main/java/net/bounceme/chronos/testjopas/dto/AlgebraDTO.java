@@ -18,6 +18,15 @@ public class AlgebraDTO implements Serializable {
 
 	public AlgebraDTO() {
 		numeroCoeficientes = 2;
+		initialize();
+	}
+	
+	public AlgebraDTO(Integer numeroCoeficientes) {
+		this.numeroCoeficientes = numeroCoeficientes;
+		initialize();
+	}
+
+	private void initialize() {
 		matrizCoeficientes = new BigDecimal[numeroCoeficientes][numeroCoeficientes];
 		terminos = new BigDecimal[numeroCoeficientes];
 		
