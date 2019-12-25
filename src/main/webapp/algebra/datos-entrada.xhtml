@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<table class="c100">
+		<tbody>
+			<tr>
+				<td class="c20"><h:outputLabel
+						value="#{res['algebra.numeroCoeficientes']}" for="numeroCoeficientes"
+						styleClass="label" /></td>
+				<td>
+					<p:spinner id="numeroCoeficientes" value="#{algebraBean.algebraDTO.numeroCoeficientes}"
+						min="2" max="10">
+                		<p:ajax process="@this" listener="#{algebraBean.cambiarCoeficientes}" update="panelCoeficientes"/>
+            		</p:spinner></td>
+			</tr>
+		</tbody>
+	</table>
+	
+	<p:outputPanel id="panelCoeficientes" layout="block" rendered="#{algebraBean.algebraDTO.numeroCoeficientes gt 0}">
+		<table class="c100 sistema">
+			<tbody>
+			<ui:repeat value="#{algebraBean.algebraDTO.matrizCoeficientes}" var="fila" varStatus="stf">
+			<tr>
+				<ui:repeat value="#{fila}" var="columna" varStatus="stc">
+				<td>
+					<p:inputNumber decimalPlaces="2"
+							value="#{algebraBean.algebraDTO.matrizCoeficientes[stf.index][stc.index]}"
+							styleClass="c100"/>		
+				</td>
+				<td>
+					<h:outputText value="+" rendered="#{!stc.last}"/>
+					<h:outputText value="=" rendered="#{stc.last}"/>
+				</td>
+				</ui:repeat>
+				<td>
+					<p:inputNumber decimalPlaces="2"
+							value="#{algebraBean.algebraDTO.terminos[stf.index]}"
+							styleClass="c100"/>	
+				</td>
+			</tr>
+			</ui:repeat>
+			</tbody>
+		</table>
+	</p:outputPanel>
+
+</ui:composition>
