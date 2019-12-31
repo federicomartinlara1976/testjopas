@@ -73,8 +73,7 @@ public class AlgebraBean extends BaseBean implements Serializable {
 			appBean.getCalcService().passVariable("A", algebraDTO.getMatrizCoeficientes());
 			appBean.getCalcService().passVariable("b", algebraDTO.getTerminos());
 			
-			// La fórmula para resolver un sistema de ecuaciones es: c = A\b
-			String cmd = "c=A\\b";
+			String cmd = "c=solve(A, b)";
 			appBean.getCalcService().execute(cmd);
 				
 			c = appBean.getCalcService().getArray("c");
