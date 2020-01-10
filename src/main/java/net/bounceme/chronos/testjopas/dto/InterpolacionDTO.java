@@ -3,6 +3,10 @@ package net.bounceme.chronos.testjopas.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class InterpolacionDTO implements Serializable {
 	
 	/**
@@ -10,8 +14,11 @@ public class InterpolacionDTO implements Serializable {
 	 */
 	private static final long serialVersionUID = 4783998953563598183L;
 	
+	@NotNull
 	private BigDecimal puntoInterpolar;
 	
+	@Min(1)
+	@Max(10)
 	private Integer numeroPuntos;
 	
 	private PuntoDTO[] puntos;
