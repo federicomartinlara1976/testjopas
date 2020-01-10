@@ -48,7 +48,7 @@
 							value="#{interpolacionBean.interpolacionDTO.puntos[st.index].punto}" 
 							rendered="#{sessionBean.opcion eq 'funcion'}"
 							styleClass="c100">
-							<p:ajax event="change" listener="#{interpolacionBean.calcularValor(st.index)}" update="panelPuntos"/>
+							<p:ajax event="change" process="@this" listener="#{interpolacionBean.calcularValor(st.index)}" update="panelPuntos"/>
 						</p:inputNumber>
 						
 						<p:inputNumber decimalPlaces="6"
