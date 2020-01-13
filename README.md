@@ -12,5 +12,8 @@ La aplicación consiste en una serie de algoritmos numéricos:
   - Mediante los valores de una función dada
   - Mediante los valores de una tabla
   
+- Integración numérica:
+  - Integración mediante la fórmula de Simpson
+  
 - Álgebra:
   - Resolución de sistemas de ecuaciones de grado 1.
