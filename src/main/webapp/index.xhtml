@@ -18,17 +18,20 @@
 	<ui:define name="content">
 		<p:outputPanel layout="block"
 			styleClass="funcionalidades ui-g-12 box shadow overview-box">
-			<p:accordionPanel activeIndex="-1">
-				<p:tab title="Raiz de un polinomio">
+			<p:panel styleClass="ui-g ui-g-12">
+			</p:panel>
+				
+			<p:accordionPanel activeIndex="-1" styleClass="ui-g ui-g-12">
+				<p:tab title="#{res['menu.raiz']}">
 										
 				</p:tab>
-				<p:tab title="Interpolacion">
+				<p:tab title="#{res['menu.interpolacion']}">
 										
 				</p:tab>
-				<p:tab title="Integracion">
+				<p:tab title="#{res['menu.integracion']}">
 										
 				</p:tab>
-				<p:tab title="Algebra">
+				<p:tab title="#{res['menu.algebra']}">
 										
 				</p:tab>
 				<p:tab title="Algoritmos">
