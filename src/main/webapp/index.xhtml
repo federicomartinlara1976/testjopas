@@ -6,38 +6,107 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:chronos="http://chronos.componentes.jsf/composite"
 	template="/WEB-INF/templates/template.xhtml">
-	
+
 	<ui:define name="title">
-		<chronos:title type="3" value="#{res['app.title']}" />	
+		<chronos:title type="3" value="#{res['app.title']}" />
 	</ui:define>
-	
+
 	<ui:define name="menu">
-		<ui:include src="/menu.xhtml" />	
+		<ui:include src="/menu.xhtml" />
 	</ui:define>
 
 	<ui:define name="content">
 		<p:outputPanel layout="block"
 			styleClass="funcionalidades ui-g-12 box shadow overview-box">
-			<p:panel styleClass="ui-g ui-g-12">
+			<p:panel header="Test de Octave" styleClass="ui-g-12">
+				<p>
+					<h:outputText
+						value="Aplicación web de prueba de interfaz java para Octave / Matlab" />
+				</p>
+				<p>
+					<h:outputText
+						value="La aplicación consiste en una serie de algoritmos numéricos:" />
+				</p>
+
+				<p:accordionPanel activeIndex="-1" styleClass="ui-g-12">
+					<p:tab title="#{res['menu.raiz']}">
+						<ul>
+							<li><h:outputText
+									value="Método de Newton para encontrar la raíz de un polinomio" /></li>
+							<li><h:outputText
+									value="Método de la secante para encontrar la raíz de un polinomio" /></li>
+						</ul>
+					</p:tab>
+					<p:tab title="#{res['menu.interpolacion']}">
+						<ul>
+							<li><h:outputText
+									value="Mediante los valores de una función dada" /></li>
+							<li><h:outputText value="Mediante los valores de una tabla" /></li>
+						</ul>
+					</p:tab>
+					<p:tab title="#{res['menu.integracion']}">
+						<ul>
+							<li><h:outputText
+									value="Integración mediante la fórmula de Simpson" /></li>
+						</ul>
+					</p:tab>
+					<p:tab title="#{res['menu.algebra']}">
+						<ul>
+							<li><h:outputText
+									value="Resolución de sistemas de ecuaciones de grado 1" /></li>
+						</ul>
+					</p:tab>
+					<p:tab title="Algoritmos">
+
+					</p:tab>
+				</p:accordionPanel>
 			</p:panel>
-				
-			<p:accordionPanel activeIndex="-1" styleClass="ui-g ui-g-12">
-				<p:tab title="#{res['menu.raiz']}">
-										
-				</p:tab>
-				<p:tab title="#{res['menu.interpolacion']}">
-										
-				</p:tab>
-				<p:tab title="#{res['menu.integracion']}">
-										
-				</p:tab>
-				<p:tab title="#{res['menu.algebra']}">
-										
-				</p:tab>
-				<p:tab title="Algoritmos">
-										
-				</p:tab>
-			</p:accordionPanel>
+		</p:outputPanel>
+		<p:outputPanel layout="block"
+			styleClass="funcionalidades ui-g-12 box shadow overview-box">
+			<p:panel header="Tecnologías" styleClass="ui-g-12">
+				<ul class="tecnologias">
+					<li><h:outputLink
+							value="https://access.redhat.com/articles/2026253"
+							target="_blank">
+							<h:graphicImage value="/resources/img/jbossas7.png"
+								styleClass="icon" />
+							<span><h:outputText value="Red hat JBOSS EAP 7.2" /></span>
+						</h:outputLink></li>
+					<li><h:outputLink
+							value="https://www.java.com" target="_blank">
+							<h:graphicImage
+								value="http://2.bp.blogspot.com/-EG9VvPjULdc/TjhoDyEhKhI/AAAAAAAAANE/V7lhYGxh6I4/s1600/Java_applet.png"
+								styleClass="icon" />
+							<span><h:outputText value="Java 8" /></span>
+						</h:outputLink></li>
+					<li><h:outputLink
+							value="https://spring.io" target="_blank">
+							<h:graphicImage value="/resources/img/spring.png"
+								styleClass="icon" />
+							<span><h:outputText value="Spring 4.3.18.RELEASE" /></span>
+						</h:outputLink></li>
+					<li><h:outputLink
+							value="https://www.primefaces.org" target="_blank">
+							<h:graphicImage value="/resources/img/primefaces.jpg"
+								styleClass="icon" />
+							<span><h:outputText value="Primefaces 7.0" /></span>
+						</h:outputLink></li>
+					<li><h:outputLink
+							value="https://www.graylog.org" target="_blank">
+							<h:graphicImage value="/resources/img/graylog.png"
+								styleClass="icon" />
+							<span><h:outputText value="Graylog" /></span>
+						</h:outputLink></li>
+					<li><h:outputLink
+							value="https://www.octave.org" target="_blank">
+							<h:graphicImage
+								value="https://www.gnu.org/software/octave/img/octave-logo.svg"
+								styleClass="icon" />
+							<span><h:outputText value="Octave" /></span>
+						</h:outputLink></li>
+				</ul>
+			</p:panel>
 		</p:outputPanel>
 	</ui:define>
 
