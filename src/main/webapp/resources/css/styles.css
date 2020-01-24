@@ -543,3 +543,11 @@ ul.tecnologias li a span {
 	display: block;
 	text-align: center;
 }
+
+.layout-content {
+	margin-top: 1em;
+}
+
+.funcionalidades {
+	margin-bottom: 1em;
+}
