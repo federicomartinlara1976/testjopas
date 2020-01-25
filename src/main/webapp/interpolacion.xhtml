@@ -20,14 +20,14 @@
 			<p:outputPanel layout="block" styleClass="ui-g-12">
 				<p:outputPanel layout="block"
 					styleClass="jumbotron ui-g-12 box shadow overview-box overview-box-1">
-					<p class="description">
-						<h:outputText value="#{res['menu.interpolacion']}" />
-					</p>
-					<hr class="my-4" />
 					<h1>
+						<h:outputText value="#{res['menu.interpolacion']}" />
+					</h1>
+					<hr class="my-4" />
+					<p class="description">
 						<h:outputText value="#{res['menu.interpolacion.funcion']}" rendered="#{sessionBean.opcion eq 'funcion'}"/>
 						<h:outputText value="#{res['menu.interpolacion.tabla']}" rendered="#{sessionBean.opcion eq 'tabla'}"/>
-					</h1>
+					</p>
 				</p:outputPanel>
 			</p:outputPanel>
 			

@@ -20,13 +20,13 @@
 			<p:outputPanel layout="block" styleClass="ui-g-12">
 				<p:outputPanel layout="block"
 					styleClass="jumbotron ui-g-12 box shadow overview-box overview-box-1">
-					<p class="description">
-						<h:outputText value="#{res['menu.algebra']}" />
-					</p>
-					<hr class="my-4" />
 					<h1>
-						<h:outputText value="#{res['menu.algebra.sistema']}" rendered="#{sessionBean.opcion eq 'sistemas'}"/>
+						<h:outputText value="#{res['menu.algebra']}" />
 					</h1>
+					<hr class="my-4" />
+					<p class="description">
+						<h:outputText value="#{res['menu.algebra.sistema']}" rendered="#{sessionBean.opcion eq 'sistemas'}"/>
+					</p>
 				</p:outputPanel>
 			</p:outputPanel>
 			
