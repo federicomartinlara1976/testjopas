@@ -74,6 +74,17 @@
 					</h:commandLink></li>
 				</ul>
 			</p:tab>
+			<p:tab title="#{res['menu.algoritmos']}">
+				<ul class="list-group">
+					<li class="list-group-item"><h:commandLink
+						actionListener="#{sessionBean.setParam('opcion', 'dtw')}"
+						action="#{sessionBean.navegar('algoritmos')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'algoritmos' and sessionBean.opcion eq 'dtw'}">
+							<i class="fa fa-users"></i>
+							<span><h:outputText value="#{res['menu.algoritmos.dtw']}" /></span>
+					</h:commandLink></li>
+				</ul>
+			</p:tab>
 		</p:accordionPanel>
 	</p:outputPanel>
     

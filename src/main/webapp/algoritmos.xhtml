@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:chronos="http://chronos.componentes.jsf/composite"
+	template="/WEB-INF/templates/template.xhtml">
+	
+	<ui:define name="title">
+		<chronos:title type="3" value="#{res['app.title']}" />	
+	</ui:define>
+	
+	<ui:define name="menu">
+		<ui:include src="/menu.xhtml" />	
+	</ui:define>
+
+	<ui:define name="content">
+		<p:outputPanel layout="block" styleClass="acerca ui-g dashboard">
+			<p:outputPanel layout="block" styleClass="ui-g-12">
+				<p:outputPanel layout="block"
+					styleClass="jumbotron ui-g-12 box shadow overview-box overview-box-1">
+					<p class="description">
+						<h:outputText value="#{res['menu.algebra']}" />
+					</p>
+					<hr class="my-4" />
+					<h1>
+						<h:outputText value="#{res['menu.algebra.sistema']}" rendered="#{sessionBean.opcion eq 'sistemas'}"/>
+					</h1>
+				</p:outputPanel>
+			</p:outputPanel>
+			
+			<p:outputPanel id="datosEntrada" layout="block" styleClass="ui-g-12">
+				<p:outputPanel layout="block"
+					styleClass="ui-g-12 box shadow overview-box">
+					<ui:include src="/algebra/datos-entrada.xhtml" />
+					
+					<p:outputPanel layout="block" id="botonera"
+						styleClass="botonera ui-g-12 ui-md-12 ui-lg-12">
+
+						<p:commandButton id="calcular" value="#{res['algebra.calcular']}"
+							actionListener="#{algebraBean.calcular}" process="@form" ajax="true" update="messages,resultados"
+							styleClass="btn btn-primary ui-g-2 ui-md-2 ui-lg-2"
+							icon="fa fa-save" />
+							
+						<p:commandButton id="reset" value="#{res['algebra.reset']}"
+							actionListener="#{algebraBean.reset}" process="@form" ajax="true" update="datosEntrada,resultados"
+							styleClass="btn btn-danger ui-g-2 ui-md-2 ui-lg-2"
+							icon="fa fa-refresh" />
+					</p:outputPanel>
+				</p:outputPanel>
+			</p:outputPanel>
+			
+			<p:outputPanel id="resultados" layout="block" styleClass="ui-g-12">
+				<p:outputPanel layout="block"
+					rendered="#{algebraBean.c != null}"
+					styleClass="ui-g-12 box shadow overview-box">
+					<ui:include src="/algebra/datos-salida.xhtml" />
+				</p:outputPanel>
+			</p:outputPanel>
+		</p:outputPanel>	
+	</ui:define>
+
+</ui:composition>
