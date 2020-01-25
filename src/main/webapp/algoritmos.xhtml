@@ -32,8 +32,9 @@
 			
 			<p:outputPanel id="datosEntrada" layout="block" styleClass="ui-g-12">
 				<p:outputPanel layout="block"
-					styleClass="ui-g-12 box shadow overview-box">
-					
+					styleClass="ui-g-12 box shadow overview-box"
+					rendered="#{sessionBean.opcion eq 'dtw'}">
+					<ui:include src="/algoritmos/dtw/datos-entrada.xhtml"/>
 				</p:outputPanel>
 			</p:outputPanel>
 			
