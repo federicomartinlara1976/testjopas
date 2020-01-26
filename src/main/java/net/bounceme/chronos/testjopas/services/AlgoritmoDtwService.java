@@ -1,6 +1,10 @@
 package net.bounceme.chronos.testjopas.services;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,6 +52,25 @@ public class AlgoritmoDtwService {
 		try {
 			return Arrays.asList(dirManager.listContents(carpetaFirmas));
 		} catch (FileManagerException e) {
+			logger.error("ERROR", e);
+			throw new ServiceException(e);
+		}
+	}
+	
+	public List<String[]> getFileParameters(String sFile) throws ServiceException {
+		
+		try (BufferedReader reader = new BufferedReader(new FileReader(carpetaFirmas + "/" + sFile))) {
+			List<String[]> parameters = new ArrayList<>();
+			
+			String line = reader.readLine();
+			while (line != null) {
+				
+				// read next line
+				line = reader.readLine();
+			}
+	
+			return parameters;
+		} catch (IOException e) {
 			logger.error("ERROR", e);
 			throw new ServiceException(e);
 		}
