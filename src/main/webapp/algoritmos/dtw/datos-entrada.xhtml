@@ -11,11 +11,19 @@
 				<td class="c20"><strong><h:outputLabel
 						value="#{res['algoritmos.dtw.fichero1']}" for="fichero1"
 						styleClass="label" /></strong></td>
-				<td></td>
+				<td>
+					<h:selectOneMenu id="fichero1" value="#{algoritmosBean.algoritmoDtwDTO.fichero1}">
+						<f:selectItems value="#{algoritmosBean.archivos}"/>
+					</h:selectOneMenu>
+				</td>
 				<td class="c20"><strong><h:outputLabel
 						value="#{res['algoritmos.dtw.fichero2']}" for="fichero2"
 						styleClass="label" /></strong></td>
-				<td></td>
+				<td>
+					<h:selectOneMenu id="fichero2" value="#{algoritmosBean.algoritmoDtwDTO.fichero2}">
+						<f:selectItems value="#{algoritmosBean.archivos}"/>
+					</h:selectOneMenu>
+				</td>
 			</tr>
 			<tr>
 				<td class="c30"><strong><h:outputLabel

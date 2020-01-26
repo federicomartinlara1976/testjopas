@@ -1,20 +1,24 @@
 package net.bounceme.chronos.testjopas.controllers;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import net.bounceme.chronos.logger.Log;
 import net.bounceme.chronos.logger.LogFactory;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
-import net.bounceme.chronos.testjopas.dto.AlgebraDTO;
+import net.bounceme.chronos.testjopas.controllers.converters.FileSelectItemConverter;
 import net.bounceme.chronos.testjopas.dto.AlgoritmoDtwDTO;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
+import net.bounceme.chronos.testjopas.services.AlgoritmoDtwService;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 
 /**
@@ -42,8 +46,15 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	/** The app bean. */
 	@ManagedProperty(value = "#{sessionBean}")
 	private SessionBean sessionBean;
+	
+	@Autowired
+	private AlgoritmoDtwService algoritmoDtwService;
 
 	private AlgoritmoDtwDTO algoritmoDtwDTO; 
+	
+	private List<SelectItem> archivos;
+	
+	private FileSelectItemConverter fileSelectItemConverter;
 
 	@PostConstruct
 	public void initialize() {
@@ -57,7 +68,7 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 			appBean.getCalcService().resetPath();
 			appBean.getCalcService().addPath(Paths.funciones.value());
 			appBean.getCalcService().addPath(paths.value());
-
+	
 			reset();
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
@@ -65,7 +76,10 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 		}
 	}
 
-	public void reset() {
+	public void reset() throws ServiceException {
+		fileSelectItemConverter = new FileSelectItemConverter();
+		archivos = (List<SelectItem>) fileSelectItemConverter.assemble(algoritmoDtwService.getArchivosParametros());
+
 		algoritmoDtwDTO = new AlgoritmoDtwDTO();
 	}
 
@@ -103,5 +117,12 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	 */
 	public void setAlgoritmoDtwDTO(AlgoritmoDtwDTO algoritmoDtwDTO) {
 		this.algoritmoDtwDTO = algoritmoDtwDTO;
+	}
+
+	/**
+	 * @return the archivos
+	 */
+	public List<SelectItem> getArchivos() {
+		return archivos;
 	}
 }
