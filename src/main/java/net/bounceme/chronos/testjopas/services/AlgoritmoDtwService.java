@@ -63,10 +63,13 @@ public class AlgoritmoDtwService {
 			List<String[]> parameters = new ArrayList<>();
 			
 			String line = reader.readLine();
+			String[] lines = line.trim().split("\\s+");
+			parameters.add(lines);
+			
 			while (line != null) {
-				
 				// read next line
 				line = reader.readLine();
+				lines = line.trim().split("\\s+");
 			}
 	
 			return parameters;
