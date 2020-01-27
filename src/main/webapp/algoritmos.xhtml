@@ -6,13 +6,13 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:chronos="http://chronos.componentes.jsf/composite"
 	template="/WEB-INF/templates/template.xhtml">
-	
+
 	<ui:define name="title">
-		<chronos:title type="3" value="#{res['app.title']}" />	
+		<chronos:title type="3" value="#{res['app.title']}" />
 	</ui:define>
-	
+
 	<ui:define name="menu">
-		<ui:include src="/menu.xhtml" />	
+		<ui:include src="/menu.xhtml" />
 	</ui:define>
 
 	<ui:define name="content">
@@ -25,23 +25,43 @@
 					</h1>
 					<hr class="my-4" />
 					<p class="description">
-						<h:outputText value="#{res['menu.algoritmos.dtw']}" rendered="#{sessionBean.opcion eq 'dtw'}"/>
+						<h:outputText value="#{res['menu.algoritmos.dtw']}"
+							rendered="#{sessionBean.opcion eq 'dtw'}" />
 					</p>
 				</p:outputPanel>
 			</p:outputPanel>
-			
+
 			<p:outputPanel id="datosEntrada" layout="block" styleClass="ui-g-12">
 				<p:outputPanel layout="block"
-					styleClass="ui-g-12 box shadow overview-box"
-					rendered="#{sessionBean.opcion eq 'dtw'}">
-					<ui:include src="/algoritmos/dtw/datos-entrada.xhtml"/>
+					styleClass="ui-g-12 box shadow overview-box">
+					
+					<p:outputPanel layout="block" rendered="#{sessionBean.opcion eq 'dtw'}">
+						<ui:include src="/algoritmos/dtw/datos-entrada.xhtml" />
+					</p:outputPanel>
+
+					<p:outputPanel layout="block" id="botonera"
+						styleClass="botonera ui-g-12 ui-md-12 ui-lg-12">
+
+						<p:commandButton id="calcular"
+							value="#{res['algoritmos.calcular']}"
+							actionListener="#{algoritmosBean.calcular}" process="@form"
+							ajax="true" styleClass="btn btn-primary ui-g-2 ui-md-2 ui-lg-2"
+							icon="fa fa-save" />
+
+						<p:commandButton id="reset" value="#{res['algoritmos.reset']}"
+							actionListener="#{algoritmosBean.reset}" process="@form"
+							ajax="true" update="datosEntrada"
+							styleClass="btn btn-danger ui-g-2 ui-md-2 ui-lg-2"
+							icon="fa fa-refresh" />
+
+					</p:outputPanel>
 				</p:outputPanel>
 			</p:outputPanel>
-			
+
 			<p:outputPanel id="resultados" layout="block" styleClass="ui-g-12">
-				
+
 			</p:outputPanel>
-		</p:outputPanel>	
+		</p:outputPanel>
 	</ui:define>
 
 </ui:composition>

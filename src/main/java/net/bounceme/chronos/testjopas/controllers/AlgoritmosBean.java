@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import net.bounceme.chronos.logger.Log;
@@ -20,7 +21,6 @@ import net.bounceme.chronos.testjopas.dto.AlgoritmoDtwDTO;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.testjopas.services.AlgoritmoDtwService;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
-
 
 /**
  * @author Federico Martín Lara
@@ -48,18 +48,18 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	/** The app bean. */
 	@ManagedProperty(value = "#{sessionBean}")
 	private SessionBean sessionBean;
-	
+
 	@Autowired
 	private transient AlgoritmoDtwService algoritmoDtwService;
 
-	private AlgoritmoDtwDTO algoritmoDtwDTO; 
-	
+	private AlgoritmoDtwDTO algoritmoDtwDTO;
+
 	private List<SelectItem> archivos;
-	
+
 	private transient FileSelectItemConverter fileSelectItemConverter;
-	
+
 	private List<String[]> parametrosFirma1;
-	
+
 	private List<String[]> parametrosFirma2;
 
 	@PostConstruct
@@ -74,7 +74,7 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 			appBean.getCalcService().resetPath();
 			appBean.getCalcService().addPath(Paths.funciones.value());
 			appBean.getCalcService().addPath(paths.value());
-	
+
 			reset();
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
@@ -90,8 +90,15 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 		archivos = (List<SelectItem>) fileSelectItemConverter.assemble(algoritmoDtwService.getArchivosParametros());
 
 		algoritmoDtwDTO = new AlgoritmoDtwDTO();
+		if (CollectionUtils.isNotEmpty(parametrosFirma1)) {
+			parametrosFirma1.clear();
+		}
+
+		if (CollectionUtils.isNotEmpty(parametrosFirma2)) {
+			parametrosFirma2.clear();
+		}
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -103,7 +110,7 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 			this.addErrorMessage(e);
 		}
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -114,6 +121,13 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 			logger.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
+	}
+
+	/**
+	 * 
+	 */
+	public void calcular() {
+
 	}
 
 	/**

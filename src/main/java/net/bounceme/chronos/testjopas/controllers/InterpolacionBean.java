@@ -144,9 +144,9 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 			String cmd = "y=f(x)";
 			appBean.getCalcService().execute(cmd);
 
-			BigDecimal y = appBean.getCalcService().getScalar("y");
-			if (y != null) {
-				interpolacionDTO.getPuntos()[index].setValor(y);
+			BigDecimal scalarY = appBean.getCalcService().getScalar("y");
+			if (scalarY != null) {
+				interpolacionDTO.getPuntos()[index].setValor(scalarY);
 			}
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);

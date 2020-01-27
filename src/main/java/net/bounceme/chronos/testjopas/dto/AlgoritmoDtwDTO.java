@@ -18,6 +18,8 @@ public class AlgoritmoDtwDTO implements Serializable {
 
 	public AlgoritmoDtwDTO() {
 		factorDistancia = BigDecimal.ZERO;
+		fichero1 = "";
+		fichero2 = "";
 	}
 
 	/**
