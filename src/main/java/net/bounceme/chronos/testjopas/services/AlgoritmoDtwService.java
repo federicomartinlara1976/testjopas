@@ -23,6 +23,8 @@ import net.bounceme.chronos.utils.filemanager.impl.system.SystemDirManager;
 @Service("algoritmoDtwService")
 public class AlgoritmoDtwService {
 
+	private String SEPARATOR = "\\s+";
+	
 	/** The logger. */
 	private Log logger;
 	
@@ -63,13 +65,14 @@ public class AlgoritmoDtwService {
 			List<String[]> parameters = new ArrayList<>();
 			
 			String line = reader.readLine();
-			String[] lines = line.trim().split("\\s+");
+			String[] lines = line.trim().split(SEPARATOR);
 			parameters.add(lines);
 			
 			while (line != null) {
 				// read next line
 				line = reader.readLine();
-				lines = line.trim().split("\\s+");
+				lines = line.trim().split(SEPARATOR);
+				parameters.add(lines);
 			}
 	
 			return parameters;
