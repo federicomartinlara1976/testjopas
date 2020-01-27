@@ -13,7 +13,9 @@
 						styleClass="label" /></strong></td>
 				<td>
 					<p:selectOneMenu id="fichero1" value="#{algoritmosBean.algoritmoDtwDTO.fichero1}">
+						<f:selectItem itemLabel="Elija un fichero" itemValue=""/>
 						<f:selectItems value="#{algoritmosBean.archivos}"/>
+						<p:ajax event="change" process="@this" listener="#{algoritmosBean.cambiarFichero1}"/>
 					</p:selectOneMenu>
 				</td>
 				<td class="c20"><strong><h:outputLabel
@@ -21,7 +23,9 @@
 						styleClass="label" /></strong></td>
 				<td>
 					<p:selectOneMenu id="fichero2" value="#{algoritmosBean.algoritmoDtwDTO.fichero2}">
+						<f:selectItem itemLabel="Elija un fichero" itemValue=""/>
 						<f:selectItems value="#{algoritmosBean.archivos}"/>
+						<p:ajax event="change" process="@this" listener="#{algoritmosBean.cambiarFichero2}"/>
 					</p:selectOneMenu>
 				</td>
 			</tr>

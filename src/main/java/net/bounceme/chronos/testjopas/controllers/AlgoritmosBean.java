@@ -21,8 +21,10 @@ import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.testjopas.services.AlgoritmoDtwService;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 
+
 /**
- * The Class SessionBean.
+ * @author Federico Martín Lara
+ *
  */
 @ManagedBean(name = AlgoritmosBean.NAME)
 @ViewScoped
@@ -37,7 +39,7 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	public static final String NAME = "algoritmosBean";
 
 	/** The logger. */
-	private Log logger;
+	private transient Log logger;
 
 	/** The app bean. */
 	@ManagedProperty(value = "#{appBean}")
@@ -48,13 +50,17 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	private SessionBean sessionBean;
 	
 	@Autowired
-	private AlgoritmoDtwService algoritmoDtwService;
+	private transient AlgoritmoDtwService algoritmoDtwService;
 
 	private AlgoritmoDtwDTO algoritmoDtwDTO; 
 	
 	private List<SelectItem> archivos;
 	
-	private FileSelectItemConverter fileSelectItemConverter;
+	private transient FileSelectItemConverter fileSelectItemConverter;
+	
+	private List<String[]> parametrosFirma1;
+	
+	private List<String[]> parametrosFirma2;
 
 	@PostConstruct
 	public void initialize() {
@@ -76,11 +82,38 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 		}
 	}
 
+	/**
+	 * @throws ServiceException
+	 */
 	public void reset() throws ServiceException {
 		fileSelectItemConverter = new FileSelectItemConverter();
 		archivos = (List<SelectItem>) fileSelectItemConverter.assemble(algoritmoDtwService.getArchivosParametros());
 
 		algoritmoDtwDTO = new AlgoritmoDtwDTO();
+	}
+	
+	/**
+	 * 
+	 */
+	public void cambiarFichero1() {
+		try {
+			parametrosFirma1 = algoritmoDtwService.getFileParameters(algoritmoDtwDTO.getFichero1());
+		} catch (ServiceException e) {
+			logger.error("ERROR:", e);
+			this.addErrorMessage(e);
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	public void cambiarFichero2() {
+		try {
+			parametrosFirma2 = algoritmoDtwService.getFileParameters(algoritmoDtwDTO.getFichero2());
+		} catch (ServiceException e) {
+			logger.error("ERROR:", e);
+			this.addErrorMessage(e);
+		}
 	}
 
 	/**

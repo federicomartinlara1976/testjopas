@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +25,15 @@ import net.bounceme.chronos.utils.filemanager.impl.system.SystemDirManager;
 public class AlgoritmoDtwService {
 
 	private String SEPARATOR = "\\s+";
-	
+
 	/** The logger. */
 	private Log logger;
-	
+
 	@Value("#{myProps['testjopas.carpetaFirmas']}")
 	private String carpetaFirmas;
-	
+
 	private DirManager dirManager;
-	
+
 	public AlgoritmoDtwService() {
 		super();
 		dirManager = new SystemDirManager();
@@ -58,23 +59,23 @@ public class AlgoritmoDtwService {
 			throw new ServiceException(e);
 		}
 	}
-	
+
 	public List<String[]> getFileParameters(String sFile) throws ServiceException {
-		
+
 		try (BufferedReader reader = new BufferedReader(new FileReader(carpetaFirmas + "/" + sFile))) {
 			List<String[]> parameters = new ArrayList<>();
-			
-			String line = reader.readLine();
-			String[] lines = line.trim().split(SEPARATOR);
-			parameters.add(lines);
-			
-			while (line != null) {
+
+			String line = StringUtils.EMPTY;
+
+			do {
 				// read next line
 				line = reader.readLine();
-				lines = line.trim().split(SEPARATOR);
-				parameters.add(lines);
-			}
-	
+				if (StringUtils.isNotBlank(line)) {
+					String[] lines = line.trim().split(SEPARATOR);
+					parameters.add(lines);
+				}
+			} while (line != null);
+
 			return parameters;
 		} catch (IOException e) {
 			logger.error("ERROR", e);
