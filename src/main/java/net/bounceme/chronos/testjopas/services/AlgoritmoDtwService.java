@@ -93,6 +93,7 @@ public class AlgoritmoDtwService {
 		int j=0;
 		for (String[] tokens : parameters) {
 			for (String num : tokens) {
+				matrix[i][j] = BigDecimal.ZERO;
 				j++;
 			}
 			i++;
