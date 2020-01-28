@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -57,6 +58,11 @@ public class AlgoritmoDtwService {
 		}
 	}
 
+	/**
+	 * @param sFile
+	 * @return
+	 * @throws ServiceException
+	 */
 	public List<String[]> getFileParameters(String sFile) throws ServiceException {
 
 		try (BufferedReader reader = new BufferedReader(new FileReader(carpetaFirmas + "/" + sFile))) {
@@ -80,6 +86,10 @@ public class AlgoritmoDtwService {
 		}
 	}
 	
+	/**
+	 * @param parameters
+	 * @return
+	 */
 	public BigDecimal[][] getParametersMatrix(List<String[]> parameters) {
 		int f = parameters.size();
 		int c = parameters.get(0).length;
@@ -89,10 +99,14 @@ public class AlgoritmoDtwService {
 		int i=0;
 		int j=0;
 		for (String[] tokens : parameters) {
+			
 			for (String num : tokens) {
-				matrix[i][j] = BigDecimal.ZERO;
+				Integer value = Integer.parseInt(num);
+				matrix[i][j] = new BigDecimal(value);
 				j++;
 			}
+			
+			j=0;
 			i++;
 		}
 		

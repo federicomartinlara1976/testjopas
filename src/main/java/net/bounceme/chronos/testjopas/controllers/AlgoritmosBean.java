@@ -1,6 +1,7 @@
 package net.bounceme.chronos.testjopas.controllers;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -127,7 +128,16 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	 * 
 	 */
 	public void calcular() {
+		try {
+			BigDecimal[][] matrizFirma1 = algoritmoDtwService.getParametersMatrix(parametrosFirma1);
+			BigDecimal[][] matrizFirma2 = algoritmoDtwService.getParametersMatrix(parametrosFirma2);
 
+			appBean.getCalcService().passVariable("firma1", matrizFirma1);
+			appBean.getCalcService().passVariable("firma2", matrizFirma2);
+		} catch (ServiceException e) {
+			logger.error("ERROR:", e);
+			this.addErrorMessage(e);
+		}
 	}
 
 	/**
