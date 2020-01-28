@@ -89,6 +89,15 @@ public class AlgoritmoDtwService {
 		
 		BigDecimal[][] matrix = new BigDecimal[f][c];
 		
+		int i=0;
+		int j=0;
+		for (String[] tokens : parameters) {
+			for (String num : tokens) {
+				j++;
+			}
+			i++;
+		}
+		
 		return matrix;
 	}
 }
