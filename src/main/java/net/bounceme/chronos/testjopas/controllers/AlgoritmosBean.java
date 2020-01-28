@@ -132,8 +132,8 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 			BigDecimal[][] matrizFirma1 = algoritmoDtwService.getParametersMatrix(parametrosFirma1);
 			BigDecimal[][] matrizFirma2 = algoritmoDtwService.getParametersMatrix(parametrosFirma2);
 
-			appBean.getCalcService().passVariable("firma1", matrizFirma1);
-			appBean.getCalcService().passVariable("firma2", matrizFirma2);
+			appBean.getCalcService().passVariable("signatureData1", matrizFirma1);
+			appBean.getCalcService().passVariable("signatureData2", matrizFirma2);
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
 			this.addErrorMessage(e);
