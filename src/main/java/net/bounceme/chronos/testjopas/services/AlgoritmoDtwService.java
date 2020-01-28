@@ -82,4 +82,7 @@ public class AlgoritmoDtwService {
 			throw new ServiceException(e);
 		}
 	}
+	
+	public BigDecimal[][] getParametersMatrix(List<String[]> parameters) {
+	}
 }
