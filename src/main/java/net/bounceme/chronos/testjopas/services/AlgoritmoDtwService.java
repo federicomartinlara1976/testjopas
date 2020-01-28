@@ -84,5 +84,11 @@ public class AlgoritmoDtwService {
 	}
 	
 	public BigDecimal[][] getParametersMatrix(List<String[]> parameters) {
+		int f = parameters.size();
+		int c = parameters.get(0).length;
+		
+		BigDecimal[][] matrix = new BigDecimal[f][c];
+		
+		return matrix;
 	}
 }
