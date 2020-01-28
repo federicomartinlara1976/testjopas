@@ -34,17 +34,14 @@ public class AlgoritmoDtwService {
 
 	private DirManager dirManager;
 
-	public AlgoritmoDtwService() {
-		super();
-		dirManager = new SystemDirManager();
-	}
-
 	/**
 	 * Initialize.
 	 */
 	@PostConstruct
 	public void initialize() {
 		logger = LogFactory.getInstance().getLogger(AlgoritmoDtwService.class, "LOG4J");
+		
+		dirManager = new SystemDirManager();
 	}
 
 	/**
