@@ -36,24 +36,22 @@ classdef Dtw
 			n = size(signature1.x);
 			m = size(signature2.x);
     
-			double[][] dtwArray = new double[n+1][m+1];
+			dtwArray = zeros(n+1, m+1);
     
-			for(int i = 1; i < n+1; ++i)
-				dtwArray[i][0] = Double.POSITIVE_INFINITY;
+			for i=2:n+1
+				dtwArray(i, 1) = inf;
 			end
     
-			for(int i = 1; i < m+1; ++i)
-				dtwArray[0][i] = Double.POSITIVE_INFINITY;
+			for i=2:m+1
+				dtwArray(1, i) = inf;
 			end
     
-			dtwArray[0][0] = 0;
+			dtwArray(1, 1) = 0;
     
-			for(int i = 1; i < n+1; ++i)
-				for(int j = 1; j < m+1; ++j)
-					double cost = pointDistance(i-1, j-1);
-					dtwArray[i][j] = cost + myMin(dtwArray[i-1][j],
-                                 dtwArray[i][j-1],
-                                 dtwArray[i-1][j-1]);
+			for i=2:n+1
+				for j=2:m+1
+					cost = pointDistance(i-1, j-1);
+					dtwArray(i, j) = cost + myMin(dtwArray(i-1, j), dtwArray(i, j-1), dtwArray(i-1, j-1));
 				end
 			end
       
@@ -62,8 +60,8 @@ classdef Dtw
 		endfunction
 		
 		function p = pointDistance(i, j)
-			return sqrt(pow((float)(signature1.x.get(i)-signature2.x.get(j)), 2) + 
-                        pow((float)(signature1.y.get(i)-signature2.y.get(j)), 2));
+			p = sqrt((signature1.x(i) - signature2.x(j))^2) + 
+                     (signature1.y(i) - signature2.y(j))^2);
 		endfunction
   
   
