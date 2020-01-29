@@ -62,6 +62,8 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	private List<String[]> parametrosFirma1;
 
 	private List<String[]> parametrosFirma2;
+	
+	private BigDecimal distancia;
 
 	@PostConstruct
 	public void initialize() {
@@ -134,6 +136,11 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 
 			appBean.getCalcService().passVariable("signatureData1", matrizFirma1);
 			appBean.getCalcService().passVariable("signatureData2", matrizFirma2);
+			
+			String cmd = "distance=signatureRecognition(signatureData1, signatureData2)";
+			appBean.getCalcService().execute(cmd);
+			
+			distancia = appBean.getCalcService().getScalar("distance");
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
 			this.addErrorMessage(e);
