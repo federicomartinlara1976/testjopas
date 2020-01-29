@@ -1,7 +1,5 @@
 classdef Signature
 	properties
-		matrix = [];
-		
 		minX = -1.0;
 		minY = -1.0;
 		maxX = -1.0;
@@ -14,20 +12,16 @@ classdef Signature
   
 	methods
 		function s = Signature (a)
-			if (nargin > 1)
+			if (nargin <> 1)
 				print_usage ();
 			endif
 
 			if (nargin == 1)
-				if (isa (a, "Signature"))
-					s.matrix = a.matrix;
-				elseif (isreal (a) && isvector (a))
-					s.matrix = a;
+				if (isreal (a) && isvector (a))
+					initializeData(a);
 				else
 					error ("Signature: A must be a matrix");
 				endif
-				
-				initializeData(s.matrix);
 			endif
 		endfunction
 		
