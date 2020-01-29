@@ -100,6 +100,8 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 		if (CollectionUtils.isNotEmpty(parametrosFirma2)) {
 			parametrosFirma2.clear();
 		}
+		
+		distancia = BigDecimal.ZERO;
 	}
 
 	/**
