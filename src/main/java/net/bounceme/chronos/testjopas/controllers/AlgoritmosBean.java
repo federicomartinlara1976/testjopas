@@ -150,6 +150,13 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	}
 
 	/**
+	 * @return the distancia
+	 */
+	public BigDecimal getDistancia() {
+		return distancia;
+	}
+
+	/**
 	 * @return the appBean
 	 */
 	public AppBean getAppBean() {
