@@ -16,13 +16,13 @@ classdef Dtw
 				if (isreal (a) && isvector (a))
 					signature1 = new Signature(a);
 				else
-					error ("Signature: A must be a matrix");
+					error ("DTW: A must be a matrix");
 				endif
 				
 				if (isreal (b) && isvector (b))
 					signature2 = new Signature(b);
 				else
-					error ("Signature: B must be a matrix");
+					error ("DTW: B must be a matrix");
 				endif
 			endif
 		endfunction
