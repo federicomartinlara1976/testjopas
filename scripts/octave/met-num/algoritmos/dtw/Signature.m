@@ -17,10 +17,10 @@ classdef Signature
 				sig.time(i) = a(i, 5);
 			end
       
-      sig.minX = -1.0; 
-      sig.minY = -1.0; 
-      sig.maxX = -1.0; 
-      sig.maxY = -1.0;
+      sig.minX = -1; 
+      sig.minY = -1; 
+      sig.maxX = -1; 
+      sig.maxY = -1;
 		endfunction
     
     function normaliseData (sig)
@@ -35,23 +35,11 @@ classdef Signature
   methods (Access = private)
 		
 		function find = findMinAndMaxElement (sig)
-			for i=1:size(sig.x)
-				itemX = sig.x(i);
-				itemY = sig.y(i);
-      
-				if (sig.minX > itemX || sig.minX == -1.0)
-					sig.minX = itemX;
-				endif
-				if (sig.maxX < itemX || sig.maxX == -1.0)
-					sig.maxX = itemX;
-				endif
-				if (sig.minY > itemY || sig.minY == -1.0)
-					sig.minY = itemY;
-				endif
-				if (sig.maxY < itemY || sig.maxY == -1.0)
-					sig.maxY = itemY;
-				endif
-			end
+			sig.minX = min(sig.x);
+			sig.maxX = max(sig.x);
+			
+			sig.minY = min(sig.y);
+			sig.maxY = max(sig.y);
       
       printf("minX = %d, minY = %d, maxX = %d, maxY = %d\n", sig.minX, sig.minY, sig.maxX, sig.maxY);
 		endfunction
@@ -67,8 +55,17 @@ classdef Signature
 			divisorY = (sig.maxY - sig.minY) / normaliseHeight;
 			
 			for i = 1:size(sig.x)
-				sig.x(i) = sig.x(i) / divisorX;
-				sig.y(i) = sig.y(i) / divisorY;
+				if eq(divisorX, 0)
+					sig.x(i) = inf;
+				else
+					sig.x(i) = sig.x(i) / divisorX;
+				endif
+				
+				if eq(divisorY, 0)
+					sig.y(i) = inf;
+				else
+					sig.y(i) = sig.y(i) / divisorY;
+				endif
 			end
 	
 		endfunction

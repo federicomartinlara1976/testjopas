@@ -17,30 +17,31 @@ classdef Dtw
 			dtw.signature2.normaliseData();
 		endfunction
 		
-		function d = findDistance(dtw)
-			n = size(dtw.signature1.x);
-			m = size(dtw.signature2.x);
-    
-			dtwArray = zeros(n+1, m+1);
-    
-			for i=2:n+1
+		function [dist, dtwArray] = findDistance(dtw)
+			[nr1, nc1] = size(dtw.signature1.x);
+			[nr2, nc2] = size(dtw.signature2.x);
+			m = nc1 + 1;
+			n = nc2 + 1;
+      printf("m = %d, n = %d\n", m, n);
+	
+			for i=2:n
 				dtwArray(i, 1) = inf;
 			end
     
-			for i=2:m+1
+			for i=2:m
 				dtwArray(1, i) = inf;
 			end
     
 			dtwArray(1, 1) = 0;
     
-			for i=2:n
-				for j=2:m
+			for i=2:nc1
+				for j=2:nc2
 					cost = dtw.pointDistance(i-1, j-1);
 					dtwArray(i, j) = cost + dtw.myMin(dtwArray(i-1, j), dtwArray(i, j-1), dtwArray(i-1, j-1));
 				end
 			end
       
-			d = dtwArray(n, m);
+			d = dtw.dtwArray(nc1, nc2);
    
 		endfunction
 

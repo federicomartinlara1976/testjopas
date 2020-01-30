@@ -1,5 +1,5 @@
 function distance = signatureRecognition(a, b)
 	algoritmo = Dtw(a, b);
 	algoritmo.normaliseData();
-	distance = algoritmo.findDistance();
+	[dist, dtwArray] = algoritmo.findDistance();
 endfunction
