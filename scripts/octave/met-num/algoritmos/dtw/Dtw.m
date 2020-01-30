@@ -34,14 +34,15 @@ classdef Dtw
     
 			dtwArray(1, 1) = 0;
     
-			for i=2:nc1
-				for j=2:nc2
+			for i=2:nc1-1
+				for j=2:nc2-1
 					cost = dtw.pointDistance(i-1, j-1);
 					dtwArray(i, j) = cost + dtw.myMin(dtwArray(i-1, j), dtwArray(i, j-1), dtwArray(i-1, j-1));
+					printf("dtwArray(%d, %d) = %d\n", i, j, dtwArray(i, j));
 				end
 			end
       
-			d = dtw.dtwArray(nc1, nc2);
+			d = dtwArray(nc1, nc2);
    
 		endfunction
 
