@@ -33,12 +33,15 @@ classdef Dtw
 			end
     
 			dtwArray(1, 1) = 0;
+			
+			rows = rows(dtwArray) - 1;
+			cols = columns(dtwArray) - 1;
     
-			for i=2:nc1-1
-				for j=2:nc2-1
+			for i=2:rows
+				for j=2:cols
 					cost = dtw.pointDistance(i-1, j-1);
 					dtwArray(i, j) = cost + dtw.myMin(dtwArray(i-1, j), dtwArray(i, j-1), dtwArray(i-1, j-1));
-					printf("dtwArray(%d, %d) = %d\n", i, j, dtwArray(i, j));
+					%printf("dtwArray(%d, %d) = %d\n", i, j, dtwArray(i, j));
 				end
 			end
       
