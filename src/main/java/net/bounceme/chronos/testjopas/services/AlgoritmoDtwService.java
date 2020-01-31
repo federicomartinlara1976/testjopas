@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import net.bounceme.chronos.logger.Log;
 import net.bounceme.chronos.logger.LogFactory;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
+import net.bounceme.chronos.utils.calc.dto.MatrixDTO;
 import net.bounceme.chronos.utils.exceptions.FileManagerException;
 import net.bounceme.chronos.utils.filemanager.DirManager;
 import net.bounceme.chronos.utils.filemanager.impl.system.SystemDirManager;
@@ -111,5 +112,14 @@ public class AlgoritmoDtwService {
 		}
 		
 		return matrix;
+	}
+	
+	/**
+	 * @param name
+	 * @param value
+	 * @return
+	 */
+	public MatrixDTO getAsMatrix(String name, BigDecimal[][] value) {
+		return new MatrixDTO(name, value);
 	}
 }

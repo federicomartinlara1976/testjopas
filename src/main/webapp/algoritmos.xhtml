@@ -44,13 +44,13 @@
 
 						<p:commandButton id="calcular"
 							value="#{res['algoritmos.calcular']}"
-							actionListener="#{algoritmosBean.calcular}" process="@form" update="messages"
+							actionListener="#{algoritmosBean.calcular}" process="@form" update="messages,resultados"
 							ajax="true" styleClass="btn btn-primary ui-g-2 ui-md-2 ui-lg-2"
 							icon="fa fa-save" />
 
 						<p:commandButton id="reset" value="#{res['algoritmos.reset']}"
 							actionListener="#{algoritmosBean.reset}" process="@form"
-							ajax="true" update="datosEntrada"
+							ajax="true" update="datosEntrada,resultados"
 							styleClass="btn btn-danger ui-g-2 ui-md-2 ui-lg-2"
 							icon="fa fa-refresh" />
 
@@ -59,7 +59,11 @@
 			</p:outputPanel>
 
 			<p:outputPanel id="resultados" layout="block" styleClass="ui-g-12">
-
+				<p:outputPanel layout="block"
+					rendered="#{algoritmosBean.distancia != null}"
+					styleClass="ui-g-12 box shadow overview-box">
+					<ui:include src="/algoritmos/dtw/datos-salida.xhtml" />
+				</p:outputPanel>
 			</p:outputPanel>
 		</p:outputPanel>
 	</ui:define>

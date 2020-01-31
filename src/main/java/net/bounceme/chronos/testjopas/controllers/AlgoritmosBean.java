@@ -21,7 +21,9 @@ import net.bounceme.chronos.testjopas.controllers.converters.FileSelectItemConve
 import net.bounceme.chronos.testjopas.dto.AlgoritmoDtwDTO;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.testjopas.services.AlgoritmoDtwService;
+import net.bounceme.chronos.utils.calc.dto.MatrixDTO;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
+import net.bounceme.chronos.velazquez.services.ComparadorFirmas;
 
 /**
  * @author Federico Martín Lara
@@ -53,6 +55,9 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	@Autowired
 	private transient AlgoritmoDtwService algoritmoDtwService;
 
+	@Autowired
+	private transient ComparadorFirmas comparadorFirmas;
+
 	private AlgoritmoDtwDTO algoritmoDtwDTO;
 
 	private List<SelectItem> archivos;
@@ -62,7 +67,7 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	private List<String[]> parametrosFirma1;
 
 	private List<String[]> parametrosFirma2;
-	
+
 	private BigDecimal distancia;
 
 	@PostConstruct
@@ -100,7 +105,7 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 		if (CollectionUtils.isNotEmpty(parametrosFirma2)) {
 			parametrosFirma2.clear();
 		}
-		
+
 		distancia = BigDecimal.ZERO;
 	}
 
@@ -132,21 +137,14 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	 * 
 	 */
 	public void calcular() {
-		try {
-			BigDecimal[][] matrizFirma1 = algoritmoDtwService.getParametersMatrix(parametrosFirma1);
-			BigDecimal[][] matrizFirma2 = algoritmoDtwService.getParametersMatrix(parametrosFirma2);
+		BigDecimal[][] matrizFirma1 = algoritmoDtwService.getParametersMatrix(parametrosFirma1);
+		BigDecimal[][] matrizFirma2 = algoritmoDtwService.getParametersMatrix(parametrosFirma2);
 
-			appBean.getCalcService().passVariable("signatureData1", matrizFirma1);
-			appBean.getCalcService().passVariable("signatureData2", matrizFirma2);
-			
-			String cmd = "distance=signatureRecognition(signatureData1, signatureData2)";
-			appBean.getCalcService().execute(cmd);
-			
-			distancia = appBean.getCalcService().getScalar("distance");
-		} catch (ServiceException e) {
-			logger.error("ERROR:", e);
-			this.addErrorMessage(e);
-		}
+		MatrixDTO signatureData1 = algoritmoDtwService.getAsMatrix("signatureData1", matrizFirma1);
+		MatrixDTO signatureData2 = algoritmoDtwService.getAsMatrix("signatureData2", matrizFirma2);
+
+		Double dist = comparadorFirmas.verDistancia(signatureData1, signatureData2);
+		distancia = BigDecimal.valueOf(dist);
 	}
 
 	/**
