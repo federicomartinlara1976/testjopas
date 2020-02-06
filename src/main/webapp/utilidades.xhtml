@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:chronos="http://chronos.componentes.jsf/composite"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">
+		<chronos:title type="3" value="#{res['app.title']}" />
+	</ui:define>
+
+	<ui:define name="menu">
+		<ui:include src="/menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="content">
+		<p:outputPanel layout="block" styleClass="acerca ui-g dashboard">
+			<p:outputPanel layout="block" styleClass="ui-g-12">
+				<p:outputPanel layout="block"
+					styleClass="jumbotron ui-g-12 box shadow overview-box overview-box-1">
+					<h1>
+						<h:outputText value="#{res['menu.utilidades']}" />
+					</h1>
+					<hr class="my-4" />
+					<p class="description">
+						<h:outputText value="#{res['menu.utilidades.convertirArchivo']}"
+							rendered="#{sessionBean.opcion eq 'convertirArchivo'}" />
+					</p>
+				</p:outputPanel>
+			</p:outputPanel>
+
+			<p:outputPanel id="datosEntrada" layout="block" styleClass="ui-g-12">
+				<p:outputPanel layout="block"
+					styleClass="ui-g-12 box shadow overview-box">
+					
+					
+				</p:outputPanel>
+			</p:outputPanel>
+
+			<p:outputPanel id="resultados" layout="block" styleClass="ui-g-12">
+				<p:outputPanel layout="block"
+					rendered="#{algoritmosBean.distancia != null}"
+					styleClass="ui-g-12 box shadow overview-box">
+					
+				</p:outputPanel>
+			</p:outputPanel>
+		</p:outputPanel>
+	</ui:define>
+
+</ui:composition>

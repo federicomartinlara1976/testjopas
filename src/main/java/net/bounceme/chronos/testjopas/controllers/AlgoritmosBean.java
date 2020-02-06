@@ -21,6 +21,7 @@ import net.bounceme.chronos.testjopas.controllers.converters.FileSelectItemConve
 import net.bounceme.chronos.testjopas.dto.AlgoritmoDtwDTO;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.testjopas.services.AlgoritmoDtwService;
+import net.bounceme.chronos.testjopas.services.FilesService;
 import net.bounceme.chronos.utils.calc.dto.MatrixDTO;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 import net.bounceme.chronos.velazquez.services.ComparadorFirmas;
@@ -54,6 +55,9 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 
 	@Autowired
 	private transient AlgoritmoDtwService algoritmoDtwService;
+	
+	@Autowired
+	private transient FilesService filesService;
 
 	@Autowired
 	private transient ComparadorFirmas comparadorFirmas;
@@ -95,7 +99,7 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	 */
 	public void reset() throws ServiceException {
 		fileSelectItemConverter = new FileSelectItemConverter();
-		archivos = (List<SelectItem>) fileSelectItemConverter.assemble(algoritmoDtwService.getArchivosParametros());
+		archivos = (List<SelectItem>) fileSelectItemConverter.assemble(filesService.getArchivosParametros());
 
 		algoritmoDtwDTO = new AlgoritmoDtwDTO();
 		if (CollectionUtils.isNotEmpty(parametrosFirma1)) {
@@ -114,7 +118,7 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	 */
 	public void cambiarFichero1() {
 		try {
-			parametrosFirma1 = algoritmoDtwService.getFileParameters(algoritmoDtwDTO.getFichero1());
+			parametrosFirma1 = filesService.getFileParameters(algoritmoDtwDTO.getFichero1());
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
 			this.addErrorMessage(e);
@@ -126,7 +130,7 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	 */
 	public void cambiarFichero2() {
 		try {
-			parametrosFirma2 = algoritmoDtwService.getFileParameters(algoritmoDtwDTO.getFichero2());
+			parametrosFirma2 = filesService.getFileParameters(algoritmoDtwDTO.getFichero2());
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
 			this.addErrorMessage(e);

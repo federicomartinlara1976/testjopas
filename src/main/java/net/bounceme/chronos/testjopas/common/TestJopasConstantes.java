@@ -14,7 +14,9 @@ public class TestJopasConstantes extends Constantes {
 		integracion("F:/usuarios/frederik/octave/met-num/integracion"),
 		algebra("F:/usuarios/frederik/octave/met-num/algebra"),
 		algoritmos("F:/usuarios/frederik/octave/met-num/algoritmos/dtw"),
+		utilidades("F:/usuarios/frederik/octave/utilidades"),
 		funciones("F:/usuarios/frederik/octave/funciones");
+		
 
 		/** The path. */
 		private String path;
