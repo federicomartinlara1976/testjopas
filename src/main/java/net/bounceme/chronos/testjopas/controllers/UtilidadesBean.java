@@ -41,10 +41,17 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 	
 	@Autowired
 	private transient FilesService filesService;
+	
+	private List<File> availables;
 
 	@PostConstruct
 	public void initialize() {
 		logger = LogFactory.getInstance().getLogger(UtilidadesBean.class, "LOG4J");
+		availables = filesService.getAvailableFiles();
+	}
+	
+	public List<File> getAvailables() {
+		return availables;
 	}
 
 	public SessionBean getSessionBean() {
