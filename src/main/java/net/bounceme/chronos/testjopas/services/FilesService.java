@@ -68,6 +68,11 @@ public class FilesService {
 		return (List<File>) CollectionUtils.subtract(muestras, processed);
 	}
 	
+	/**
+	 * @param ficheros
+	 * 
+	 * @throws ServiceException
+	 */
 	public void convertirFicheros(List<File> ficheros) throws ServiceException {
 		try {
 			for (File file : ficheros) {
@@ -146,9 +151,11 @@ public class FilesService {
 	
 	class WriterClosure implements Closure {
 		private PrintWriter pw;
+		private String separator;
 		
 		public WriterClosure(PrintWriter pw, String separator) {
 			this.pw = pw;
+			this.separator = separator;
 		}
 		
 		@Override
