@@ -72,6 +72,7 @@ public class FilesService {
 		try {
 			for (File file : ficheros) {
 				List<String[]> items = getFileItems(carpetaMuestras + "/" + file.getName(), SEPARATOR_MUESTRAS);
+				writeFileItems(carpetaFirmas + "/" + file.getName(), items, SEPARATOR_PROCESSED);
 			}
 		} catch (IOException e) {
 			logger.error("ERROR", e);
@@ -118,6 +119,16 @@ public class FilesService {
 		} catch (IOException e) {
 			throw e;
 		}
+	}
+	
+	/**
+	 * @param sFile
+	 * @param items
+	 * @param separator
+	 * @return
+	 * @throws ServiceException
+	 */
+	private void writefileItems(String sFile, List<String[]> items, String separator) throws IOException {
 	}
 	
 	/**
