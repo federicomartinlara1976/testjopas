@@ -71,6 +71,10 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 		}
 	}
 	
+	public void reset() {
+		droppedFiles.clear();
+	}
+	
 	public List<File> getAvailables() {
 		return availables;
 	}
