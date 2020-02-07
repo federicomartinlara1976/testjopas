@@ -67,6 +67,16 @@ public class FilesService {
 		
 		return (List<File>) CollectionUtils.subtract(muestras, processed);
 	}
+	
+	public void convertirFicheros(List<File> ficheros) throws ServiceException {
+		try {
+			for (File file : ficheros) {
+			}
+		} catch (IOException e) {
+			logger.error("ERROR", e);
+			throw new ServiceException(e);
+		}
+	}
 
 	/**
 	 * @param sFile
