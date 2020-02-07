@@ -34,7 +34,22 @@
 			<p:outputPanel id="panelConvertir" layout="block" styleClass="ui-g-12">
 				<p:outputPanel layout="block"
 					styleClass="ui-g-12 box shadow overview-box">
-					<ui:include src="/convertirFicheros.xhtml" />	
+					<ui:include src="/convertirFicheros.xhtml" />
+					
+					<p:outputPanel layout="block" id="botonera"
+						styleClass="botonera ui-g-12 ui-md-12 ui-lg-12"
+						rendered="#{sessionBean.opcion eq 'convertirArchivo'}">
+
+						<p:commandButton id="calcular" value="#{res['algebra.calcular']}"
+							actionListener="#{utilidadesBean.convertirFicheros}" ajax="true" update="messages,panelConvertir"
+							styleClass="btn btn-primary ui-g-2 ui-md-2 ui-lg-2"
+							icon="fa fa-save" />
+							
+						<p:commandButton id="reset" value="#{res['algebra.reset']}"
+							actionListener="#{utilidadesBean.reset}" ajax="true" update="panelConvertir"
+							styleClass="btn btn-danger ui-g-2 ui-md-2 ui-lg-2"
+							icon="fa fa-refresh" />
+					</p:outputPanel>
 					
 				</p:outputPanel>
 			</p:outputPanel>
