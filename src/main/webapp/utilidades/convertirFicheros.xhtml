@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:fieldset id="availableFilesField"
+		legend="#{res['utilidades.disponibles']}">
+		<p:dataView id="availableFiles" var="file"
+			value="#{utilidadesBean.availables}" rows="6" paginator="true"
+			rowsPerPageTemplate="6,12"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			layout="grid">
+
+			<p:dataViewGridItem>
+				<p:panel id="pnl" header="#{file.name}" style="text-align:center">
+					<h:panelGrid columns="1" styleClass="c100">
+						<h:graphicImage value="/resources/img/certificado.png"
+							styleClass="icon" />
+					</h:panelGrid>
+				</p:panel>
+
+				<p:draggable for="pnl" revert="true" handle=".ui-panel-titlebar"
+					stack=".ui-panel" />
+			</p:dataViewGridItem>
+		</p:dataView>
+	</p:fieldset>
+
+	<p:fieldset id="selectedFiles"
+		legend="#{res['utilidades.seleccionados']}" style="margin-top:20px">
+		<p:outputPanel id="dropArea">
+			<h:outputText value="#{res['utilidades.soltar']}"
+				rendered="#{empty utilidadesBean.droppedFiles}"
+				style="font-size:24px;" />
+			<p:dataTable id="selectedFilesTable" var="file"
+				value="#{utilidadesBean.droppedFiles}"
+				rendered="#{not empty utilidadesBean.droppedFiles}">
+				<p:column headerText="Nombre">
+					<h:outputText value="#{file.name}" />
+				</p:column>
+			</p:dataTable>
+		</p:outputPanel>
+	</p:fieldset>
+
+	<p:droppable for="selectedFiles" tolerance="touch"
+		activeStyleClass="ui-state-highlight" datasource="availableFiles">
+		<p:ajax listener="#{utilidadesBean.onFileDrop}"
+			update="dropArea availableFiles" />
+	</p:droppable>
+
+</ui:composition>

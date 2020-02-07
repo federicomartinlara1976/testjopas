@@ -28,7 +28,7 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>net.bounceme.chronos.chronoslibs</groupId>
 			<artifactId>chronos-logger-utils</artifactId>
@@ -52,7 +52,7 @@
 			<artifactId>chronos-jsf-3-components</artifactId>
 			<version>${chronoslibs.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>net.bounceme.chronos.cervantes</groupId>
 			<artifactId>Velazquez</artifactId>
@@ -64,13 +64,20 @@
 			<artifactId>all-themes</artifactId>
 			<version>1.0.10</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.graylog2</groupId>
 			<artifactId>gelfj</artifactId>
 			<version>1.1.14</version>
 			<scope>compile</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.4</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

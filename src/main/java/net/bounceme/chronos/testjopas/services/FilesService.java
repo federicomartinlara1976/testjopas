@@ -2,24 +2,27 @@ package net.bounceme.chronos.testjopas.services;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.Predicate;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Closure;
-import org.apache.commons.collections.Predicate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import net.bounceme.chronos.logger.Log;
 import net.bounceme.chronos.logger.LogFactory;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
+import net.bounceme.chronos.testjopas.services.utils.FileEquator;
+import net.bounceme.chronos.testjopas.services.utils.WriterClosure;
 import net.bounceme.chronos.utils.exceptions.FileManagerException;
 import net.bounceme.chronos.utils.filemanager.DirManager;
 import net.bounceme.chronos.utils.filemanager.impl.system.SystemDirManager;
@@ -35,7 +38,7 @@ public class FilesService {
 
 	@Value("#{myProps['testjopas.carpetaFirmas']}")
 	private String carpetaFirmas;
-	
+
 	@Value("#{myProps['testjopas.carpetaMuestras']}")
 	private String carpetaMuestras;
 
@@ -47,7 +50,7 @@ public class FilesService {
 	@PostConstruct
 	public void initialize() {
 		logger = LogFactory.getInstance().getLogger(FilesService.class, "LOG4J");
-		
+
 		dirManager = new SystemDirManager();
 	}
 
@@ -58,7 +61,7 @@ public class FilesService {
 	public List<File> getArchivosParametros() throws ServiceException {
 		return getProcessed();
 	}
-	
+
 	/**
 	 * @return
 	 * @throws ServiceException
@@ -66,10 +69,10 @@ public class FilesService {
 	public List<File> getAvailableFiles() throws ServiceException {
 		List<File> muestras = getMuestras();
 		List<File> processed = getProcessed();
-		
-		return (List<File>) CollectionUtils.subtract(muestras, processed);
+
+		return (List<File>) CollectionUtils.removeAll(muestras, processed, new FileEquator());
 	}
-	
+
 	/**
 	 * @param ficheros
 	 * 
@@ -81,7 +84,7 @@ public class FilesService {
 				List<String[]> items = getFileItems(carpetaMuestras + "/" + file.getName(), SEPARATOR_MUESTRAS);
 				writeFileItems(carpetaFirmas + "/" + file.getName(), items, SEPARATOR_PROCESSED);
 			}
-		} catch (FileNotFoundException | IOException e) {
+		} catch (IOException e) {
 			logger.error("ERROR", e);
 			throw new ServiceException(e);
 		}
@@ -100,7 +103,7 @@ public class FilesService {
 			throw new ServiceException(e);
 		}
 	}
-	
+
 	/**
 	 * @param sFile
 	 * @return
@@ -123,11 +126,9 @@ public class FilesService {
 			} while (line != null);
 
 			return items;
-		} catch (IOException e) {
-			throw e;
 		}
 	}
-	
+
 	/**
 	 * @param sFile
 	 * @param items
@@ -135,59 +136,35 @@ public class FilesService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	private void writefileItems(String sFile, List<String[]> items, String separator) throws FileNotFoundException {
+	private void writeFileItems(String sFile, List<String[]> items, String separator) throws FileNotFoundException {
 		PrintWriter pw = null;
-        	try {
-            		pw = new PrintWriter(new File(sFile));
-		
-			CollectionUtils.forAlldo(items, new WriterClosure(pw, separator));
-            
-        	} catch (FileNotFoundException e) {
-            		throw e;
-        	} finally {
-            		if (pw != null) {
-                		pw.close();
-            		}
-        	}
-	}
-	
-	class WriterClosure implements Closure {
-		private PrintWriter pw;
-		private String separator;
-		
-		public WriterClosure(PrintWriter pw, String separator) {
-			this.pw = pw;
-			this.separator = separator;
-		}
-		
-		@Override
-		public void execute(Object input) {
-			String line = StringUtils.EMPTY;
-			String[] items = (String[]) input;
-			
-			for (String item : items) {
-				line += item + separator;
+		try {
+			pw = new PrintWriter(new File(sFile));
+
+			CollectionUtils.forAllDo(items, new WriterClosure(pw, separator));
+
+		} finally {
+			if (pw != null) {
+				pw.close();
 			}
-			
-			line = line.substring(0, line.length() - 1);
-			pw.println(line);
 		}
 	}
-	
+
 	/**
 	 * @return
 	 * @throws ServiceException
 	 */
+	@SuppressWarnings("unchecked")
 	private List<File> getMuestras() throws ServiceException {
 		try {
-			List<File> contents = dirManager.listContents(carpetaMuestras);
-			
+			List<File> contents = Arrays.asList(dirManager.listContents(carpetaMuestras));
+
 			return (List<File>) CollectionUtils.select(contents, new Predicate() {
-				
+
 				@Override
 				public boolean evaluate(Object object) {
 					File f = (File) object;
-					return !f.isDir();	
+					return !f.isDirectory();
 				}
 			});
 		} catch (FileManagerException e) {
@@ -195,7 +172,7 @@ public class FilesService {
 			throw new ServiceException(e);
 		}
 	}
-	
+
 	/**
 	 * @return
 	 * @throws ServiceException

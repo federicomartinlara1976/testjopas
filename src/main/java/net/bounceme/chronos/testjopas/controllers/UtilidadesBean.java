@@ -1,13 +1,15 @@
 package net.bounceme.chronos.testjopas.controllers;
 
-import java.io.Serializable;
 import java.io.File;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import org.primefaces.event.DragDropEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import net.bounceme.chronos.logger.Log;
@@ -34,12 +36,12 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 
 	/** The logger. */
 	private transient Log logger;
-	
+
 	@Autowired
 	private transient FilesService filesService;
-	
+
 	private List<File> availables;
-	
+
 	private List<File> droppedFiles;
 
 	@PostConstruct
@@ -53,33 +55,34 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 			this.addErrorMessage(e);
 		}
 	}
-	
-	public void onFileDrop(DragDropEvent<File> ddEvent) {
-        	File file = ddEvent.getData();
-  
-        	droppedFiles.add(file);
-        	availables.remove(file);
-    	}
-	
+
+	public void onFileDrop(DragDropEvent ddEvent) {
+		File file = (File) ddEvent.getData();
+
+		droppedFiles.add(file);
+		availables.remove(file);
+	}
+
 	public void convertirFicheros() {
 		try {
 			filesService.convertirFicheros(droppedFiles);
+			availables = filesService.getAvailableFiles();
 			droppedFiles.clear();
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
 	}
-	
+
 	public void reset() {
 		droppedFiles.clear();
 	}
-	
+
 	public List<File> getAvailables() {
 		return availables;
 	}
-	
+
 	public List<File> getDroppedFiles() {
-        	return droppedFiles;
-    	}  
+		return droppedFiles;
+	}
 }

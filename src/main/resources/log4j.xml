@@ -54,6 +54,11 @@
 		<appender-ref ref="GRAYLOG_JOPAS" />
 	</logger>
 	
+	<logger name="net.bounceme.chronos.testjopas.services.utils">
+		<level value="DEBUG" />
+		<appender-ref ref="GRAYLOG_JOPAS" />
+	</logger>
+	
 	<!-- Necesitamos saber el tiempo que tarda el algoritmo -->
 	<logger name="net.bounceme.chronos.velazquez.aspect">
 		<level value="DEBUG" />
