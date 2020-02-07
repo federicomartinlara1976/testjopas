@@ -11,6 +11,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,9 @@ public class FilesService {
 
 	@Value("#{myProps['testjopas.carpetaFirmas']}")
 	private String carpetaFirmas;
+	
+	@Value("#{myProps['testjopas.carpetaMuestras']}")
+	private String carpetaMuestras;
 
 	private DirManager dirManager;
 
@@ -50,12 +54,18 @@ public class FilesService {
 	 * @throws ServiceException
 	 */
 	public List<File> getArchivosParametros() throws ServiceException {
-		try {
-			return Arrays.asList(dirManager.listContents(carpetaFirmas));
-		} catch (FileManagerException e) {
-			logger.error("ERROR", e);
-			throw new ServiceException(e);
-		}
+		return getProcessed();
+	}
+	
+	/**
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<File> getAvailableFiles() throws ServiceException {
+		List<File> muestras = getMuestras();
+		List<File> processed = getProcessed();
+		
+		return (List<File>) CollectionUtils.subtract(muestras, processed);
 	}
 
 	/**
@@ -82,6 +92,41 @@ public class FilesService {
 
 			return parameters;
 		} catch (IOException e) {
+			logger.error("ERROR", e);
+			throw new ServiceException(e);
+		}
+	}
+	
+	/**
+	 * @return
+	 * @throws ServiceException
+	 */
+	private List<File> getMuestras() throws ServiceException {
+		try {
+			List<File> files = new ArrayList<>();
+			List<File> contents = dirManager.listContents(carpetaMuestras);
+			
+			for (File f : contents) {
+				if (!f.isDir()) {
+					files.add(f);
+				}
+			}
+			
+			return files;
+		} catch (FileManagerException e) {
+			logger.error("ERROR", e);
+			throw new ServiceException(e);
+		}
+	}
+	
+	/**
+	 * @return
+	 * @throws ServiceException
+	 */
+	private List<File> getProcessed() throws ServiceException {
+		try {
+			return Arrays.asList(dirManager.listContents(carpetaFirmas));
+		} catch (FileManagerException e) {
 			logger.error("ERROR", e);
 			throw new ServiceException(e);
 		}
