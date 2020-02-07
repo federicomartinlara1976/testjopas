@@ -25,8 +25,8 @@ import net.bounceme.chronos.utils.filemanager.impl.system.SystemDirManager;
 @Service("filesService")
 public class FilesService {
 
-	//private String SEPARATOR = "\\s+";
-	private String SEPARATOR = ",";
+	private String SEPARATOR_MUESTRAS = "\\s+";
+	private String SEPARATOR_PROCESSED = ",";
 
 	/** The logger. */
 	private Log logger;
@@ -71,6 +71,7 @@ public class FilesService {
 	public void convertirFicheros(List<File> ficheros) throws ServiceException {
 		try {
 			for (File file : ficheros) {
+				List<String[]> items = getFileItems(carpetaMuestras + "/" + file.getName(), SEPARATOR_MUESTRAS);
 			}
 		} catch (IOException e) {
 			logger.error("ERROR", e);
@@ -84,9 +85,23 @@ public class FilesService {
 	 * @throws ServiceException
 	 */
 	public List<String[]> getFileParameters(String sFile) throws ServiceException {
+		try {
+			return getFileItems(carpetaFirmas + "/" + sFile, SEPARATOR_PROCESSED);
+		} catch (IOException e) {
+			logger.error("ERROR", e);
+			throw new ServiceException(e);
+		}
+	}
+	
+	/**
+	 * @param sFile
+	 * @return
+	 * @throws ServiceException
+	 */
+	private List<String[]> getFileItems(String sFile, String separator) throws IOException {
 
-		try (BufferedReader reader = new BufferedReader(new FileReader(carpetaFirmas + "/" + sFile))) {
-			List<String[]> parameters = new ArrayList<>();
+		try (BufferedReader reader = new BufferedReader(new FileReader(sFile))) {
+			List<String[]> items = new ArrayList<>();
 
 			String line = StringUtils.EMPTY;
 
@@ -94,15 +109,14 @@ public class FilesService {
 				// read next line
 				line = reader.readLine();
 				if (StringUtils.isNotBlank(line)) {
-					String[] lines = line.trim().split(SEPARATOR);
-					parameters.add(lines);
+					String[] lines = line.trim().split(separator);
+					items.add(lines);
 				}
 			} while (line != null);
 
-			return parameters;
+			return items;
 		} catch (IOException e) {
-			logger.error("ERROR", e);
-			throw new ServiceException(e);
+			throw e;
 		}
 	}
 	
