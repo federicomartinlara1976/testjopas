@@ -1,6 +1,7 @@
 package net.bounceme.chronos.testjopas.controllers;
 
 import java.io.Serializable;
+import java.io.File;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -46,8 +47,13 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 
 	@PostConstruct
 	public void initialize() {
-		logger = LogFactory.getInstance().getLogger(UtilidadesBean.class, "LOG4J");
-		availables = filesService.getAvailableFiles();
+		try {
+			logger = LogFactory.getInstance().getLogger(UtilidadesBean.class, "LOG4J");
+			availables = filesService.getAvailableFiles();
+		} catch (ServiceException e) {
+			logger.error("ERROR:", e);
+			this.addErrorMessage(e);
+		}
 	}
 	
 	public List<File> getAvailables() {
