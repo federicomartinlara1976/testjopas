@@ -69,6 +69,7 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 	public void convertirFicheros() {
 		try {
 			filesService.convertirFicheros(droppedFiles);
+			droppedFiles.clear();
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
 			this.addErrorMessage(e);
