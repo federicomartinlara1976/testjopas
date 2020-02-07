@@ -35,10 +35,6 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 
 	/** The logger. */
 	private transient Log logger;
-
-	/** The app bean. */
-	@ManagedProperty(value = "#{sessionBean}")
-	private SessionBean sessionBean;
 	
 	@Autowired
 	private transient FilesService filesService;
@@ -83,12 +79,4 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 	public List<File> getDroppedFiles() {
         	return droppedFiles;
     	}  
-
-	public SessionBean getSessionBean() {
-		return sessionBean;
-	}
-
-	public void setSessionBean(SessionBean sessionBean) {
-		this.sessionBean = sessionBean;
-	}
 }
