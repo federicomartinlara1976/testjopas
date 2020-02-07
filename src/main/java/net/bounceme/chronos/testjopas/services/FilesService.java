@@ -84,7 +84,6 @@ public class FilesService {
 				// read next line
 				line = reader.readLine();
 				if (StringUtils.isNotBlank(line)) {
-					line = line.substring(0, line.length()-1);
 					String[] lines = line.trim().split(SEPARATOR);
 					parameters.add(lines);
 				}
