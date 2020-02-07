@@ -103,16 +103,16 @@ public class FilesService {
 	 */
 	private List<File> getMuestras() throws ServiceException {
 		try {
-			List<File> files = new ArrayList<>();
 			List<File> contents = dirManager.listContents(carpetaMuestras);
 			
-			for (File f : contents) {
-				if (!f.isDir()) {
-					files.add(f);
+			return (List<File>) CollectionUtils.select(contents, new Predicate() {
+				
+				@Override
+				public boolean evaluate(Object object) {
+					File f = (File) object;
+					return !f.isDir();	
 				}
-			}
-			
-			return files;
+			});
 		} catch (FileManagerException e) {
 			logger.error("ERROR", e);
 			throw new ServiceException(e);
