@@ -66,6 +66,15 @@ public class UtilidadesBean extends BaseBean implements Serializable {
         	availables.remove(file);
     	}
 	
+	public void convertirFicheros() {
+		try {
+			filesService.convertirFicheros(droppedFiles);
+		} catch (ServiceException e) {
+			logger.error("ERROR:", e);
+			this.addErrorMessage(e);
+		}
+	}
+	
 	public List<File> getAvailables() {
 		return availables;
 	}
