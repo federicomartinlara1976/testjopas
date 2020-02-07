@@ -44,21 +44,35 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 	private transient FilesService filesService;
 	
 	private List<File> availables;
+	
+	private List<File> droppedFiles;
 
 	@PostConstruct
 	public void initialize() {
 		try {
 			logger = LogFactory.getInstance().getLogger(UtilidadesBean.class, "LOG4J");
 			availables = filesService.getAvailableFiles();
+			droppedFiles = new ArrayList<>();
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
 	}
 	
+	public void onFileDrop(DragDropEvent<File> ddEvent) {
+        	File file = ddEvent.getData();
+  
+        	droppedFiles.add(file);
+        	availables.remove(file);
+    	}
+	
 	public List<File> getAvailables() {
 		return availables;
 	}
+	
+	public List<File> getDroppedFiles() {
+        	return droppedFiles;
+    	}  
 
 	public SessionBean getSessionBean() {
 		return sessionBean;
