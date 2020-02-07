@@ -46,10 +46,6 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 	private transient Log logger;
 
 	/** The app bean. */
-	@ManagedProperty(value = "#{appBean}")
-	private AppBean appBean;
-
-	/** The app bean. */
 	@ManagedProperty(value = "#{sessionBean}")
 	private SessionBean sessionBean;
 	
@@ -59,20 +55,6 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 	@PostConstruct
 	public void initialize() {
 		logger = LogFactory.getInstance().getLogger(UtilidadesBean.class, "LOG4J");
-	}
-
-	/**
-	 * @return the appBean
-	 */
-	public AppBean getAppBean() {
-		return appBean;
-	}
-
-	/**
-	 * @param appBean the appBean to set
-	 */
-	public void setAppBean(AppBean appBean) {
-		this.appBean = appBean;
 	}
 
 	public SessionBean getSessionBean() {
