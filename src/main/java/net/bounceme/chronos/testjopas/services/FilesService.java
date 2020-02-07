@@ -74,7 +74,7 @@ public class FilesService {
 				List<String[]> items = getFileItems(carpetaMuestras + "/" + file.getName(), SEPARATOR_MUESTRAS);
 				writeFileItems(carpetaFirmas + "/" + file.getName(), items, SEPARATOR_PROCESSED);
 			}
-		} catch (IOException e) {
+		} catch (FileNotFoundException | IOException e) {
 			logger.error("ERROR", e);
 			throw new ServiceException(e);
 		}
@@ -128,7 +128,41 @@ public class FilesService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	private void writefileItems(String sFile, List<String[]> items, String separator) throws IOException {
+	private void writefileItems(String sFile, List<String[]> items, String separator) throws FileNotFoundException {
+		PrintWriter pw = null;
+        	try {
+            		pw = new PrintWriter(new File(sFile));
+		
+			CollectionUtils.forAlldo(items, new WriterClosure(pw, separator));
+            
+        	} catch (FileNotFoundException e) {
+            		throw e;
+        	} finally {
+            		if (pw != null) {
+                		pw.close();
+            		}
+        	}
+	}
+	
+	class WriterClosure implements Closure {
+		private PrintWriter pw;
+		
+		public WriterClosure(PrintWriter pw, String separator) {
+			this.pw = pw;
+		}
+		
+		@Override
+		public void execute(Object input) {
+			String line = StringUtils.EMPTY;
+			String[] items = (String[]) input;
+			
+			for (String item : items) {
+				line += item + separator;
+			}
+			
+			line = line.substring(0, line.length() - 1);
+			pw.println(line);
+		}
 	}
 	
 	/**
