@@ -9,7 +9,7 @@
         <p:dataGrid id="availableFiles" var="file" value="#{utilidadesBean.availables}" columns="3">
             <p:panel id="pnl" header="#{file.name}" style="text-align:center">
                 <h:panelGrid columns="1" style="width:100%">
-                    <p:graphicImage name="/demo/images/car/#{car.brand}.gif" />
+                    <p:graphicImage name="/resources/img/primefaces.jpg" styleClass="icon"/>
                 </h:panelGrid>
             </p:panel>
  
@@ -19,7 +19,7 @@
  
     <p:fieldset id="selectedFiles" legend="Ficheros seleccionados" style="margin-top:20px">
         <p:outputPanel id="dropArea">
-            <h:outputText value="!!!Drop here!!!" rendered="#{empty utilidadesBean.droppedFiles}" style="font-size:24px;" />
+            <h:outputText value="!!!Soltar aqui!!!" rendered="#{empty utilidadesBean.droppedFiles}" style="font-size:24px;" />
             <p:dataTable id="selectedFilesTable" var="file" value="#{utilidadesBean.droppedFiles}" rendered="#{not empty utilidadesBean.droppedFiles}">
                 <p:column headerText="Nombre">
                     <h:outputText value="#{file.name}" />
