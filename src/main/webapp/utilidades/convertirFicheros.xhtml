@@ -7,7 +7,13 @@
 
 	<p:fieldset id="availableFilesField"
 		legend="#{res['utilidades.disponibles']}">
+		
+		<h:outputText value="#{res['utilidades.noAvailables']}"
+				rendered="#{empty utilidadesBean.availables}"
+				style="font-size:24px;" />
+		
 		<p:dataView id="availableFiles" var="file"
+			rendered="#{not empty utilidadesBean.availables}"
 			value="#{utilidadesBean.availables}" rows="6" paginator="true"
 			rowsPerPageTemplate="6,12"
 			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -28,7 +34,8 @@
 	</p:fieldset>
 
 	<p:fieldset id="selectedFiles"
-		legend="#{res['utilidades.seleccionados']}" style="margin-top:20px">
+		legend="#{res['utilidades.seleccionados']}" style="margin-top:20px"
+		rendered="#{not empty utilidadesBean.availables}">
 		<p:outputPanel id="dropArea">
 			<h:outputText value="#{res['utilidades.soltar']}"
 				rendered="#{empty utilidadesBean.droppedFiles}"
