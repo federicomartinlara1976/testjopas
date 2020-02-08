@@ -13,6 +13,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,7 @@ import net.bounceme.chronos.logger.Log;
 import net.bounceme.chronos.logger.LogFactory;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.testjopas.services.utils.FileEquator;
+import net.bounceme.chronos.testjopas.services.utils.IterableFiles;
 import net.bounceme.chronos.testjopas.services.utils.WriterClosure;
 import net.bounceme.chronos.utils.exceptions.FileManagerException;
 import net.bounceme.chronos.utils.filemanager.DirManager;
@@ -70,7 +72,16 @@ public class FilesService {
 		List<File> muestras = getMuestras();
 		List<File> processed = getProcessed();
 
-		return (List<File>) CollectionUtils.removeAll(muestras, processed, new FileEquator());
+		List<File> availables = new ArrayList<>();
+		Iterable<File> iterableProcessed = new IterableFiles(processed);
+
+		for (File file : muestras) {
+			if (!IterableUtils.contains(iterableProcessed, file, new FileEquator())) {
+				availables.add(file);
+			}
+		}
+
+		return availables;
 	}
 
 	/**
