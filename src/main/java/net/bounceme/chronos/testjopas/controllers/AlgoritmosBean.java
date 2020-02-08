@@ -12,6 +12,7 @@ import javax.faces.model.SelectItem;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import net.bounceme.chronos.logger.Log;
 import net.bounceme.chronos.logger.LogFactory;
@@ -24,6 +25,7 @@ import net.bounceme.chronos.testjopas.services.AlgoritmoDtwService;
 import net.bounceme.chronos.testjopas.services.FilesService;
 import net.bounceme.chronos.utils.calc.dto.MatrixDTO;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
+import net.bounceme.chronos.velazquez.aspect.VelazquezTimeTrackAspect;
 import net.bounceme.chronos.velazquez.services.ComparadorFirmas;
 
 /**
@@ -61,6 +63,10 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 
 	@Autowired
 	private transient ComparadorFirmas comparadorFirmas;
+	
+	@Autowired
+	@Qualifier("timeTrack")
+	private transient VelazquezTimeTrackAspect velazquezTimeTrackAspect;
 
 	private AlgoritmoDtwDTO algoritmoDtwDTO;
 
@@ -73,6 +79,8 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	private List<String[]> parametrosFirma2;
 
 	private BigDecimal distancia;
+	
+	private Long lastExecution;
 
 	@PostConstruct
 	public void initialize() {
@@ -149,6 +157,7 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 
 		Double dist = comparadorFirmas.verDistancia(signatureData1, signatureData2);
 		distancia = BigDecimal.valueOf(dist);
+		lastExecution = velazquezTimeTrackAspect.getLastExecutionTime();
 	}
 
 	/**
@@ -156,6 +165,13 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	 */
 	public BigDecimal getDistancia() {
 		return distancia;
+	}
+
+	/**
+	 * @return the lastExecution
+	 */
+	public Long getLastExecution() {
+		return lastExecution;
 	}
 
 	/**
