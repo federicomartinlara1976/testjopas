@@ -27,7 +27,7 @@
 
 	<!-- Appender para la salida por graylog (tiempo de ejecución) -->
 	<appender name="GRAYLOG_JOPAS" class="org.graylog2.log.GelfAppender">
-		<param name="graylogHost" value="192.168.1.33" />
+		<param name="graylogHost" value="192.168.1.2" />
 		<param name="originHost" value="localhost"/>
 		<param name="graylogPort" value="12201"/>
 		<param name="additionalFields"
