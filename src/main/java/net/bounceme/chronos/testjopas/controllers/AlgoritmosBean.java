@@ -23,6 +23,7 @@ import net.bounceme.chronos.testjopas.dto.AlgoritmoDtwDTO;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.testjopas.services.AlgoritmoDtwService;
 import net.bounceme.chronos.testjopas.services.FilesService;
+import net.bounceme.chronos.testjopas.services.utils.Utilidades;
 import net.bounceme.chronos.utils.calc.dto.MatrixDTO;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 import net.bounceme.chronos.velazquez.aspect.VelazquezTimeTrackAspect;
@@ -89,17 +90,23 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 
 			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
 					.getSessionAttribute("path");
-
-			appBean.getCalcService().clearEnvironment();
-			appBean.getCalcService().resetPath();
-			appBean.getCalcService().addPath(Paths.funciones.value());
-			appBean.getCalcService().addPath(paths.value());
-
-			reset();
+			
+			initializePaths(paths);
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
+	}
+
+	private void initializePaths(TestJopasConstantes.Paths paths) throws ServiceException {
+		Utilidades utilidades = new Utilidades();
+		
+		appBean.getCalcService().clearEnvironment();
+		appBean.getCalcService().resetPath();
+		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.funciones.value()));
+		appBean.getCalcService().addPath(utilidades.getPathFromResource(paths.value()));
+
+		reset();
 	}
 
 	/**
