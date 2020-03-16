@@ -68,7 +68,10 @@ public class JavaOctaveService implements CalcService {
 		try {
 			StringBuilder sbComando = new StringBuilder();
 			sbComando.append("addpath('").append(path).append("')");
-			octave.eval(sbComando.toString());
+			
+			String cmd = sbComando.toString();
+			logger.info(cmd);
+			octave.eval(cmd);
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
