@@ -66,6 +66,9 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	private transient ComparadorFirmas comparadorFirmas;
 	
 	@Autowired
+	private Utilidades utilidades;
+	
+	@Autowired
 	@Qualifier("timeTrack")
 	private transient VelazquezTimeTrackAspect velazquezTimeTrackAspect;
 
@@ -99,8 +102,6 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	}
 
 	private void initializePaths(TestJopasConstantes.Paths paths) throws ServiceException {
-		Utilidades utilidades = new Utilidades();
-		
 		appBean.getCalcService().clearEnvironment();
 		appBean.getCalcService().resetPath();
 		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.funciones.value()));

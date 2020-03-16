@@ -1,20 +1,17 @@
 package net.bounceme.chronos.testjopas.services.utils;
 
-import java.io.File;
-import java.net.URL;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Utilidades {
 	
+	@Value("#{myProps['testjopas.carpetaScripts']}")
+	private String carpetaScripts;
+	
 	public String getPathFromResource(String path) {
-		URL url = this.getClass().getClassLoader().getResource(path);
-	    File file = null;
+		
 	    
-	    try {
-	        file = new File(url.toURI());
-	    } catch (Exception e) {
-	        file = new File(url.getPath());
-	    } 
-	    
-	    return file.getAbsolutePath();
+	    return carpetaScripts + "/" + path;
 	}
 }

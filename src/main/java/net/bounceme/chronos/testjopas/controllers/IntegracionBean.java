@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import net.bounceme.chronos.logger.Log;
 import net.bounceme.chronos.logger.LogFactory;
@@ -45,6 +46,9 @@ public class IntegracionBean extends BaseBean implements Serializable {
 	/** The sessionBean bean. */
 	@ManagedProperty(value = "#{sessionBean}")
 	private SessionBean sessionBean;
+	
+	@Autowired
+	private Utilidades utilidades;
 
 	private IntegracionDTO integracionDTO;
 	
@@ -70,8 +74,6 @@ public class IntegracionBean extends BaseBean implements Serializable {
 	}
 	
 	private void initializePaths(TestJopasConstantes.Paths paths) throws ServiceException {
-		Utilidades utilidades = new Utilidades();
-		
 		appBean.getCalcService().clearEnvironment();
 		appBean.getCalcService().resetPath();
 		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.funciones.value()));
