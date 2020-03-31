@@ -27,6 +27,8 @@
 					<p class="description">
 						<h:outputText value="#{res['menu.utilidades.convertirArchivo']}"
 							rendered="#{sessionBean.opcion eq 'convertirArchivo'}" />
+						<h:outputText value="#{res['menu.utilidades.pruebaFop']}"
+							rendered="#{sessionBean.opcion eq 'probarXSL'}" />
 					</p>
 				</p:outputPanel>
 			</p:outputPanel>
@@ -50,6 +52,20 @@
 							styleClass="btn btn-danger ui-g-2 ui-md-2 ui-lg-2"
 							icon="fa fa-refresh" />
 					</p:outputPanel>
+					
+				</p:outputPanel>
+			</p:outputPanel>
+			
+			<p:outputPanel id="panelXSL" layout="block" styleClass="ui-g-12"
+				rendered="#{sessionBean.opcion eq 'probarXSL'}">
+				<p:outputPanel layout="block"
+					styleClass="ui-g-12 box shadow overview-box">
+					<ui:include src="/utilidades/pruebaFop.xhtml" />
+					
+					<p:commandButton id="obtenerPdf" value="#{res['utilidades.obtenerPdf']}"
+							actionListener="#{pruebaFopBean.obtenerPdf}" ajax="false" update="messages"
+							styleClass="btn btn-primary ui-g-2 ui-md-2 ui-lg-2"
+							icon="fa fa-save" />
 					
 				</p:outputPanel>
 			</p:outputPanel>

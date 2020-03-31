@@ -94,6 +94,13 @@
 							<i class="fa fa-users"></i>
 							<span><h:outputText value="#{res['menu.utilidades.convertirArchivo']}" /></span>
 					</h:commandLink></li>
+					<li class="list-group-item"><h:commandLink
+						actionListener="#{sessionBean.setParam('opcion', 'probarXSL')}"
+						action="#{sessionBean.navegar('utilidades')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'utilidades' and sessionBean.opcion eq 'probarXSL'}">
+							<i class="fa fa-users"></i>
+							<span><h:outputText value="#{res['menu.utilidades.pruebaFop']}" /></span>
+					</h:commandLink></li>
 				</ul>
 			</p:tab>
 		</p:accordionPanel>

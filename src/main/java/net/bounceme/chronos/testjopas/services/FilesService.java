@@ -1,16 +1,21 @@
 package net.bounceme.chronos.testjopas.services;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.IterableUtils;
@@ -28,6 +33,8 @@ import net.bounceme.chronos.testjopas.services.utils.WriterClosure;
 import net.bounceme.chronos.utils.exceptions.FileManagerException;
 import net.bounceme.chronos.utils.filemanager.DirManager;
 import net.bounceme.chronos.utils.filemanager.impl.system.SystemDirManager;
+import net.bounceme.chronos.utils.fop.CreatePdf;
+import net.bounceme.chronos.utils.fop.exceptions.ParseException;
 
 @Service("filesService")
 public class FilesService {
@@ -43,6 +50,12 @@ public class FilesService {
 
 	@Value("#{myProps['testjopas.carpetaMuestras']}")
 	private String carpetaMuestras;
+	
+	@Value("#{myProps['testjopas.carpetaTemplates']}")
+	private String carpetaTemplates;
+	
+	@Value("#{myProps['testjopas.carpetaArchivos']}")
+	private String carpetaArchivos;
 
 	private DirManager dirManager;
 
@@ -193,6 +206,66 @@ public class FilesService {
 			return Arrays.asList(dirManager.listContents(carpetaFirmas));
 		} catch (FileManagerException e) {
 			logger.error("ERROR", e);
+			throw new ServiceException(e);
+		}
+	}
+
+	/**
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<String> getTemplates() throws ServiceException {
+		try {
+			File[] files = dirManager.listContents(carpetaTemplates);
+			List<String> names = new ArrayList<>();
+			
+			for(File file : files) {
+				names.add(file.getName());
+			}
+			
+			return names;
+		} catch (FileManagerException e) {
+			logger.error("ERROR", e);
+			throw new ServiceException(e);
+		}
+	}
+	
+	/**
+	 * @return
+	 * @throws ServiceException
+	 */
+	public List<String> getArchivos() throws ServiceException {
+		try {
+			File[] files = dirManager.listContents(carpetaArchivos);
+			List<String> names = new ArrayList<>();
+			
+			for(File file : files) {
+				names.add(file.getName());
+			}
+			
+			return names;
+		} catch (FileManagerException e) {
+			logger.error("ERROR", e);
+			throw new ServiceException(e);
+		}
+	}
+	
+	/**
+	 * @param template
+	 * @param archivoXML
+	 */
+	public InputStream obtenerPdf(String template, String archivoXML) throws ServiceException {
+		try {
+			StreamSource xslSource = new StreamSource(new File(carpetaTemplates + "/" + template));
+			StreamSource xmlSource = new StreamSource(new File(carpetaArchivos + "/" + archivoXML));
+		
+			CreatePdf createPdf = new CreatePdf();
+			OutputStream ostream = createPdf.parse(xslSource, xmlSource);
+			
+			ByteArrayInputStream istream = new ByteArrayInputStream(((ByteArrayOutputStream)ostream).toByteArray());
+			return istream;
+		} catch (ParseException e) {
+			logger.error("ERROR: ", e);
 			throw new ServiceException(e);
 		}
 	}

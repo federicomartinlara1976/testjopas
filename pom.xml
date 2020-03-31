@@ -52,6 +52,12 @@
 			<artifactId>chronos-jsf-3-components</artifactId>
 			<version>${chronoslibs.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>net.bounceme.chronos.chronoslibs</groupId>
+			<artifactId>chronos-pdf-utils</artifactId>
+			<version>${chronoslibs.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>net.bounceme.chronos.cervantes</groupId>

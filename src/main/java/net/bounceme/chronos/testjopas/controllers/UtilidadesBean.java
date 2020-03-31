@@ -43,12 +43,19 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 	private List<File> availables;
 
 	private List<File> droppedFiles;
+	
+	private List<String> templates;
+	
+	private List<String> archivos;
 
 	@PostConstruct
 	public void initialize() {
 		try {
 			logger = LogFactory.getInstance().getLogger(UtilidadesBean.class, "LOG4J");
 			availables = filesService.getAvailableFiles();
+			templates = filesService.getTemplates();
+			archivos = filesService.getArchivos();
+			
 			droppedFiles = new ArrayList<>();
 		} catch (ServiceException e) {
 			logger.error("ERROR:", e);
@@ -74,15 +81,38 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void reset() {
 		droppedFiles.clear();
 	}
 
+	/**
+	 * @return
+	 */
 	public List<File> getAvailables() {
 		return availables;
 	}
 
+	/**
+	 * @return
+	 */
 	public List<File> getDroppedFiles() {
 		return droppedFiles;
+	}
+
+	/**
+	 * @return the templates
+	 */
+	public List<String> getTemplates() {
+		return templates;
+	}
+
+	/**
+	 * @return the archivos
+	 */
+	public List<String> getArchivos() {
+		return archivos;
 	}
 }

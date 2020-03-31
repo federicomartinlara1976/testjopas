@@ -1,5 +1,6 @@
 package net.bounceme.chronos.testjopas.services;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +26,6 @@ public class JoPasService implements CalcService {
 	
 	public JoPasService() {
 		super();
-		this.jopas = JopasFactory.getInstance().newInstance();
 	}
 
 	/**
@@ -34,6 +34,12 @@ public class JoPasService implements CalcService {
 	@PostConstruct
 	public void initialize() {
 		logger = LogFactory.getInstance().getLogger(JoPasService.class, "LOG4J");
+	
+		try {
+			this.jopas = JopasFactory.getInstance().newInstance();
+		} catch (Exception e) {
+			logger.error("No se ha podido iniciar el intérprete");
+		}
 	}
 
 	/**
