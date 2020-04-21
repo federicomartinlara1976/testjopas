@@ -52,7 +52,7 @@
 			<artifactId>chronos-jsf-3-components</artifactId>
 			<version>${chronoslibs.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>net.bounceme.chronos.chronoslibs</groupId>
 			<artifactId>chronos-pdf-utils</artifactId>
@@ -82,6 +82,12 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-collections4</artifactId>
 			<version>4.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>javax.annotation-api</artifactId>
+			<version>1.3.2</version>
 		</dependency>
 
 	</dependencies>
