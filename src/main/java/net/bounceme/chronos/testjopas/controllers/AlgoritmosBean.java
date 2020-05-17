@@ -21,12 +21,12 @@ import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.controllers.converters.FileSelectItemConverter;
 import net.bounceme.chronos.testjopas.dto.AlgoritmoDtwDTO;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
-import net.bounceme.chronos.testjopas.services.AlgoritmoDtwService;
 import net.bounceme.chronos.testjopas.services.FilesService;
 import net.bounceme.chronos.testjopas.services.utils.Utilidades;
 import net.bounceme.chronos.utils.calc.dto.MatrixDTO;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 import net.bounceme.chronos.velazquez.aspect.VelazquezTimeTrackAspect;
+import net.bounceme.chronos.velazquez.services.AlgoritmoDtwService;
 import net.bounceme.chronos.velazquez.services.ComparadorFirmas;
 
 /**
