@@ -74,26 +74,19 @@
 					</h:commandLink></li>
 				</ul>
 			</p:tab>
-			<p:tab title="#{res['menu.algoritmos']}">
+			<p:tab title="Reglas de negocio">
 				<ul class="list-group">
 					<li class="list-group-item"><h:commandLink
-						actionListener="#{sessionBean.setParam('opcion', 'dtw')}"
-						action="#{sessionBean.navegar('algoritmos')}" ajax="false"
-						disabled="#{sessionBean.currentPage eq 'algoritmos' and sessionBean.opcion eq 'dtw'}">
+						actionListener="#{sessionBean.setParam('opcion', 'test')}"
+						action="#{sessionBean.navegar('reglas')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'reglas' and sessionBean.opcion eq 'test'}">
 							<i class="fa fa-users"></i>
-							<span><h:outputText value="#{res['menu.algoritmos.dtw']}" /></span>
+							<span><h:outputText value="Test de reglas de negocio" /></span>
 					</h:commandLink></li>
 				</ul>
 			</p:tab>
 			<p:tab title="#{res['menu.utilidades']}">
 				<ul class="list-group">
-					<li class="list-group-item"><h:commandLink
-						actionListener="#{sessionBean.setParam('opcion', 'convertirArchivo')}"
-						action="#{sessionBean.navegar('utilidades')}" ajax="false"
-						disabled="#{sessionBean.currentPage eq 'utilidades' and sessionBean.opcion eq 'convertirArchivo'}">
-							<i class="fa fa-users"></i>
-							<span><h:outputText value="#{res['menu.utilidades.convertirArchivo']}" /></span>
-					</h:commandLink></li>
 					<li class="list-group-item"><h:commandLink
 						actionListener="#{sessionBean.setParam('opcion', 'probarXSL')}"
 						action="#{sessionBean.navegar('utilidades')}" ajax="false"

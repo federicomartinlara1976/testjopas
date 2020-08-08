@@ -15,6 +15,7 @@ public class TestJopasConstantes extends Constantes {
 		algebra("octave/met-num/algebra"),
 		algoritmos("octave/met-num/algoritmos/dtw"),
 		utilidades("octave/utilidades"),
+		reglas(""),
 		funciones("octave/funciones");
 		
 

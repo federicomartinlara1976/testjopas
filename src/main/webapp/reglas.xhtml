@@ -6,13 +6,13 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:chronos="http://chronos.componentes.jsf/composite"
 	template="/WEB-INF/templates/template.xhtml">
-
+	
 	<ui:define name="title">
-		<chronos:title type="3" value="#{res['app.title']}" />
+		<chronos:title type="3" value="#{res['app.title']}" />	
 	</ui:define>
-
+	
 	<ui:define name="menu">
-		<ui:include src="/menu.xhtml" />
+		<ui:include src="/menu.xhtml" />	
 	</ui:define>
 
 	<ui:define name="content">
@@ -21,31 +21,32 @@
 				<p:outputPanel layout="block"
 					styleClass="jumbotron ui-g-12 box shadow overview-box overview-box-1">
 					<h1>
-						<h:outputText value="#{res['menu.utilidades']}" />
+						<h:outputText value="Reglas de negocio" />
 					</h1>
 					<hr class="my-4" />
 					<p class="description">
-						<h:outputText value="#{res['menu.utilidades.pruebaFop']}"
-							rendered="#{sessionBean.opcion eq 'probarXSL'}" />
+						<h:outputText value="Test de reglas de negocio"/>
 					</p>
 				</p:outputPanel>
 			</p:outputPanel>
 			
-			<p:outputPanel id="panelXSL" layout="block" styleClass="ui-g-12"
-				rendered="#{sessionBean.opcion eq 'probarXSL'}">
+			<p:outputPanel id="datosEntrada" layout="block" styleClass="ui-g-12">
 				<p:outputPanel layout="block"
 					styleClass="ui-g-12 box shadow overview-box">
-					<ui:include src="/utilidades/pruebaFop.xhtml" />
+					<ui:include src="/reglas/datos-entrada.xhtml" />
 					
-					<p:commandButton id="obtenerPdf" value="#{res['utilidades.obtenerPdf']}"
-							actionListener="#{pruebaFopBean.obtenerPdf}" ajax="false" update="messages"
+					<p:outputPanel layout="block" id="botonera"
+						styleClass="botonera ui-g-12 ui-md-12 ui-lg-12">
+
+						<p:commandButton id="calcular" value="Lanzar reglas"
+							actionListener="#{reglasBean.calcular}" process="@form" ajax="true" update="messages,orders"
 							styleClass="btn btn-primary ui-g-2 ui-md-2 ui-lg-2"
 							icon="fa fa-save" />
-					
+							
+					</p:outputPanel>
 				</p:outputPanel>
 			</p:outputPanel>
-
-		</p:outputPanel>
+		</p:outputPanel>	
 	</ui:define>
 
 </ui:composition>

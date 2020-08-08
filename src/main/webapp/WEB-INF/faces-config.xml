@@ -53,8 +53,8 @@
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
 		<navigation-case>
-			<from-outcome>algoritmos</from-outcome>
-			<to-view-id>/algoritmos.xhtml</to-view-id>
+			<from-outcome>reglas</from-outcome>
+			<to-view-id>/reglas.xhtml</to-view-id>
 			<redirect/>
 		</navigation-case>
 	</navigation-rule>

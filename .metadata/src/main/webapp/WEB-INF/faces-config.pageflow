@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15856700590010" configfile="/testjopas/src/main/webapp/WEB-INF/faces-config.xml"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15856700590010" configfile="/testjopas/src/main/webapp/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="1330" id="pf15969131715920" referenceLink="//@navigationRule.5/@fromViewId|" outlinks="pf15969131715921 pf15969131715922 pf15969131715923 pf15969131715924 pf15969131715925 pf15969131715926" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="index.xhtml" x="338" y="178" id="pf15969131715927" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf15969131715921" path="/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="raiz.xhtml" x="338" y="562" id="pf15969131715928" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf15969131715922" path="/raiz.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="interpolacion.xhtml" x="338" y="946" id="pf15969131715929" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf15969131715923" path="/interpolacion.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="integracion.xhtml" x="338" y="1330" id="pf159691317159310" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf15969131715924" path="/integracion.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="algebra.xhtml" x="338" y="1714" id="pf159691317159311" referenceLink="//@navigationRule.4/@navigationCase.0/@toViewId|" inlinks="pf15969131715925" path="/algebra.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="utilidades.xhtml" x="338" y="2482" id="pf159691317159312" referenceLink="//@navigationRule.5/@navigationCase.0/@toViewId|" inlinks="pf15969131715926" path="/utilidades.xhtml"/>
+  <links id="pf15969131715921" target="pf15969131715927" source="pf15969131715920" outcome="inicio" redirect="true"/>
+  <links id="pf15969131715922" target="pf15969131715928" source="pf15969131715920" outcome="raiz" redirect="true"/>
+  <links id="pf15969131715923" target="pf15969131715929" source="pf15969131715920" outcome="interpolacion" redirect="true"/>
+  <links id="pf15969131715924" target="pf159691317159310" source="pf15969131715920" outcome="integracion" redirect="true"/>
+  <links id="pf15969131715925" target="pf159691317159311" source="pf15969131715920" outcome="algebra" redirect="true"/>
+  <links id="pf15969131715926" target="pf159691317159312" source="pf15969131715920" outcome="utilidades" redirect="true"/>
+</pageflow:Pageflow>

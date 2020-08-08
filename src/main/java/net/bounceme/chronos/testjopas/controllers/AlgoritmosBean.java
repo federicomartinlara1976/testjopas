@@ -12,7 +12,6 @@ import javax.faces.model.SelectItem;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import net.bounceme.chronos.logger.Log;
 import net.bounceme.chronos.logger.LogFactory;
@@ -23,11 +22,7 @@ import net.bounceme.chronos.testjopas.dto.AlgoritmoDtwDTO;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.testjopas.services.FilesService;
 import net.bounceme.chronos.testjopas.services.utils.Utilidades;
-import net.bounceme.chronos.utils.calc.dto.MatrixDTO;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
-import net.bounceme.chronos.velazquez.aspect.VelazquezTimeTrackAspect;
-import net.bounceme.chronos.velazquez.services.AlgoritmoDtwService;
-import net.bounceme.chronos.velazquez.services.ComparadorFirmas;
 
 /**
  * @author Federico Martín Lara
@@ -55,22 +50,12 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	/** The app bean. */
 	@ManagedProperty(value = "#{sessionBean}")
 	private SessionBean sessionBean;
-
-	@Autowired
-	private transient AlgoritmoDtwService algoritmoDtwService;
 	
 	@Autowired
 	private transient FilesService filesService;
-
-	@Autowired
-	private transient ComparadorFirmas comparadorFirmas;
 	
 	@Autowired
 	private Utilidades utilidades;
-	
-	@Autowired
-	@Qualifier("timeTrack")
-	private transient VelazquezTimeTrackAspect velazquezTimeTrackAspect;
 
 	private AlgoritmoDtwDTO algoritmoDtwDTO;
 
@@ -151,21 +136,6 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 			logger.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
-	}
-
-	/**
-	 * 
-	 */
-	public void calcular() {
-		BigDecimal[][] matrizFirma1 = algoritmoDtwService.getParametersMatrix(parametrosFirma1);
-		BigDecimal[][] matrizFirma2 = algoritmoDtwService.getParametersMatrix(parametrosFirma2);
-
-		MatrixDTO signatureData1 = algoritmoDtwService.getAsMatrix("signatureData1", matrizFirma1);
-		MatrixDTO signatureData2 = algoritmoDtwService.getAsMatrix("signatureData2", matrizFirma2);
-
-		Double dist = comparadorFirmas.verDistancia(signatureData1, signatureData2);
-		distancia = BigDecimal.valueOf(dist);
-		lastExecution = velazquezTimeTrackAspect.getLastExecutionTime();
 	}
 
 	/**
