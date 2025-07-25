@@ -5,158 +5,171 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.0.5</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
 	<groupId>net.bounceme.chronos.calc</groupId>
 	<artifactId>testjopas</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<version>1.1.0</version>
 
 	<name>testjopas Maven Webapp</name>
 	<!-- FIXME change it to the project's website -->
 	<url>http://www.example.com</url>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<chronoslibs.version>1.0.5-SNAPSHOT</chronoslibs.version>
+		<java.version>17</java.version>
+		
+		<spring-cloud.version>2022.0.3</spring-cloud.version>
+		<joinfaces.version>5.0.3</joinfaces.version>
+		
+		<chronoslibs.version>1.0.0</chronoslibs.version>
+		
+		<jacoco.version>0.8.12</jacoco.version>
 	</properties>
 
 	<dependencies>
+	
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>[4.13.1,)</version>
-			<scope>test</scope>
+			<groupId>org.joinfaces</groupId>
+			<artifactId>primefaces-spring-boot-starter</artifactId>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>net.bounceme.chronos.chronoslibs</groupId>
-			<artifactId>chronos-logger-utils</artifactId>
-			<version>${chronoslibs.version}</version>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-logging</artifactId>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>net.bounceme.chronos.chronoslibs</groupId>
-			<artifactId>chronos-net-utils</artifactId>
-			<version>${chronoslibs.version}</version>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>net.bounceme.chronos.chronoslibs</groupId>
-			<artifactId>chronos-calc-utils</artifactId>
-			<version>${chronoslibs.version}</version>
+    		<groupId>org.springframework.cloud</groupId>
+    		<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>net.bounceme.chronos.chronoslibs</groupId>
-			<artifactId>chronos-jsf-3-components</artifactId>
-			<version>${chronoslibs.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>net.bounceme.chronos.chronoslibs</groupId>
-			<artifactId>chronos-pdf-utils</artifactId>
-			<version>${chronoslibs.version}</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-
+	
 		<dependency>
-			<groupId>net.bounceme.chronos.cervantes</groupId>
-			<artifactId>Velazquez</artifactId>
-			<version>1.0.7-SNAPSHOT</version>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>org.primefaces.themes</groupId>
-			<artifactId>all-themes</artifactId>
-			<version>1.0.10</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.graylog2</groupId>
-			<artifactId>gelfj</artifactId>
-			<version>1.1.14</version>
-			<scope>compile</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-collections4</artifactId>
-			<version>4.4</version>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.annotation</groupId>
-			<artifactId>javax.annotation-api</artifactId>
-			<version>1.3.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>knowledge-api</artifactId>
-			<version>5.4.0.Final</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-core</artifactId>
-			<version>5.4.0.Final</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-compiler</artifactId>
-			<version>5.4.0.Final</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-			<version>1.4.13-java7</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.codehaus.janino</groupId>
-			<artifactId>janino</artifactId>
-			<version>2.5.16</version>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
 		</dependency>
 
 	</dependencies>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.joinfaces</groupId>
+				<artifactId>joinfaces-dependencies</artifactId>
+				<version>${joinfaces.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
-		<finalName>testjopas</finalName>
-		<pluginManagement><!-- lock down plugins versions to avoid using Maven 
-				defaults (may be moved to parent pom) -->
-			<plugins>
-				<plugin>
-					<artifactId>maven-clean-plugin</artifactId>
-					<version>3.1.0</version>
-				</plugin>
-				<!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
-				<plugin>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>3.0.2</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.8.0</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.22.1</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-war-plugin</artifactId>
-					<version>3.2.2</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-install-plugin</artifactId>
-					<version>2.5.2</version>
-				</plugin>
-				<plugin>
-					<artifactId>maven-deploy-plugin</artifactId>
-					<version>2.8.2</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
+	
+		<finalName>testjopas-${spring.profiles.active}</finalName>
+		
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<doctitle>Documentación del proyecto testjopas</doctitle>
+					<use>true</use>
+					<author>true</author>
+					<version>true</version>
+					<show>protected</show>
+					<failOnError>false</failOnError>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+		</plugins>
 	</build>
+	
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<spring.profiles.active>dev</spring.profiles.active>
+			</properties>
+		</profile>
+
+		<profile>
+			<id>prod</id>
+			<properties>
+				<spring.profiles.active>prod</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
 </project>

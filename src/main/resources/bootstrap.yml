@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: testjopas
+    version: @project.version@
+
+  profiles:
+    active: @spring.profiles.active@
+  
+  config.import: "optional:configserver:"
+  cloud:
+    config:
+      name: cuentas
+      enabled: true
+      uri: http://192.168.1.135:8888
+
+build.date: @maven.build.timestamp@
