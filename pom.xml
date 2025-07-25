@@ -69,6 +69,12 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>net.bounceme.chronos.libs</groupId>
+			<artifactId>chronos-calc-utils</artifactId>
+			<version>${chronoslibs.version}</version>
+		</dependency>
+		
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
