@@ -3,15 +3,13 @@ package net.bounceme.chronos.testjopas.controllers;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
-import net.bounceme.chronos.logger.Log;
-import net.bounceme.chronos.logger.LogFactory;
+import jakarta.annotation.ManagedBean;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.annotation.ManagedProperty;
+import jakarta.faces.view.ViewScoped;
+import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.dto.AlgebraDTO;
@@ -24,6 +22,7 @@ import net.bounceme.chronos.utils.jsf.controller.BaseBean;
  */
 @ManagedBean(name = AlgebraBean.NAME)
 @ViewScoped
+@Slf4j
 public class AlgebraBean extends BaseBean implements Serializable {
 
 	/**
@@ -33,9 +32,6 @@ public class AlgebraBean extends BaseBean implements Serializable {
 
 	/** The Constant NAME. */
 	public static final String NAME = "algebraBean";
-
-	/** The logger. */
-	private Log logger;
 
 	/** The app bean. */
 	@ManagedProperty(value = "#{appBean}")
@@ -55,14 +51,12 @@ public class AlgebraBean extends BaseBean implements Serializable {
 	@PostConstruct
 	public void initialize() {
 		try {
-			logger = LogFactory.getInstance().getLogger(AlgebraBean.class, "LOG4J");
-
 			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
 					.getSessionAttribute("path");
 
 			initializePaths(paths);
 		} catch (ServiceException e) {
-			logger.error("ERROR:", e);
+			log.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
 	}
@@ -86,7 +80,7 @@ public class AlgebraBean extends BaseBean implements Serializable {
 				
 			c = appBean.getCalcService().getArray("c");
 		} catch (ServiceException e) {
-			logger.error("ERROR:", e);
+			log.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
 	}
