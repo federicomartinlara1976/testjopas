@@ -1,4 +1,4 @@
-package net.bounceme.chronos.testjopas.services;
+package net.bounceme.chronos.testjopas.services.impl;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -12,6 +12,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
+import net.bounceme.chronos.testjopas.services.CalcService;
 import net.bounceme.chronos.utils.jopas.JopasFactory;
 import net.bounceme.chronos.utils.jopas.JopasInterpreter;
 
@@ -22,6 +23,8 @@ public class JoPasService implements CalcService {
 	private JopasInterpreter jopas;
 	
 	private Boolean initialized = false;
+	
+	private static final String ERROR_ILLEGAL_MSG = "El objeto no ha sido inicializado";
 
 	/**
 	 * Initialize.
@@ -43,7 +46,7 @@ public class JoPasService implements CalcService {
 	 */
 	@SneakyThrows
 	public void addPath(String path) {
-		Validate.validState(initialized, "El objeto no ha sido inicializado");
+		Validate.validState(initialized, ERROR_ILLEGAL_MSG);
 	
 		StringBuilder sbComando = new StringBuilder();
 		sbComando.append("addpath('").append(path).append("')");
@@ -52,7 +55,7 @@ public class JoPasService implements CalcService {
 
 	@SneakyThrows
 	public void resetPath() {
-		Validate.validState(initialized, "El objeto no ha sido inicializado");
+		Validate.validState(initialized, ERROR_ILLEGAL_MSG);
 	
 		StringBuilder sbComando = new StringBuilder();
 		sbComando.append("restoredefaultpath();");
@@ -64,7 +67,7 @@ public class JoPasService implements CalcService {
 	 */
 	@SneakyThrows
 	public void clearEnvironment() {
-		Validate.validState(initialized, "El objeto no ha sido inicializado");
+		Validate.validState(initialized, ERROR_ILLEGAL_MSG);
 	
 		StringBuilder sbComando = new StringBuilder();
 		sbComando.append("clear()");
@@ -75,8 +78,8 @@ public class JoPasService implements CalcService {
 	 * @throws ServiceException
 	 */
 	@SneakyThrows
-	public void execute(String cmd) throws ServiceException {
-		Validate.validState(initialized, "El objeto no ha sido inicializado");
+	public void execute(String cmd) {
+		Validate.validState(initialized, ERROR_ILLEGAL_MSG);
 	
 		StringBuilder sbComando = new StringBuilder();
 		sbComando.append(cmd);
@@ -90,8 +93,8 @@ public class JoPasService implements CalcService {
 	 * @param value
 	 */
 	@SneakyThrows
-	public void passVariable(String name, BigDecimal value) throws ServiceException {
-		Validate.validState(initialized, "El objeto no ha sido inicializado");
+	public void passVariable(String name, BigDecimal value) {
+		Validate.validState(initialized, ERROR_ILLEGAL_MSG);
 	
 		log.debug("Pasando variable {} con valor {}", name, value.doubleValue());
 		jopas.load(value, name);
@@ -103,7 +106,7 @@ public class JoPasService implements CalcService {
 	 */
 	@SneakyThrows
 	public void passVariable(String name, Integer value) {
-		Validate.validState(initialized, "El objeto no ha sido inicializado");
+		Validate.validState(initialized, ERROR_ILLEGAL_MSG);
 	
 		log.debug("Pasando variable {} con valor {}", name, value.doubleValue());
 		jopas.load(value, name);
@@ -111,7 +114,7 @@ public class JoPasService implements CalcService {
 	
 	@SneakyThrows
 	public void terminate() {
-		Validate.validState(initialized, "El objeto no ha sido inicializado");
+		Validate.validState(initialized, ERROR_ILLEGAL_MSG);
 		jopas.terminate();
 	}
 
@@ -141,13 +144,13 @@ public class JoPasService implements CalcService {
 	}
 
 	@Override
-	public void passVariable(String name, BigDecimal[] value) throws ServiceException {
+	public void passVariable(String name, BigDecimal[] value) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void passVariable(String name, BigDecimal[][] value) throws ServiceException {
+	public void passVariable(String name, BigDecimal[][] value) {
 		// TODO Auto-generated method stub
 		
 	}
