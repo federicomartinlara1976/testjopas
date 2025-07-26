@@ -1,44 +1,39 @@
 package net.bounceme.chronos.testjopas.services;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Service;
 
-import net.bounceme.chronos.logger.Log;
-import net.bounceme.chronos.logger.LogFactory;
+import jakarta.annotation.PostConstruct;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.utils.jopas.JopasFactory;
 import net.bounceme.chronos.utils.jopas.JopasInterpreter;
 
-@Service("joPasService")
+@Service
+@Slf4j
 public class JoPasService implements CalcService {
-
-	/** The logger. */
-	private Log logger;
 	
 	private JopasInterpreter jopas;
 	
-	public JoPasService() {
-		super();
-	}
+	private Boolean initialized = false;
 
 	/**
 	 * Initialize.
 	 */
 	@PostConstruct
 	public void initialize() {
-		logger = LogFactory.getInstance().getLogger(JoPasService.class, "LOG4J");
-	
 		try {
 			this.jopas = JopasFactory.getInstance().newInstance();
+			initialized = true;
 		} catch (Exception e) {
-			logger.error("No se ha podido iniciar el intérprete");
+			log.error("No se ha podido iniciar el intérprete");
+			initialized = false;
 		}
 	}
 
@@ -46,106 +41,78 @@ public class JoPasService implements CalcService {
 	 * @param path
 	 * @throws ServiceException
 	 */
-	public void addPath(String path) throws ServiceException {
-		try {
-			jopas.checkIsInitialized();
+	@SneakyThrows
+	public void addPath(String path) {
+		Validate.validState(initialized, "El objeto no ha sido inicializado");
 	
-			StringBuilder sbComando = new StringBuilder();
-			sbComando.append("addpath('").append(path).append("')");
-			jopas.execute(sbComando.toString());
-		} catch (Exception e) {
-			throw new ServiceException(e);
-		}
+		StringBuilder sbComando = new StringBuilder();
+		sbComando.append("addpath('").append(path).append("')");
+		jopas.execute(sbComando.toString());
 	}
 
-	/**
-	 * @throws ServiceException
-	 */
-	public void resetPath() throws ServiceException {
-		try {
-			jopas.checkIsInitialized();
+	@SneakyThrows
+	public void resetPath() {
+		Validate.validState(initialized, "El objeto no ha sido inicializado");
 	
-			StringBuilder sbComando = new StringBuilder();
-			sbComando.append("restoredefaultpath();");
-			jopas.execute(sbComando.toString());
-		} catch (Exception e) {
-			throw new ServiceException(e);
-		}
+		StringBuilder sbComando = new StringBuilder();
+		sbComando.append("restoredefaultpath();");
+		jopas.execute(sbComando.toString());
 	}
 	
 	/**
 	 * @throws ServiceException
 	 */
-	public void clearEnvironment() throws ServiceException {
-		try {
-			jopas.checkIsInitialized();
+	@SneakyThrows
+	public void clearEnvironment() {
+		Validate.validState(initialized, "El objeto no ha sido inicializado");
 	
-			StringBuilder sbComando = new StringBuilder();
-			sbComando.append("clear()");
-			jopas.execute(sbComando.toString());
-		} catch (Exception e) {
-			throw new ServiceException(e);
-		}
+		StringBuilder sbComando = new StringBuilder();
+		sbComando.append("clear()");
+		jopas.execute(sbComando.toString());
 	}
 	
 	/**
 	 * @throws ServiceException
 	 */
+	@SneakyThrows
 	public void execute(String cmd) throws ServiceException {
-		try {
-			jopas.checkIsInitialized();
+		Validate.validState(initialized, "El objeto no ha sido inicializado");
 	
-			StringBuilder sbComando = new StringBuilder();
-			sbComando.append(cmd);
+		StringBuilder sbComando = new StringBuilder();
+		sbComando.append(cmd);
 	
-			logger.debug("Ejecutar comando: %s", sbComando.toString());
-			jopas.execute(sbComando.toString());
-		} catch (Exception e) {
-			throw new ServiceException(e);
-		}
+		log.debug("Ejecutar comando: {}", sbComando.toString());
+		jopas.execute(sbComando.toString());
 	}
 	
 	/**
 	 * @param name
 	 * @param value
 	 */
+	@SneakyThrows
 	public void passVariable(String name, BigDecimal value) throws ServiceException {
-		try {
-			jopas.checkIsInitialized();
+		Validate.validState(initialized, "El objeto no ha sido inicializado");
 	
-			logger.debug("Pasando variable %s con valor %.6f", name, value.doubleValue());
-			jopas.load(value, name);
-		} catch (Exception e) {
-			throw new ServiceException(e);
-		}
+		log.debug("Pasando variable {} con valor {}", name, value.doubleValue());
+		jopas.load(value, name);
 	}
 	
 	/**
 	 * @param name
 	 * @param value
 	 */
-	public void passVariable(String name, Integer value) throws ServiceException {
-		try {
-			jopas.checkIsInitialized();
+	@SneakyThrows
+	public void passVariable(String name, Integer value) {
+		Validate.validState(initialized, "El objeto no ha sido inicializado");
 	
-			logger.debug("Pasando variable %s con valor %.6f", name, value.doubleValue());
-			jopas.load(value, name);
-		} catch (Exception e) {
-			throw new ServiceException(e);
-		}
+		log.debug("Pasando variable {} con valor {}", name, value.doubleValue());
+		jopas.load(value, name);
 	}
 	
-	/**
-	 * @param name
-	 * @param value
-	 */
-	public void terminate() throws ServiceException {
-		try {
-			jopas.checkIsInitialized();
-			jopas.terminate();
-		} catch (Exception e) {
-			throw new ServiceException(e);
-		}
+	@SneakyThrows
+	public void terminate() {
+		Validate.validState(initialized, "El objeto no ha sido inicializado");
+		jopas.terminate();
 	}
 
 	@Override

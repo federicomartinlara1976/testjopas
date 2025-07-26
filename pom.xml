@@ -79,6 +79,18 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>net.bounceme.chronos.libs</groupId>
+			<artifactId>chronos-utils</artifactId>
+			<version>${chronoslibs.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>net.bounceme.chronos.libs</groupId>
+			<artifactId>chronos-calc-utils</artifactId>
+			<version>${chronoslibs.version}</version>
+		</dependency>
+		
+		<dependency>
     		<groupId>org.apache.commons</groupId>
     		<artifactId>commons-collections4</artifactId>
     		<version>4.5.0</version>

@@ -1,31 +1,25 @@
 package net.bounceme.chronos.testjopas.services;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.xml.transform.stream.StreamSource;
-
+import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.IterableUtils;
-import org.apache.commons.collections4.Predicate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import net.bounceme.chronos.logger.Log;
-import net.bounceme.chronos.logger.LogFactory;
+import jakarta.annotation.PostConstruct;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.testjopas.services.utils.FileEquator;
 import net.bounceme.chronos.testjopas.services.utils.IterableFiles;
@@ -33,28 +27,25 @@ import net.bounceme.chronos.testjopas.services.utils.WriterClosure;
 import net.bounceme.chronos.utils.exceptions.FileManagerException;
 import net.bounceme.chronos.utils.filemanager.DirManager;
 import net.bounceme.chronos.utils.filemanager.impl.system.SystemDirManager;
-import net.bounceme.chronos.utils.fop.CreatePdf;
-import net.bounceme.chronos.utils.fop.exceptions.ParseException;
 
-@Service("filesService")
+@Service
+@Slf4j
 public class FilesService {
 
-	private String SEPARATOR_MUESTRAS = "\\s+";
-	private String SEPARATOR_PROCESSED = ",";
+	private static final String ERROR = "ERROR";
+	private static final String SEPARATOR_MUESTRAS = "\\s+";
+	private static final String SEPARATOR_PROCESSED = ",";
 
-	/** The logger. */
-	private Log logger;
-
-	@Value("#{myProps['testjopas.carpetaFirmas']}")
+	@Value("${application.carpetaFirmas}")
 	private String carpetaFirmas;
 
-	@Value("#{myProps['testjopas.carpetaMuestras']}")
+	@Value("${application.carpetaMuestras}")
 	private String carpetaMuestras;
 	
-	@Value("#{myProps['testjopas.carpetaTemplates']}")
+	@Value("${application.carpetaTemplates}")
 	private String carpetaTemplates;
 	
-	@Value("#{myProps['testjopas.carpetaArchivos']}")
+	@Value("${application.carpetaArchivos}")
 	private String carpetaArchivos;
 
 	private DirManager dirManager;
@@ -64,8 +55,6 @@ public class FilesService {
 	 */
 	@PostConstruct
 	public void initialize() {
-		logger = LogFactory.getInstance().getLogger(FilesService.class, "LOG4J");
-
 		dirManager = new SystemDirManager();
 	}
 
@@ -109,7 +98,7 @@ public class FilesService {
 				writeFileItems(carpetaFirmas + "/" + file.getName(), items, SEPARATOR_PROCESSED);
 			}
 		} catch (IOException e) {
-			logger.error("ERROR", e);
+			log.error(ERROR, e);
 			throw new ServiceException(e);
 		}
 	}
@@ -119,13 +108,9 @@ public class FilesService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	public List<String[]> getFileParameters(String sFile) throws ServiceException {
-		try {
-			return getFileItems(carpetaFirmas + "/" + sFile, SEPARATOR_PROCESSED);
-		} catch (IOException e) {
-			logger.error("ERROR", e);
-			throw new ServiceException(e);
-		}
+	@SneakyThrows(IOException.class)
+	public List<String[]> getFileParameters(String sFile) {
+		return getFileItems(carpetaFirmas + "/" + sFile, SEPARATOR_PROCESSED);
 	}
 
 	/**
@@ -160,39 +145,24 @@ public class FilesService {
 	 * @return
 	 * @throws ServiceException
 	 */
-	private void writeFileItems(String sFile, List<String[]> items, String separator) throws FileNotFoundException {
-		PrintWriter pw = null;
-		try {
-			pw = new PrintWriter(new File(sFile));
-
-			CollectionUtils.forAllDo(items, new WriterClosure(pw, separator));
-
-		} finally {
-			if (pw != null) {
-				pw.close();
-			}
-		}
+	@SneakyThrows(FileNotFoundException.class)
+	private void writeFileItems(String sFile, List<String[]> items, String separator) {
+		try (PrintWriter pw = new PrintWriter(new File(sFile))) {
+			IteratorUtils.forEach(items.iterator(), new WriterClosure(pw, separator));
+		} 
 	}
 
 	/**
 	 * @return
 	 * @throws ServiceException
 	 */
-	@SuppressWarnings("unchecked")
 	private List<File> getMuestras() throws ServiceException {
 		try {
 			List<File> contents = Arrays.asList(dirManager.listContents(carpetaMuestras));
 
-			return (List<File>) CollectionUtils.select(contents, new Predicate() {
-
-				@Override
-				public boolean evaluate(Object object) {
-					File f = (File) object;
-					return !f.isDirectory();
-				}
-			});
+			return (List<File>) CollectionUtils.select(contents, file -> !file.isDirectory());
 		} catch (FileManagerException e) {
-			logger.error("ERROR", e);
+			log.error(ERROR, e);
 			throw new ServiceException(e);
 		}
 	}
@@ -205,7 +175,7 @@ public class FilesService {
 		try {
 			return Arrays.asList(dirManager.listContents(carpetaFirmas));
 		} catch (FileManagerException e) {
-			logger.error("ERROR", e);
+			log.error(ERROR, e);
 			throw new ServiceException(e);
 		}
 	}
@@ -225,7 +195,7 @@ public class FilesService {
 			
 			return names;
 		} catch (FileManagerException e) {
-			logger.error("ERROR", e);
+			log.error(ERROR, e);
 			throw new ServiceException(e);
 		}
 	}
@@ -245,27 +215,7 @@ public class FilesService {
 			
 			return names;
 		} catch (FileManagerException e) {
-			logger.error("ERROR", e);
-			throw new ServiceException(e);
-		}
-	}
-	
-	/**
-	 * @param template
-	 * @param archivoXML
-	 */
-	public InputStream obtenerPdf(String template, String archivoXML) throws ServiceException {
-		try {
-			StreamSource xslSource = new StreamSource(new File(carpetaTemplates + "/" + template));
-			StreamSource xmlSource = new StreamSource(new File(carpetaArchivos + "/" + archivoXML));
-		
-			CreatePdf createPdf = new CreatePdf();
-			OutputStream ostream = createPdf.parse(xslSource, xmlSource);
-			
-			ByteArrayInputStream istream = new ByteArrayInputStream(((ByteArrayOutputStream)ostream).toByteArray());
-			return istream;
-		} catch (ParseException e) {
-			logger.error("ERROR: ", e);
+			log.error(ERROR, e);
 			throw new ServiceException(e);
 		}
 	}

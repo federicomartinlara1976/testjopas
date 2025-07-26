@@ -10,8 +10,6 @@ public class Utilidades {
 	private String carpetaScripts;
 	
 	public String getPathFromResource(String path) {
-		
-	    
 	    return carpetaScripts + "/" + path;
 	}
 }
