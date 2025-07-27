@@ -2,8 +2,7 @@ package net.bounceme.chronos.testjopas.controllers.converters;
 
 import java.io.File;
 
-import javax.faces.model.SelectItem;
-
+import jakarta.faces.model.SelectItem;
 import net.bounceme.chronos.utils.assemblers.GenericAssembler;
 
 public class FileSelectItemConverter extends GenericAssembler<File, SelectItem> {

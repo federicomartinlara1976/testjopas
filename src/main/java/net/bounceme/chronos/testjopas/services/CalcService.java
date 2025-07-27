@@ -3,8 +3,6 @@ package net.bounceme.chronos.testjopas.services;
 import java.math.BigDecimal;
 import java.util.List;
 
-import net.bounceme.chronos.testjopas.exceptions.ServiceException;
-
 public interface CalcService {
 	
 	void addPath(String path);
