@@ -3,16 +3,14 @@ package net.bounceme.chronos.testjopas.controllers;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import net.bounceme.chronos.logger.Log;
-import net.bounceme.chronos.logger.LogFactory;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.annotation.ManagedProperty;
+import jakarta.faces.view.ViewScoped;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.dto.RaizDTO;
@@ -23,8 +21,8 @@ import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 /**
  * The Class SessionBean.
  */
-@ManagedBean(name = RaizBean.NAME)
 @ViewScoped
+@Slf4j
 public class RaizBean extends BaseBean implements Serializable {
 
 	/**
@@ -34,9 +32,6 @@ public class RaizBean extends BaseBean implements Serializable {
 
 	/** The Constant NAME. */
 	public static final String NAME = "raizBean";
-	
-	/** The logger. */
-	private Log logger;
 
 	/** The appBean bean. */
 	@ManagedProperty(value = "#{appBean}")
@@ -62,23 +57,22 @@ public class RaizBean extends BaseBean implements Serializable {
 	@PostConstruct
 	public void initialize() {
 		try {
-			logger = LogFactory.getInstance().getLogger(RaizBean.class, "LOG4J");
-			
 			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
 					.getSessionAttribute("path");
 
 			initializePaths(paths);
-		} catch (ServiceException e) {
-			logger.error("ERROR:", e);
+		} catch (Exception e) {
+			log.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
 	}
 	
-	private void initializePaths(TestJopasConstantes.Paths paths) throws ServiceException {
+	@SneakyThrows
+	private void initializePaths(TestJopasConstantes.Paths paths) {
 		appBean.getCalcService().clearEnvironment();
 		appBean.getCalcService().resetPath();
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.funciones.value()));
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(paths.value()));
+		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.FUNCIONES.getPath()));
+		appBean.getCalcService().addPath(utilidades.getPathFromResource(paths.getPath()));
 
 		reset();
 	}
@@ -116,7 +110,7 @@ public class RaizBean extends BaseBean implements Serializable {
 			}
 
 		} catch (Exception e) {
-			logger.error("ERROR:", e);
+			log.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
 	}

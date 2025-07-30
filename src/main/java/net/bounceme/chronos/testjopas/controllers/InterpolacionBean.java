@@ -3,16 +3,15 @@ package net.bounceme.chronos.testjopas.controllers;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import net.bounceme.chronos.logger.Log;
-import net.bounceme.chronos.logger.LogFactory;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.annotation.ManagedProperty;
+import jakarta.faces.view.ViewScoped;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.dto.InterpolacionDTO;
@@ -24,20 +23,14 @@ import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 /**
  * The Class SessionBean.
  */
-@ManagedBean(name = InterpolacionBean.NAME)
 @ViewScoped
+@Slf4j
 public class InterpolacionBean extends BaseBean implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2350030970399677473L;
-
-	/** The Constant NAME. */
-	public static final String NAME = "interpolacionBean";
-
-	/** The logger. */
-	private Log logger;
 
 	/** The app bean. */
 	@ManagedProperty(value = "#{appBean}")
@@ -50,25 +43,28 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	@Autowired
 	private Utilidades utilidades;
 
+	@Getter
+	@Setter
 	private InterpolacionDTO interpolacionDTO;
 	
+	@Getter
 	private BigDecimal sp;
 	
+	@Getter
 	private BigDecimal[][] dd;
 	
+	@Getter
 	private BigDecimal[] y;
 
 	@PostConstruct
 	public void initialize() {
 		try {
-			logger = LogFactory.getInstance().getLogger(InterpolacionBean.class, "LOG4J");
-
 			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
 					.getSessionAttribute("path");
 
 			initializePaths(paths);
 		} catch (ServiceException e) {
-			logger.error("ERROR:", e);
+			log.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
 	}
@@ -76,8 +72,8 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	private void initializePaths(TestJopasConstantes.Paths paths) throws ServiceException {
 		appBean.getCalcService().clearEnvironment();
 		appBean.getCalcService().resetPath();
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.funciones.value()));
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(paths.value()));
+		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.FUNCIONES.getPath()));
+		appBean.getCalcService().addPath(utilidades.getPathFromResource(paths.getPath()));
 
 		reset();
 	}
@@ -103,14 +99,14 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 			appBean.getCalcService().execute(cmd);
 				
 			sp = appBean.getCalcService().getScalar("SP");
-			logger.debug("SP: %.6f", sp);
+			log.debug("SP: {}", sp);
 				
 			y = appBean.getCalcService().getArray("Y");
 			
 			dd = appBean.getCalcService().getMatrix("DD");
 		
-		} catch (ServiceException e) {
-			logger.error("ERROR:", e);
+		} catch (Exception e) {
+			log.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
 	}
@@ -157,66 +153,9 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 			if (scalarY != null) {
 				interpolacionDTO.getPuntos()[index].setValor(scalarY);
 			}
-		} catch (ServiceException e) {
-			logger.error("ERROR:", e);
+		} catch (Exception e) {
+			log.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
-	}
-
-	/**
-	 * @return the appBean
-	 */
-	public AppBean getAppBean() {
-		return appBean;
-	}
-
-	/**
-	 * @param appBean the appBean to set
-	 */
-	public void setAppBean(AppBean appBean) {
-		this.appBean = appBean;
-	}
-
-	public SessionBean getSessionBean() {
-		return sessionBean;
-	}
-
-	public void setSessionBean(SessionBean sessionBean) {
-		this.sessionBean = sessionBean;
-	}
-
-	/**
-	 * @return the interpolacionDTO
-	 */
-	public InterpolacionDTO getInterpolacionDTO() {
-		return interpolacionDTO;
-	}
-
-	/**
-	 * @param interpolacionDTO the interpolacionDTO to set
-	 */
-	public void setInterpolacionDTO(InterpolacionDTO interpolacionDTO) {
-		this.interpolacionDTO = interpolacionDTO;
-	}
-	
-	/**
-	 * @return the sp
-	 */
-	public BigDecimal getSp() {
-		return sp;
-	}
-
-	/**
-	 * @return the dd
-	 */
-	public BigDecimal[][] getDd() {
-		return dd;
-	}
-
-	/**
-	 * @return the y
-	 */
-	public BigDecimal[] getY() {
-		return y;
 	}
 }

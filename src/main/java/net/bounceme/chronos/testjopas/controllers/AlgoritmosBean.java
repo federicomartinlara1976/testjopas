@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
-import javax.faces.model.SelectItem;
-
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import net.bounceme.chronos.logger.Log;
-import net.bounceme.chronos.logger.LogFactory;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.annotation.ManagedProperty;
+import jakarta.faces.model.SelectItem;
+import jakarta.faces.view.ViewScoped;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.controllers.converters.FileSelectItemConverter;
@@ -28,20 +28,14 @@ import net.bounceme.chronos.utils.jsf.controller.BaseBean;
  * @author Federico Martín Lara
  *
  */
-@ManagedBean(name = AlgoritmosBean.NAME)
 @ViewScoped
+@Slf4j
 public class AlgoritmosBean extends BaseBean implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2350030970399677473L;
-
-	/** The Constant NAME. */
-	public static final String NAME = "algoritmosBean";
-
-	/** The logger. */
-	private transient Log logger;
 
 	/** The app bean. */
 	@ManagedProperty(value = "#{appBean}")
@@ -57,8 +51,11 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	@Autowired
 	private Utilidades utilidades;
 
+	@Getter
+	@Setter
 	private AlgoritmoDtwDTO algoritmoDtwDTO;
 
+	@Getter
 	private List<SelectItem> archivos;
 
 	private transient FileSelectItemConverter fileSelectItemConverter;
@@ -67,30 +64,31 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 
 	private List<String[]> parametrosFirma2;
 
+	@Getter
 	private BigDecimal distancia;
 	
+	@Getter
 	private Long lastExecution;
 
 	@PostConstruct
 	public void initialize() {
 		try {
-			logger = LogFactory.getInstance().getLogger(AlgoritmosBean.class, "LOG4J");
-
 			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
 					.getSessionAttribute("path");
 			
 			initializePaths(paths);
-		} catch (ServiceException e) {
-			logger.error("ERROR:", e);
+		} catch (Exception e) {
+			log.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
 	}
 
-	private void initializePaths(TestJopasConstantes.Paths paths) throws ServiceException {
+	@SneakyThrows
+	private void initializePaths(TestJopasConstantes.Paths paths) {
 		appBean.getCalcService().clearEnvironment();
 		appBean.getCalcService().resetPath();
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.funciones.value()));
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(paths.value()));
+		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.FUNCIONES.getPath()));
+		appBean.getCalcService().addPath(utilidades.getPathFromResource(paths.getPath()));
 
 		reset();
 	}
@@ -120,8 +118,8 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	public void cambiarFichero1() {
 		try {
 			parametrosFirma1 = filesService.getFileParameters(algoritmoDtwDTO.getFichero1());
-		} catch (ServiceException e) {
-			logger.error("ERROR:", e);
+		} catch (Exception e) {
+			log.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
 	}
@@ -132,66 +130,9 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	public void cambiarFichero2() {
 		try {
 			parametrosFirma2 = filesService.getFileParameters(algoritmoDtwDTO.getFichero2());
-		} catch (ServiceException e) {
-			logger.error("ERROR:", e);
+		} catch (Exception e) {
+			log.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
-	}
-
-	/**
-	 * @return the distancia
-	 */
-	public BigDecimal getDistancia() {
-		return distancia;
-	}
-
-	/**
-	 * @return the lastExecution
-	 */
-	public Long getLastExecution() {
-		return lastExecution;
-	}
-
-	/**
-	 * @return the appBean
-	 */
-	public AppBean getAppBean() {
-		return appBean;
-	}
-
-	/**
-	 * @param appBean the appBean to set
-	 */
-	public void setAppBean(AppBean appBean) {
-		this.appBean = appBean;
-	}
-
-	public SessionBean getSessionBean() {
-		return sessionBean;
-	}
-
-	public void setSessionBean(SessionBean sessionBean) {
-		this.sessionBean = sessionBean;
-	}
-
-	/**
-	 * @return the algoritmoDtwDTO
-	 */
-	public AlgoritmoDtwDTO getAlgoritmoDtwDTO() {
-		return algoritmoDtwDTO;
-	}
-
-	/**
-	 * @param algoritmoDtwDTO the algoritmoDtwDTO to set
-	 */
-	public void setAlgoritmoDtwDTO(AlgoritmoDtwDTO algoritmoDtwDTO) {
-		this.algoritmoDtwDTO = algoritmoDtwDTO;
-	}
-
-	/**
-	 * @return the archivos
-	 */
-	public List<SelectItem> getArchivos() {
-		return archivos;
 	}
 }

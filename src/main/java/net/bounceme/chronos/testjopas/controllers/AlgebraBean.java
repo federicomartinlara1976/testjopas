@@ -5,22 +5,22 @@ import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import jakarta.annotation.ManagedBean;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.annotation.ManagedProperty;
 import jakarta.faces.view.ViewScoped;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.dto.AlgebraDTO;
-import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.testjopas.services.utils.Utilidades;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 
 /**
  * The Class SessionBean.
  */
-@ManagedBean(name = AlgebraBean.NAME)
 @ViewScoped
 @Slf4j
 public class AlgebraBean extends BaseBean implements Serializable {
@@ -44,8 +44,11 @@ public class AlgebraBean extends BaseBean implements Serializable {
 	@Autowired
 	private Utilidades utilidades;
 
+	@Getter
+	@Setter
 	private AlgebraDTO algebraDTO;
 	
+	@Getter
 	private BigDecimal[] c;
 
 	@PostConstruct
@@ -55,17 +58,18 @@ public class AlgebraBean extends BaseBean implements Serializable {
 					.getSessionAttribute("path");
 
 			initializePaths(paths);
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			log.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
 	}
 	
-	private void initializePaths(TestJopasConstantes.Paths paths) throws ServiceException {
+	@SneakyThrows
+	private void initializePaths(TestJopasConstantes.Paths paths) {
 		appBean.getCalcService().clearEnvironment();
 		appBean.getCalcService().resetPath();
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.funciones.value()));
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(paths.value()));
+		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.FUNCIONES.getPath()));
+		appBean.getCalcService().addPath(utilidades.getPathFromResource(paths.getPath()));
 
 		reset();
 	}
@@ -79,7 +83,7 @@ public class AlgebraBean extends BaseBean implements Serializable {
 			appBean.getCalcService().execute(cmd);
 				
 			c = appBean.getCalcService().getArray("c");
-		} catch (ServiceException e) {
+		} catch (Exception e) {
 			log.error("ERROR:", e);
 			this.addErrorMessage(e);
 		}
@@ -93,48 +97,5 @@ public class AlgebraBean extends BaseBean implements Serializable {
 	public void cambiarCoeficientes() {
 		Integer n = algebraDTO.getNumeroCoeficientes();
 		algebraDTO = new AlgebraDTO(n);
-	}
-
-	/**
-	 * @return the appBean
-	 */
-	public AppBean getAppBean() {
-		return appBean;
-	}
-
-	/**
-	 * @param appBean the appBean to set
-	 */
-	public void setAppBean(AppBean appBean) {
-		this.appBean = appBean;
-	}
-
-	public SessionBean getSessionBean() {
-		return sessionBean;
-	}
-
-	public void setSessionBean(SessionBean sessionBean) {
-		this.sessionBean = sessionBean;
-	}
-
-	/**
-	 * @return the algebraDTO
-	 */
-	public AlgebraDTO getAlgebraDTO() {
-		return algebraDTO;
-	}
-
-	/**
-	 * @param algebraDTO the algebraDTO to set
-	 */
-	public void setAlgebraDTO(AlgebraDTO algebraDTO) {
-		this.algebraDTO = algebraDTO;
-	}
-
-	/**
-	 * @return the c
-	 */
-	public BigDecimal[] getC() {
-		return c;
 	}
 }

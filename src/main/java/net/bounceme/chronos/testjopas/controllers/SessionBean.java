@@ -3,30 +3,22 @@ package net.bounceme.chronos.testjopas.controllers;
 import java.io.Serializable;
 import java.util.Locale;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.annotation.ManagedProperty;
+import jakarta.faces.context.FacesContext;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
-import net.bounceme.chronos.testjopas.exceptions.ServiceException;
-import net.bounceme.chronos.utils.jopas.JopasInterpreter;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 
 /**
  * The Class SessionBean.
  */
-@ManagedBean(name = SessionBean.NAME)
 @SessionScoped
 public class SessionBean extends BaseBean implements Serializable {
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -4764455202310413427L;
 
-	/** The Constant NAME. */
-	public static final String NAME = "sessionBean";
-	
 	/** The lang. */
 	private Locale lang;
 	

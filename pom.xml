@@ -91,6 +91,12 @@
 		</dependency>
 		
 		<dependency>
+			<groupId>net.bounceme.chronos.libs</groupId>
+			<artifactId>chronos-web-jsf</artifactId>
+			<version>${chronoslibs.version}</version>
+		</dependency>
+		
+		<dependency>
     		<groupId>org.apache.commons</groupId>
     		<artifactId>commons-collections4</artifactId>
     		<version>4.5.0</version>
