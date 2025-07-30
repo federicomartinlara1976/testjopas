@@ -3,6 +3,9 @@ package net.bounceme.chronos.testjopas.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class AlgebraDTO implements Serializable {
 
 	/**
@@ -10,10 +13,15 @@ public class AlgebraDTO implements Serializable {
 	 */
 	private static final long serialVersionUID = 4085451201013746161L;
 	
+	@Getter
 	private Integer numeroCoeficientes;
 	
+	@Getter
+	@Setter
 	private BigDecimal[][] matrizCoeficientes;
 	
+	@Getter
+	@Setter
 	private BigDecimal[] terminos;
 
 	public AlgebraDTO() {
@@ -37,47 +45,5 @@ public class AlgebraDTO implements Serializable {
 			
 			terminos[i] = BigDecimal.ZERO;
 		}
-	}
-
-	/**
-	 * @return the numeroCoeficientes
-	 */
-	public Integer getNumeroCoeficientes() {
-		return numeroCoeficientes;
-	}
-
-	/**
-	 * @param numeroCoeficientes the numeroCoeficientes to set
-	 */
-	public void setNumeroCoeficientes(Integer numeroCoeficientes) {
-		this.numeroCoeficientes = numeroCoeficientes;
-	}
-
-	/**
-	 * @return the matrizCoeficientes
-	 */
-	public BigDecimal[][] getMatrizCoeficientes() {
-		return matrizCoeficientes;
-	}
-
-	/**
-	 * @param matrizCoeficientes the matrizCoeficientes to set
-	 */
-	public void setMatrizCoeficientes(BigDecimal[][] matrizCoeficientes) {
-		this.matrizCoeficientes = matrizCoeficientes;
-	}
-
-	/**
-	 * @return the terminos
-	 */
-	public BigDecimal[] getTerminos() {
-		return terminos;
-	}
-
-	/**
-	 * @param terminos the terminos to set
-	 */
-	public void setTerminos(BigDecimal[] terminos) {
-		this.terminos = terminos;
 	}
 }
