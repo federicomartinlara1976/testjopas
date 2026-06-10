@@ -1,16 +1,14 @@
 spring:
   application:
-    name: testjopas
-    version: @project.version@
+    name: springboot-jopas-test
+    version: 1.1.0
 
   profiles:
-    active: @spring.profiles.active@
+    active: dev
   
   config.import: "optional:configserver:"
   cloud:
     config:
-      name: cuentas
+      name: springboot-jopas-test
       enabled: true
       uri: http://192.168.1.135:8888
-
-build.date: @maven.build.timestamp@
