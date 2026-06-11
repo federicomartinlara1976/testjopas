@@ -3,9 +3,21 @@
 	xmlns="http://java.sun.com/xml/ns/javaee"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
-	<display-name>testjopas</display-name>
+	
+	<display-name>Springboot Java Octave test</display-name>
 
 	<!-- JSF params -->
+	<!-- Configuración JSF -->
+    <context-param>
+        <param-name>jakarta.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>jakarta.faces.FACELETS_REFRESH_PERIOD</param-name>
+        <param-value>2</param-value>
+    </context-param>
+    
 	<context-param>
 		<param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
 		<param-value>true</param-value>
@@ -17,19 +29,25 @@
 	</context-param>
 
 	<context-param>
-		<param-name>javax.faces.PROJECT_STAGE</param-name>
-		<param-value>Development</param-value>
-	</context-param>
-
-	<context-param>
 		<param-name>javax.faces.SKIP_COMMENTS</param-name>
 		<param-value>true</param-value>
 	</context-param>
 
 	<!-- Primefaces params -->
-	<context-param>
-		<param-name>primefaces.FONT_AWESOME</param-name>
-		<param-value>true</param-value>
+	<!-- Configuración Primefaces -->
+    <context-param>
+        <param-name>primefaces.FONT_AWESOME</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    
+    <context-param>
+        <param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    
+    <context-param>
+    	<param-name>primefaces.UPLOADER</param-name>
+    	<param-value>commons</param-value>
 	</context-param>
 
 	<context-param>
@@ -51,17 +69,6 @@
 		<param-name>primefaces.LEGACY_WIDGET_NAMESPACE</param-name>
 		<param-value>true</param-value>
 	</context-param>
-
-	<!-- Spring params -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/applicationContext.xml</param-value>
-	</context-param>
-
-
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
 
 	<welcome-file-list>
 		<welcome-file>/index.xhtml</welcome-file>

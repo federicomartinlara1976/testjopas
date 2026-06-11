@@ -2,14 +2,19 @@ package net.bounceme.chronos.testjopas.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
+import lombok.Getter;
 import net.bounceme.chronos.testjopas.services.CalcService;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 
 /**
  * The Class AppBean.
  */
+@Component
+@Named
 @ApplicationScoped
 public class AppBean extends BaseBean {
 	
@@ -18,12 +23,6 @@ public class AppBean extends BaseBean {
 	
 	@Autowired
 	@Qualifier("javaOctaveService")
+	@Getter
 	private transient CalcService calcService;
-
-	/**
-	 * @return the jopasService
-	 */
-	public CalcService getCalcService() {
-		return calcService;
-	}
 }

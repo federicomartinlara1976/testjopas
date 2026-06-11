@@ -5,10 +5,11 @@ import java.math.BigDecimal;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.annotation.ManagedProperty;
 import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,8 @@ import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 /**
  * The Class SessionBean.
  */
+@Component
+@Named
 @ViewScoped
 @Slf4j
 public class InterpolacionBean extends BaseBean implements Serializable {
@@ -33,11 +36,11 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	private static final long serialVersionUID = 2350030970399677473L;
 
 	/** The app bean. */
-	@ManagedProperty(value = "#{appBean}")
+	@Autowired
 	private AppBean appBean;
 
 	/** The app bean. */
-	@ManagedProperty(value = "#{sessionBean}")
+	@Autowired
 	private SessionBean sessionBean;
 	
 	@Autowired

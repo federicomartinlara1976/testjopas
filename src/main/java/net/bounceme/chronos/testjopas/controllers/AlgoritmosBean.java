@@ -6,11 +6,12 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.annotation.ManagedProperty;
 import jakarta.faces.model.SelectItem;
 import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -28,6 +29,8 @@ import net.bounceme.chronos.utils.jsf.controller.BaseBean;
  * @author Federico Martín Lara
  *
  */
+@Component
+@Named
 @ViewScoped
 @Slf4j
 public class AlgoritmosBean extends BaseBean implements Serializable {
@@ -38,12 +41,8 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	private static final long serialVersionUID = 2350030970399677473L;
 
 	/** The app bean. */
-	@ManagedProperty(value = "#{appBean}")
+	@Autowired
 	private AppBean appBean;
-
-	/** The app bean. */
-	@ManagedProperty(value = "#{sessionBean}")
-	private SessionBean sessionBean;
 	
 	@Autowired
 	private transient FilesService filesService;
@@ -96,7 +95,8 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	/**
 	 * @throws ServiceException
 	 */
-	public void reset() throws ServiceException {
+	@SneakyThrows(ServiceException.class)
+	public void reset() {
 		fileSelectItemConverter = new FileSelectItemConverter();
 		archivos = (List<SelectItem>) fileSelectItemConverter.assemble(filesService.getArchivosParametros());
 

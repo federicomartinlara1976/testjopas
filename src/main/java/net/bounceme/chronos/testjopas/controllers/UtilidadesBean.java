@@ -7,9 +7,11 @@ import java.util.List;
 
 import org.primefaces.event.DragDropEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
@@ -20,6 +22,8 @@ import net.bounceme.chronos.utils.jsf.controller.BaseBean;
  * @author Federico Martín Lara
  *
  */
+@Component
+@Named
 @ViewScoped
 @Slf4j
 public class UtilidadesBean extends BaseBean implements Serializable {

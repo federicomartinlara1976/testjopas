@@ -5,22 +5,26 @@ import java.math.BigDecimal;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
-import jakarta.faces.annotation.ManagedProperty;
 import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
 import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.dto.RaizDTO;
-import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.testjopas.services.utils.Utilidades;
 import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 
 /**
  * The Class SessionBean.
  */
+@Component
+@Named
 @ViewScoped
 @Slf4j
 public class RaizBean extends BaseBean implements Serializable {
@@ -34,22 +38,32 @@ public class RaizBean extends BaseBean implements Serializable {
 	public static final String NAME = "raizBean";
 
 	/** The appBean bean. */
-	@ManagedProperty(value = "#{appBean}")
+	@Autowired
+	@Getter
+	@Setter
 	private AppBean appBean;
 
 	/** The sessionBean bean. */
-	@ManagedProperty(value = "#{sessionBean}")
+	@Autowired
+	@Getter
+	@Setter
 	private SessionBean sessionBean;
 	
 	@Autowired
 	private Utilidades utilidades;
 
+	@Getter
+	@Setter
 	private RaizDTO raizDTO;
 	
+	@Getter
+	@Setter
 	private BigDecimal sol;
 	
+	@Getter
 	private Integer iteraciones;
 	
+	@Getter
 	private BigDecimal[] valores;
 	
 	private String error;
@@ -122,62 +136,5 @@ public class RaizBean extends BaseBean implements Serializable {
 		iteraciones = null;
 		valores = new BigDecimal[0];
 		error = StringUtils.EMPTY;
-	}
-
-	/**
-	 * @return the appBean
-	 */
-	public AppBean getAppBean() {
-		return appBean;
-	}
-
-	/**
-	 * @param appBean the appBean to set
-	 */
-	public void setAppBean(AppBean appBean) {
-		this.appBean = appBean;
-	}
-
-	/**
-	 * @return the sessionBean
-	 */
-	public SessionBean getSessionBean() {
-		return sessionBean;
-	}
-
-	/**
-	 * @param sessionBean the sessionBean to set
-	 */
-	public void setSessionBean(SessionBean sessionBean) {
-		this.sessionBean = sessionBean;
-	}
-
-	/**
-	 * @return the raizDTO
-	 */
-	public RaizDTO getRaizDTO() {
-		return raizDTO;
-	}
-
-	/**
-	 * @param raizDTO the raizDTO to set
-	 */
-	public void setRaizDTO(RaizDTO raizDTO) {
-		this.raizDTO = raizDTO;
-	}
-
-	/**
-	 * @return the sol
-	 */
-	public BigDecimal getSol() {
-		return sol;
-	}
-	
-	public BigDecimal[] getValores() {
-		return valores;
-	}
-	
-	public Integer getIteraciones() {
-		return iteraciones;
 	}
 }
