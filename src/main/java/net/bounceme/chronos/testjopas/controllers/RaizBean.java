@@ -119,7 +119,6 @@ public class RaizBean implements Serializable {
 		raizDTO = new RaizDTO();
 		
 		sol = null;
-		iteraciones = null;
 		valores = new BigDecimal[0];
 		error = StringUtils.EMPTY;
 	}

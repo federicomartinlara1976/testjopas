@@ -31,35 +31,35 @@
 				</p:outputPanel>
 			</p:outputPanel>
 			
-			<p:outputPanel layout="block" styleClass="ui-g-12">
-				<p:outputPanel layout="block"
-					styleClass="ui-g-12 box shadow overview-box">
-					<ui:include src="/raiz/datos-entrada.xhtml" />
-					
-					<p:outputPanel layout="block" id="botonera"
-						styleClass="botonera ui-g-12 ui-md-12 ui-lg-12">
-
-						<p:commandButton id="calcular" value="#{res['raiz.calcular']}"
-							actionListener="#{raizBean.calcular}" process="@form" ajax="true" update="messages,resultados"
-							styleClass="btn btn-primary ui-g-2 ui-md-2 ui-lg-2"
-							icon="fa fa-save" />
-							
-						<p:commandButton id="reset" value="#{res['raiz.reset']}"
-							actionListener="#{raizBean.reset}" immediate="true" ajax="true" update="resultados"
-							styleClass="btn btn-danger ui-g-2 ui-md-2 ui-lg-2"
-							icon="fa fa-refresh" />
-
-					</p:outputPanel>
-				</p:outputPanel>
-			</p:outputPanel>
+			<p:panel id="datosEntrada" styleClass="ui-g-12 ui-md-12 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Datos de entrada
+	       		</f:facet>
+	       		
+	       		<f:facet name="actions">
+		            <p:commandButton icon="pi pi-save" process="@form" 
+		            	ajax="true" update="messages resultados"
+		            	actionListener="#{raizBean.calcular}"
+						styleClass="edit-button rounded-button ui-button-success"/>
+						
+					<p:commandButton icon="pi pi-replay" process="@form" 
+		            	actionListener="#{raizBean.reset}" immediate="true" ajax="true" update="datosEntrada resultados"
+						styleClass="edit-button rounded-button ui-button-danger"/>
+		            
+				</f:facet>
+				
+				<ui:include src="/raiz/datos-entrada.xhtml" />
+			</p:panel>
 			
-			<p:outputPanel id="resultados" layout="block" styleClass="ui-g-12">
-				<p:outputPanel layout="block"
-					rendered="#{raizBean.sol != null}"
-					styleClass="ui-g-12 box shadow overview-box">
-					<ui:include src="/raiz/datos-salida.xhtml" />
-				</p:outputPanel>
-			</p:outputPanel>
+			<p:panel id="resultados" styleClass="ui-g-12 ui-md-12 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Resultados
+	       		</f:facet>
+	       		
+	       		<ui:include src="/raiz/datos-salida.xhtml" />
+			</p:panel>
 		</p:outputPanel>	
 	</ui:define>
 

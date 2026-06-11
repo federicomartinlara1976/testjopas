@@ -74,7 +74,18 @@
 		<welcome-file>/index.xhtml</welcome-file>
 	</welcome-file-list>
 
-	<session-config>
-		<session-timeout>30</session-timeout>
-	</session-config>
+	<error-page>
+    	<exception-type>RuntimeException</exception-type>
+    	<location>/error.xhtml</location>
+    </error-page>
+    
+    <error-page>
+    	<exception-type>ViewExpiredException</exception-type>
+    	<location>/expired.xhtml</location>
+    </error-page>
+    
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error.xhtml</location>
+    </error-page>
 </web-app>
