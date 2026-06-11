@@ -10,13 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.testjopas.services.FilesService;
-import net.bounceme.chronos.utils.jsf.controller.BaseBean;
+import net.bounceme.chronos.testjopas.util.JsfHelper;
 
 /**
  * @author Federico Martín Lara
@@ -26,7 +27,7 @@ import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 @Named
 @ViewScoped
 @Slf4j
-public class UtilidadesBean extends BaseBean implements Serializable {
+public class UtilidadesBean implements Serializable {
 
 	/**
 	 * 
@@ -58,7 +59,7 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 			droppedFiles = new ArrayList<>();
 		} catch (ServiceException e) {
 			log.error("ERROR:", e);
-			this.addErrorMessage(e);
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
 		}
 	}
 
@@ -77,7 +78,7 @@ public class UtilidadesBean extends BaseBean implements Serializable {
 			droppedFiles.clear();
 		} catch (ServiceException e) {
 			log.error("ERROR:", e);
-			this.addErrorMessage(e);
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
 		}
 	}
 

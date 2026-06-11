@@ -5,21 +5,19 @@ import java.math.BigDecimal;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
-import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.dto.InterpolacionDTO;
 import net.bounceme.chronos.testjopas.dto.PuntoDTO;
-import net.bounceme.chronos.testjopas.exceptions.ServiceException;
-import net.bounceme.chronos.testjopas.services.utils.Utilidades;
-import net.bounceme.chronos.utils.jsf.controller.BaseBean;
+import net.bounceme.chronos.testjopas.util.JsfHelper;
 
 /**
  * The Class SessionBean.
@@ -28,12 +26,15 @@ import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 @Named
 @ViewScoped
 @Slf4j
-public class InterpolacionBean extends BaseBean implements Serializable {
+public class InterpolacionBean implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2350030970399677473L;
+	
+	@Value("${application.paths.funciones}")
+	private String pathFunciones;
 
 	/** The app bean. */
 	@Autowired
@@ -43,9 +44,6 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	@Autowired
 	private SessionBean sessionBean;
 	
-	@Autowired
-	private Utilidades utilidades;
-
 	@Getter
 	@Setter
 	private InterpolacionDTO interpolacionDTO;
@@ -62,25 +60,17 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 	@PostConstruct
 	public void initialize() {
 		try {
-			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
-					.getSessionAttribute("path");
+			appBean.getCalcService().clearEnvironment();
+			appBean.getCalcService().resetPath();
+			appBean.getCalcService().addPath(pathFunciones);
 
-			initializePaths(paths);
-		} catch (ServiceException e) {
+			reset();
+		} catch (Exception e) {
 			log.error("ERROR:", e);
-			this.addErrorMessage(e);
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
 		}
 	}
 	
-	private void initializePaths(TestJopasConstantes.Paths paths) throws ServiceException {
-		appBean.getCalcService().clearEnvironment();
-		appBean.getCalcService().resetPath();
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.FUNCIONES.getPath()));
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(paths.getPath()));
-
-		reset();
-	}
-
 	public void calcular() {
 		try {
 			String cmd = StringUtils.EMPTY;
@@ -110,7 +100,7 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 		
 		} catch (Exception e) {
 			log.error("ERROR:", e);
-			this.addErrorMessage(e);
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
 		}
 	}
 
@@ -158,7 +148,7 @@ public class InterpolacionBean extends BaseBean implements Serializable {
 			}
 		} catch (Exception e) {
 			log.error("ERROR:", e);
-			this.addErrorMessage(e);
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
 		}
 	}
 }

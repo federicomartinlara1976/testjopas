@@ -19,14 +19,14 @@
 			<p:tab title="#{res['menu.raiz']}">
 				<ul class="list-group">
 					<li class="list-group-item"><h:commandLink
-						actionListener="#{sessionBean.setParam('opcion', 'newton')}"
+						actionListener="#{sessionBean.setOpcion('newton')}"
 						action="#{sessionBean.navegar('raiz')}" ajax="false"
 						disabled="#{sessionBean.currentPage eq 'raiz' and sessionBean.opcion eq 'newton'}">
 							<i class="fa fa-book"></i>
 							<span><h:outputText value="#{res['menu.raiz.newton']}" /></span>
 					</h:commandLink></li>
 					<li class="list-group-item"><h:commandLink
-						actionListener="#{sessionBean.setParam('opcion', 'secante')}"
+						actionListener="#{sessionBean.setOpcion('secante')}"
 						action="#{sessionBean.navegar('raiz')}" ajax="false"
 						disabled="#{sessionBean.currentPage eq 'raiz' and sessionBean.opcion eq 'secante'}">
 							<i class="fa fa-book"></i>
@@ -37,14 +37,14 @@
 			<p:tab title="#{res['menu.interpolacion']}">
 				<ul class="list-group">
 					<li class="list-group-item"><h:commandLink
-						actionListener="#{sessionBean.setParam('opcion', 'funcion')}"	
+						actionListener="#{sessionBean.setOpcion('funcion')}"	
 						action="#{sessionBean.navegar('interpolacion')}" ajax="false"
 						disabled="#{sessionBean.currentPage eq 'interpolacion' and sessionBean.opcion eq 'funcion'}">
 							<i class="fa fa-users"></i>
 							<span><h:outputText value="#{res['menu.interpolacion.funcion']}" /></span>
 					</h:commandLink></li>
 					<li class="list-group-item"><h:commandLink
-						actionListener="#{sessionBean.setParam('opcion', 'tabla')}"
+						actionListener="#{sessionBean.setOpcion('tabla')}"
 						action="#{sessionBean.navegar('interpolacion')}" ajax="false"
 						disabled="#{sessionBean.currentPage eq 'interpolacion' and sessionBean.opcion eq 'tabla'}">
 							<i class="fa fa-users"></i>
@@ -55,7 +55,7 @@
 			<p:tab title="#{res['menu.integracion']}">
 				<ul class="list-group">
 					<li class="list-group-item"><h:commandLink
-						actionListener="#{sessionBean.setParam('opcion', 'simpson')}"
+						actionListener="#{sessionBean.setOpcion('simpson')}"
 						action="#{sessionBean.navegar('integracion')}" ajax="false"
 						disabled="#{sessionBean.currentPage eq 'integracion' and sessionBean.opcion eq 'simpson'}">
 							<i class="fa fa-users"></i>
@@ -66,7 +66,7 @@
 			<p:tab title="#{res['menu.algebra']}">
 				<ul class="list-group">
 					<li class="list-group-item"><h:commandLink
-						actionListener="#{sessionBean.setParam('opcion', 'sistemas')}"
+						actionListener="#{sessionBean.setOpcion('sistemas')}"
 						action="#{sessionBean.navegar('algebra')}" ajax="false"
 						disabled="#{sessionBean.currentPage eq 'algebra' and sessionBean.opcion eq 'sistemas'}">
 							<i class="fa fa-users"></i>
@@ -77,7 +77,7 @@
 			<p:tab title="Reglas de negocio">
 				<ul class="list-group">
 					<li class="list-group-item"><h:commandLink
-						actionListener="#{sessionBean.setParam('opcion', 'test')}"
+						actionListener="#{sessionBean.setOpcion('test')}"
 						action="#{sessionBean.navegar('reglas')}" ajax="false"
 						disabled="#{sessionBean.currentPage eq 'reglas' and sessionBean.opcion eq 'test'}">
 							<i class="fa fa-users"></i>
@@ -88,7 +88,7 @@
 			<p:tab title="#{res['menu.utilidades']}">
 				<ul class="list-group">
 					<li class="list-group-item"><h:commandLink
-						actionListener="#{sessionBean.setParam('opcion', 'probarXSL')}"
+						actionListener="#{sessionBean.setOpcion('probarXSL')}"
 						action="#{sessionBean.navegar('utilidades')}" ajax="false"
 						disabled="#{sessionBean.currentPage eq 'utilidades' and sessionBean.opcion eq 'probarXSL'}">
 							<i class="fa fa-users"></i>

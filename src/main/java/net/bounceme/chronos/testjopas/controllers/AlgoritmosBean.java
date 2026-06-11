@@ -6,9 +6,11 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.model.SelectItem;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
@@ -16,14 +18,11 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
-import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.controllers.converters.FileSelectItemConverter;
 import net.bounceme.chronos.testjopas.dto.AlgoritmoDtwDTO;
 import net.bounceme.chronos.testjopas.exceptions.ServiceException;
 import net.bounceme.chronos.testjopas.services.FilesService;
-import net.bounceme.chronos.testjopas.services.utils.Utilidades;
-import net.bounceme.chronos.utils.jsf.controller.BaseBean;
+import net.bounceme.chronos.testjopas.util.JsfHelper;
 
 /**
  * @author Federico Martín Lara
@@ -33,12 +32,15 @@ import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 @Named
 @ViewScoped
 @Slf4j
-public class AlgoritmosBean extends BaseBean implements Serializable {
+public class AlgoritmosBean implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2350030970399677473L;
+	
+	@Value("${application.paths.funciones}")
+	private String pathFunciones;
 
 	/** The app bean. */
 	@Autowired
@@ -47,9 +49,6 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	@Autowired
 	private transient FilesService filesService;
 	
-	@Autowired
-	private Utilidades utilidades;
-
 	@Getter
 	@Setter
 	private AlgoritmoDtwDTO algoritmoDtwDTO;
@@ -72,24 +71,15 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 	@PostConstruct
 	public void initialize() {
 		try {
-			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
-					.getSessionAttribute("path");
-			
-			initializePaths(paths);
+			appBean.getCalcService().clearEnvironment();
+			appBean.getCalcService().resetPath();
+			appBean.getCalcService().addPath(pathFunciones);
+
+			reset();
 		} catch (Exception e) {
 			log.error("ERROR:", e);
-			this.addErrorMessage(e);
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
 		}
-	}
-
-	@SneakyThrows
-	private void initializePaths(TestJopasConstantes.Paths paths) {
-		appBean.getCalcService().clearEnvironment();
-		appBean.getCalcService().resetPath();
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.FUNCIONES.getPath()));
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(paths.getPath()));
-
-		reset();
 	}
 
 	/**
@@ -120,7 +110,7 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 			parametrosFirma1 = filesService.getFileParameters(algoritmoDtwDTO.getFichero1());
 		} catch (Exception e) {
 			log.error("ERROR:", e);
-			this.addErrorMessage(e);
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
 		}
 	}
 
@@ -132,7 +122,7 @@ public class AlgoritmosBean extends BaseBean implements Serializable {
 			parametrosFirma2 = filesService.getFileParameters(algoritmoDtwDTO.getFichero2());
 		} catch (Exception e) {
 			log.error("ERROR:", e);
-			this.addErrorMessage(e);
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
 		}
 	}
 }

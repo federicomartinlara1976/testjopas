@@ -14,6 +14,7 @@ public class AlgebraDTO implements Serializable {
 	private static final long serialVersionUID = 4085451201013746161L;
 	
 	@Getter
+	@Setter
 	private Integer numeroCoeficientes;
 	
 	@Getter

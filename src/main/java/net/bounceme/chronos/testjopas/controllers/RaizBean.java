@@ -5,20 +5,18 @@ import java.math.BigDecimal;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
-import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
 import net.bounceme.chronos.testjopas.dto.RaizDTO;
-import net.bounceme.chronos.testjopas.services.utils.Utilidades;
-import net.bounceme.chronos.utils.jsf.controller.BaseBean;
+import net.bounceme.chronos.testjopas.util.JsfHelper;
 
 /**
  * The Class SessionBean.
@@ -27,15 +25,15 @@ import net.bounceme.chronos.utils.jsf.controller.BaseBean;
 @Named
 @ViewScoped
 @Slf4j
-public class RaizBean extends BaseBean implements Serializable {
+public class RaizBean implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2350030970399677473L;
 
-	/** The Constant NAME. */
-	public static final String NAME = "raizBean";
+	@Value("${application.paths.funciones}")
+	private String pathFunciones;
 
 	/** The appBean bean. */
 	@Autowired
@@ -49,9 +47,6 @@ public class RaizBean extends BaseBean implements Serializable {
 	@Setter
 	private SessionBean sessionBean;
 	
-	@Autowired
-	private Utilidades utilidades;
-
 	@Getter
 	@Setter
 	private RaizDTO raizDTO;
@@ -71,24 +66,15 @@ public class RaizBean extends BaseBean implements Serializable {
 	@PostConstruct
 	public void initialize() {
 		try {
-			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
-					.getSessionAttribute("path");
+			appBean.getCalcService().clearEnvironment();
+			appBean.getCalcService().resetPath();
+			appBean.getCalcService().addPath(pathFunciones);
 
-			initializePaths(paths);
+			reset();
 		} catch (Exception e) {
 			log.error("ERROR:", e);
-			this.addErrorMessage(e);
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
 		}
-	}
-	
-	@SneakyThrows
-	private void initializePaths(TestJopasConstantes.Paths paths) {
-		appBean.getCalcService().clearEnvironment();
-		appBean.getCalcService().resetPath();
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.FUNCIONES.getPath()));
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(paths.getPath()));
-
-		reset();
 	}
 
 	public void calcular() {
@@ -125,7 +111,7 @@ public class RaizBean extends BaseBean implements Serializable {
 
 		} catch (Exception e) {
 			log.error("ERROR:", e);
-			this.addErrorMessage(e);
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
 		}
 	}
 	
