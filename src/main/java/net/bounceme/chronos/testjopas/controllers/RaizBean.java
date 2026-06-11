@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.dto.RaizDTO;
+import net.bounceme.chronos.testjopas.services.CalcService;
 import net.bounceme.chronos.testjopas.util.JsfHelper;
 
 /**
@@ -34,17 +36,12 @@ public class RaizBean implements Serializable {
 
 	@Value("${application.paths.funciones}")
 	private String pathFunciones;
-
-	/** The appBean bean. */
+	
 	@Autowired
-	@Getter
-	@Setter
-	private AppBean appBean;
+	@Qualifier("javaOctaveService")
+	private transient CalcService calcService;
 
-	/** The sessionBean bean. */
 	@Autowired
-	@Getter
-	@Setter
 	private SessionBean sessionBean;
 	
 	@Getter
@@ -66,9 +63,9 @@ public class RaizBean implements Serializable {
 	@PostConstruct
 	public void initialize() {
 		try {
-			appBean.getCalcService().clearEnvironment();
-			appBean.getCalcService().resetPath();
-			appBean.getCalcService().addPath(pathFunciones);
+			calcService.clearEnvironment();
+			calcService.resetPath();
+			calcService.addPath(pathFunciones);
 
 			reset();
 		} catch (Exception e) {
@@ -79,12 +76,12 @@ public class RaizBean implements Serializable {
 
 	public void calcular() {
 		try {
-			appBean.getCalcService().passVariable("puntoInicial", raizDTO.getPuntoInicial());
-			appBean.getCalcService().passVariable("tolerancia", raizDTO.getTolerancia());
-			appBean.getCalcService().passVariable("iteraciones", raizDTO.getIteraciones());
+			calcService.passVariable("puntoInicial", raizDTO.getPuntoInicial());
+			calcService.passVariable("tolerancia", raizDTO.getTolerancia());
+			calcService.passVariable("iteraciones", raizDTO.getIteraciones());
 	
 			if ("secante".equals(sessionBean.getOpcion())) {
-				appBean.getCalcService().passVariable("primeraAproximacion", raizDTO.getPrimeraAproximacion());
+				calcService.passVariable("primeraAproximacion", raizDTO.getPrimeraAproximacion());
 			}
 			
 			// Ejecuta el comando
@@ -96,17 +93,17 @@ public class RaizBean implements Serializable {
 				cmd = "[x,sol,ni,error]=secante(puntoInicial, primeraAproximacion, tolerancia, iteraciones)";
 			}
 			
-			appBean.getCalcService().execute(cmd);
+			calcService.execute(cmd);
 			
 			// Las variables de salida son las que están definidas entre [] en el comando
-			error = appBean.getCalcService().getString("error");
+			error = calcService.getString("error");
 			if (StringUtils.isNotBlank(error)) {
 				throw new Exception(error);
 			}
 			else {
-				sol = appBean.getCalcService().getScalar("sol");
-				iteraciones = appBean.getCalcService().getIntScalar("ni");
-				valores = appBean.getCalcService().getArray("x");
+				sol = calcService.getScalar("sol");
+				iteraciones = calcService.getIntScalar("ni");
+				valores = calcService.getArray("x");
 			}
 
 		} catch (Exception e) {
