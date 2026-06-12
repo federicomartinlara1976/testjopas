@@ -1,4 +1,4 @@
-package net.bounceme.chronos.testjopas.services;
+package net.bounceme.chronos.testjopas.services.impl;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -13,6 +13,7 @@ import dk.ange.octave.type.OctaveDouble;
 import dk.ange.octave.type.OctaveString;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import net.bounceme.chronos.testjopas.services.CalcService;
 import net.bounceme.chronos.utils.calc.converters.Converter;
 import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToArray;
 import net.bounceme.chronos.utils.calc.converters.OctaveDoubleToMatrix;
