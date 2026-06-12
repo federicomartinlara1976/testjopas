@@ -3,9 +3,7 @@ package net.bounceme.chronos.testjopas.controllers;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.PostConstruct;
@@ -17,6 +15,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.dto.InterpolacionDTO;
 import net.bounceme.chronos.testjopas.dto.PuntoDTO;
+import net.bounceme.chronos.testjopas.services.InterpolacionService;
 import net.bounceme.chronos.testjopas.util.JsfHelper;
 
 /**
@@ -33,12 +32,8 @@ public class InterpolacionBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 2350030970399677473L;
 	
-	@Value("${application.paths.funciones}")
-	private String pathFunciones;
-
-	/** The app bean. */
 	@Autowired
-	private AppBean appBean;
+	private InterpolacionService interpolacionService;
 
 	/** The app bean. */
 	@Autowired
@@ -59,65 +54,21 @@ public class InterpolacionBean implements Serializable {
 
 	@PostConstruct
 	public void initialize() {
-		try {
-			appBean.getCalcService().clearEnvironment();
-			appBean.getCalcService().resetPath();
-			appBean.getCalcService().addPath(pathFunciones);
-
-			reset();
-		} catch (Exception e) {
-			log.error("ERROR:", e);
-			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
-		}
+		reset();
 	}
 	
 	public void calcular() {
 		try {
-			String cmd = StringUtils.EMPTY;
-			appBean.getCalcService().passVariable("puntoInterpolar", interpolacionDTO.getPuntoInterpolar());
+			interpolacionService.calcular(interpolacionDTO, sessionBean.getOpcion());
 			
-			BigDecimal[] puntos = toArrayPuntos(interpolacionDTO);
-			appBean.getCalcService().passVariable("x", puntos);
-			
-			if ("funcion".equals(sessionBean.getOpcion())) {
-				cmd = "[Y,DD,SP]=interpoladorFuncion(puntoInterpolar, x)";
-			}
-			
-			if ("tabla".equals(sessionBean.getOpcion())) {
-				BigDecimal[] valores = toArrayValores(interpolacionDTO);
-				appBean.getCalcService().passVariable("y", valores);
-				cmd = "[Y,DD,SP]=interpoladorTablaValores(puntoInterpolar, x, y)";
-			}
-			
-			appBean.getCalcService().execute(cmd);
-				
-			sp = appBean.getCalcService().getScalar("SP");
-			log.debug("SP: {}", sp);
-				
-			y = appBean.getCalcService().getArray("Y");
-			
-			dd = appBean.getCalcService().getMatrix("DD");
+			sp = interpolacionService.getSp();
+			y = interpolacionService.getY();
+			dd = interpolacionService.getDd();
 		
 		} catch (Exception e) {
-			log.error("ERROR:", e);
-			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
+			log.error("ERROR: {}", e.getMessage());
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
 		}
-	}
-
-	private BigDecimal[] toArrayPuntos(InterpolacionDTO interpolacionDTO) {
-		BigDecimal[] puntos = new BigDecimal[interpolacionDTO.getNumeroPuntos()];
-		for (int i=0;i<interpolacionDTO.getNumeroPuntos();i++) {
-			puntos[i] = interpolacionDTO.getPuntos()[i].getPunto();
-		}
-		return puntos;
-	}
-	
-	private BigDecimal[] toArrayValores(InterpolacionDTO interpolacionDTO) {
-		BigDecimal[] valores = new BigDecimal[interpolacionDTO.getNumeroPuntos()];
-		for (int i=0;i<interpolacionDTO.getNumeroPuntos();i++) {
-			valores[i] = interpolacionDTO.getPuntos()[i].getValor();
-		}
-		return valores;
 	}
 
 	public void reset() {
@@ -131,24 +82,6 @@ public class InterpolacionBean implements Serializable {
 		// inicializa puntos
 		for (int i = 0; i < interpolacionDTO.getNumeroPuntos(); i++) {
 			interpolacionDTO.getPuntos()[i] = new PuntoDTO();
-		}
-	}
-
-	public void calcularValor(Integer index) {
-		try {
-			BigDecimal punto = interpolacionDTO.getPuntos()[index].getPunto();
-			appBean.getCalcService().passVariable("x", punto);
-
-			String cmd = "y=f(x)";
-			appBean.getCalcService().execute(cmd);
-
-			BigDecimal scalarY = appBean.getCalcService().getScalar("y");
-			if (scalarY != null) {
-				interpolacionDTO.getPuntos()[index].setValor(scalarY);
-			}
-		} catch (Exception e) {
-			log.error("ERROR:", e);
-			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
 		}
 	}
 }

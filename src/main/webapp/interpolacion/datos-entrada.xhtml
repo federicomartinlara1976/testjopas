@@ -4,28 +4,23 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-
-	<table class="c100">
-		<tbody>
-			<tr>
-				<td class="c20"><h:outputLabel
-						value="#{res['interpolacion.puntoInterpolar']}" for="puntoInterpolar"
-						styleClass="label" /></td>
-				<td><p:inputNumber id="puntoInterpolar"
-						value="#{interpolacionBean.interpolacionDTO.puntoInterpolar}" styleClass="c100" /></td>
-			</tr>
-			<tr>
-				<td class="c20"><h:outputLabel
-						value="#{res['interpolacion.numeroPuntos']}" for="numeroPuntos"
-						styleClass="label" /></td>
-				<td>
-					<p:spinner id="numeroPuntos" value="#{interpolacionBean.interpolacionDTO.numeroPuntos}"
-						min="1" max="100">
-                		<p:ajax process="@this" listener="#{interpolacionBean.cambiarPuntos}" update="panelPuntos"/>
-            		</p:spinner></td>
-			</tr>
-		</tbody>
-	</table>
+	
+	<div class="ui-g ui-fluid">
+		<div class="field ui-g-12 ui-md-12 ui-lg-6">
+			<h:outputLabel
+				value="#{res['interpolacion.puntoInterpolar']}" for="puntoInterpolar"/>
+			<p:inputNumber id="puntoInterpolar"
+				value="#{interpolacionBean.interpolacionDTO.puntoInterpolar}" />
+		</div>
+		<div class="field ui-g-12 ui-md-12 ui-lg-6">
+			<h:outputLabel
+				value="#{res['interpolacion.numeroPuntos']}" for="numeroPuntos"/>
+			<p:spinner id="numeroPuntos" value="#{interpolacionBean.interpolacionDTO.numeroPuntos}"
+				min="1" max="100">
+                <p:ajax process="@this" listener="#{interpolacionBean.cambiarPuntos}" update="panelPuntos"/>
+            </p:spinner>
+		</div>
+	</div>
 	
 	<p:outputPanel id="panelPuntos" layout="block" rendered="#{interpolacionBean.interpolacionDTO.numeroPuntos gt 0}">
 		<table class="c50">
