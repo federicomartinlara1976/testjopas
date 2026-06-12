@@ -50,15 +50,17 @@
 				</f:facet>
 				
 				<ui:include src="/interpolacion/datos-entrada.xhtml" />
+				
 			</p:panel>
 			
-			<p:outputPanel id="resultados" layout="block" styleClass="ui-g-12">
-				<p:outputPanel layout="block"
-					rendered="#{interpolacionBean.sp != null}"
-					styleClass="ui-g-12 box shadow overview-box">
-					<ui:include src="/interpolacion/datos-salida.xhtml" />
-				</p:outputPanel>
-			</p:outputPanel>
+			<p:panel id="resultados" styleClass="ui-g-12 ui-md-12 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Resultados
+	       		</f:facet>
+	       		
+	       		<ui:include src="/interpolacion/datos-salida.xhtml" />
+			</p:panel>
 		</p:outputPanel>	
 	</ui:define>
 

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import dk.ange.octave.OctaveEngine;
@@ -21,6 +22,7 @@ import net.bounceme.chronos.utils.calc.dto.MatrixDTO;
 import net.bounceme.chronos.utils.calc.dto.VectorDTO;
 
 @Service
+@Scope("prototype")
 @Slf4j
 public class JavaOctaveService implements CalcService {
 

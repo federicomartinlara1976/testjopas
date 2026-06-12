@@ -75,6 +75,20 @@ public class InterpolacionBean implements Serializable {
 		interpolacionDTO = new InterpolacionDTO();
 		sp = null;
 	}
+	
+	public void calcularValor(Integer index) {
+		try {
+			BigDecimal punto = interpolacionDTO.getPuntos()[index].getPunto();
+			
+			BigDecimal scalarY = interpolacionService.calcularValor(punto);
+			if (scalarY != null) {
+				interpolacionDTO.getPuntos()[index].setValor(scalarY);
+			}
+		} catch (Exception e) {
+			log.error("ERROR: {}", e.getMessage());
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", e.getMessage());
+		}
+	}
 
 	public void cambiarPuntos() {
 		interpolacionDTO.setPuntos(new PuntoDTO[interpolacionDTO.getNumeroPuntos()]);

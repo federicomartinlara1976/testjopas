@@ -1,6 +1,7 @@
 package net.bounceme.chronos.testjopas.services;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.dto.InterpolacionDTO;
+import net.bounceme.chronos.testjopas.dto.PuntoDTO;
 
 @Service
 @Slf4j
@@ -76,32 +78,26 @@ public class InterpolacionService {
 	}
 	
 	@SneakyThrows
-	public void calcularValor(InterpolacionDTO interpolacionDTO, Integer index) {
-		BigDecimal punto = interpolacionDTO.getPuntos()[index].getPunto();
+	public BigDecimal calcularValor(BigDecimal punto) {
 		calcService.passVariable("x", punto);
 
 		String cmd = "y=f(x)";
 		calcService.execute(cmd);
 
-		BigDecimal scalarY = calcService.getScalar("y");
-		if (scalarY != null) {
-			interpolacionDTO.getPuntos()[index].setValor(scalarY);
-		}
+		return calcService.getScalar("y");
 	}
 	
 	private BigDecimal[] toArrayPuntos(InterpolacionDTO interpolacionDTO) {
-		BigDecimal[] puntos = new BigDecimal[interpolacionDTO.getNumeroPuntos()];
-		for (int i=0;i<interpolacionDTO.getNumeroPuntos();i++) {
-			puntos[i] = interpolacionDTO.getPuntos()[i].getPunto();
-		}
-		return puntos;
+		return Arrays.stream(interpolacionDTO.getPuntos())
+	            .limit(interpolacionDTO.getNumeroPuntos())
+	            .map(PuntoDTO::getPunto)
+	            .toArray(BigDecimal[]::new);
 	}
 	
 	private BigDecimal[] toArrayValores(InterpolacionDTO interpolacionDTO) {
-		BigDecimal[] valores = new BigDecimal[interpolacionDTO.getNumeroPuntos()];
-		for (int i=0;i<interpolacionDTO.getNumeroPuntos();i++) {
-			valores[i] = interpolacionDTO.getPuntos()[i].getValor();
-		}
-		return valores;
+		return Arrays.stream(interpolacionDTO.getPuntos())
+	            .limit(interpolacionDTO.getNumeroPuntos())
+	            .map(PuntoDTO::getValor)
+	            .toArray(BigDecimal[]::new);
 	}
 }
