@@ -3,9 +3,9 @@ package net.bounceme.chronos.testjopas.controllers;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,6 +17,7 @@ import jakarta.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import net.bounceme.chronos.testjopas.controllers.models.ColumnModel;
 import net.bounceme.chronos.testjopas.controllers.models.FilaDiferencias;
 import net.bounceme.chronos.testjopas.controllers.models.TablaDiferencias;
 import net.bounceme.chronos.testjopas.dto.InterpolacionDTO;
@@ -63,6 +64,9 @@ public class InterpolacionBean implements Serializable {
 	
 	@Getter
 	private List<Double> encabezados;
+	
+	@Getter
+	private List<ColumnModel> columns;
 
 	@PostConstruct
 	public void initialize() {
@@ -89,16 +93,23 @@ public class InterpolacionBean implements Serializable {
 		tablaDiferencias = new TablaDiferencias();
 		tablaDiferencias.setFilas(new ArrayList<>());
 
-		// Determinar el máximo número de columnas
-		int maxCols = 0;
-		for (BigDecimal[] fila : dd) {
-			maxCols = Math.max(maxCols, fila.length);
-			FilaDiferencias filaObj = new FilaDiferencias();
-			filaObj.setValores(Stream.of(fila)
-                    .collect(Collectors.toList()));
-			tablaDiferencias.getFilas().add(filaObj);
-		}
+		// Determinar el máximo número de columnas, con la primera fila
+		Integer maxCols = dd[0].length;
 		tablaDiferencias.setMaxColumnas(maxCols);
+		
+		// Usando Arrays.stream()
+		for (BigDecimal[] fila : dd) {
+		    maxCols = Math.max(maxCols, fila.length);
+		    FilaDiferencias filaObj = new FilaDiferencias();
+		    Map<String, BigDecimal> valoresPorColumna = new LinkedHashMap<>();
+		    
+		    for (int i = 0; i < fila.length; i++) {
+		        valoresPorColumna.put("col" + i, fila[i]);  // Mantener como BigDecimal
+		    }
+		    
+		    filaObj.setValoresPorColumna(valoresPorColumna);
+		    tablaDiferencias.getFilas().add(filaObj);
+		}
 
 		// Crear encabezados (opcional)
 		encabezados = new ArrayList<>();
@@ -111,14 +122,15 @@ public class InterpolacionBean implements Serializable {
 				encabezados.add((double) i); // O como quieras nombrarlos
 			}
 		}
-	}
-	
-	public BigDecimal obtenerValorCelda(FilaDiferencias fila, int columnaIndex) {
-        if (fila.getValores() != null && columnaIndex < fila.getValores().size()) {
-            return fila.getValores().get(columnaIndex);
-        }
-        
-        return null;
+		
+		// Construir columnas
+	    columns = new ArrayList<>();
+	    columns.add(new ColumnModel("#", "index"));
+	    
+	    for (int i = 0; i < encabezados.size(); i++) {
+	    	String key = "col" + i;
+	    	columns.add(new ColumnModel(Integer.valueOf(i+1).toString(), key));
+	    }
 	}
 
 	public void reset() {

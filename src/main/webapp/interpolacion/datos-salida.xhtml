@@ -20,30 +20,31 @@
 			<h:outputText value="#{item}" />
 		</p:column>
 	</p:dataTable>
+	
+	<br/>
 
 	<h5>
 		<h:outputText value="#{res['interpolacion.tabla']}" />
 	</h5>
 
 	<p:dataTable id="tablaDiferencias"
-		value="#{interpolacionBean.tablaDiferencias.filas}" var="fila">
-
-		<!-- Columna de índice/fila -->
-		<p:column headerText="#">
-        	#{interpolacionBean.tablaDiferencias.filas.indexOf(fila) + 1}
-      	</p:column>
-
-		<!-- Columnas dinámicas -->
-		<c:forEach items="#{interpolacionBean.encabezados}" 
-               var="encabezado" 
-               varStatus="status">
-			<p:column headerText="#{encabezado}">
-				<h:outputText
-					value="#{interpolacionBean.obtenerValorCelda(fila, status.index)}">
-					<f:convertNumber pattern="#0.0000000000" />
-				</h:outputText>
-			</p:column>
-		</c:forEach>
+             value="#{interpolacionBean.tablaDiferencias.filas}" 
+             var="fila">
+    
+	    <p:columns value="#{interpolacionBean.columns}" 
+	               var="columna" 
+	               headerText="#{columna.header}">
+	               
+	     	<h:outputText rendered="#{columna.property eq 'index'}" value="#{interpolacionBean.tablaDiferencias.filas.indexOf(fila) + 1}">
+	            <f:convertNumber pattern="#0" />
+	        </h:outputText>
+	        
+	        <h:outputText rendered="#{columna.property ne 'index'}" value="#{fila.getValor(columna.property)}">
+	            <f:convertNumber pattern="#0.000000" />
+	        </h:outputText>
+	        
+	    </p:columns>
+	    
 	</p:dataTable>
 
 </ui:composition>

@@ -2,8 +2,8 @@ package net.bounceme.chronos.testjopas.controllers.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,13 +14,9 @@ public class FilaDiferencias implements Serializable {
 	
 	@Getter
 	@Setter
-    private List<BigDecimal> valores;
+	private Map<String, BigDecimal> valoresPorColumna = new LinkedHashMap<>();
     
-    public FilaDiferencias() {
-        this.valores = new ArrayList<>();
-    }
-    
-    public FilaDiferencias(List<BigDecimal> valores) {
-        this.valores = valores;
+    public BigDecimal getValor(String columnaKey) {
+        return valoresPorColumna.get(columnaKey);
     }
 }
