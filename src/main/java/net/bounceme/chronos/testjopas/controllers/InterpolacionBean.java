@@ -42,7 +42,6 @@ public class InterpolacionBean implements Serializable {
 	@Autowired
 	private InterpolacionService interpolacionService;
 
-	/** The app bean. */
 	@Autowired
 	private SessionBean sessionBean;
 
