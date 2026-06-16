@@ -6,13 +6,13 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:chronos="http://chronos.componentes.jsf/composite"
 	template="/WEB-INF/templates/template.xhtml">
-	
+
 	<ui:define name="title">
-		<chronos:title type="3" value="#{res['app.title']}" />	
+		<chronos:title type="3" value="#{res['app.title']}" />
 	</ui:define>
-	
+
 	<ui:define name="menu">
-		<ui:include src="/menu.xhtml" />	
+		<ui:include src="/menu.xhtml" />
 	</ui:define>
 
 	<ui:define name="content">
@@ -25,42 +25,48 @@
 					</h1>
 					<hr class="my-4" />
 					<p class="description">
-						<h:outputText value="#{res['menu.integracion.simpson']}" rendered="#{sessionBean.opcion eq 'simpson'}"/>
+						<h:outputText value="#{res['menu.integracion.integracion']}"
+							rendered="#{sessionBean.opcion eq 'integracion'}" />
+						<h:outputText value="#{res['menu.integracion.simpson']}"
+							rendered="#{sessionBean.opcion eq 'simpson'}" />
 					</p>
 				</p:outputPanel>
 			</p:outputPanel>
-			
-			<p:outputPanel id="datosEntrada" layout="block" styleClass="ui-g-12">
-				<p:outputPanel layout="block"
-					styleClass="ui-g-12 box shadow overview-box">
-					<ui:include src="/integracion/datos-entrada.xhtml" />
-					
-					<p:outputPanel layout="block" id="botonera"
-						styleClass="botonera ui-g-12 ui-md-12 ui-lg-12">
 
-						<p:commandButton id="calcular" value="#{res['integracion.calcular']}"
-							actionListener="#{integracionBean.calcular}" process="@form" ajax="true" update="messages,resultados"
-							styleClass="btn btn-primary ui-g-2 ui-md-2 ui-lg-2"
-							icon="fa fa-save" />
-							
-						<p:commandButton id="reset" value="#{res['integracion.reset']}"
-							actionListener="#{integracionBean.reset}" process="@form" ajax="true" update="datosEntrada,resultados"
-							styleClass="btn btn-danger ui-g-2 ui-md-2 ui-lg-2"
-							icon="fa fa-refresh" />
+			<p:panel id="datosEntrada" styleClass="ui-g-12 ui-md-12 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Datos de entrada
+	       		</f:facet>
 
-					</p:outputPanel>
-				</p:outputPanel>
-			</p:outputPanel>
+				<f:facet name="actions">
+					<p:commandButton icon="pi pi-save" process="@form" ajax="true"
+						update="messages resultados"
+						actionListener="#{integracionBean.calcular}"
+						styleClass="edit-button rounded-button ui-button-success" />
+
+					<p:commandButton icon="pi pi-replay" process="@form"
+						actionListener="#{integracionBean.reset}" immediate="true"
+						ajax="true" update="datosEntrada resultados"
+						styleClass="edit-button rounded-button ui-button-danger" />
+
+				</f:facet>
+				
+				<ui:include src="/integracion/datos-entrada.xhtml" />
+
+			</p:panel>
 			
-			<p:outputPanel id="resultados" layout="block" styleClass="ui-g-12">
-				<p:outputPanel layout="block"
-					rendered="#{integracionBean.valor != null}"
-					styleClass="ui-g-12 box shadow overview-box">
-					<ui:include src="/integracion/datos-salida.xhtml" />
-				</p:outputPanel>
-			</p:outputPanel>
-		</p:outputPanel>	
-		
+			<p:panel id="resultados" styleClass="ui-g-12 ui-md-12 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Resultados
+	       		</f:facet>
+	       		
+	       		<ui:include src="/integracion/datos-salida.xhtml" />
+			</p:panel>
+
+		</p:outputPanel>
+
 	</ui:define>
 
 </ui:composition>

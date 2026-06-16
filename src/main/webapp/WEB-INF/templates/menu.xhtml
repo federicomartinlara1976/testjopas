@@ -55,6 +55,13 @@
 			<p:tab title="#{res['menu.integracion']}">
 				<ul class="list-group">
 					<li class="list-group-item"><h:commandLink
+						actionListener="#{sessionBean.setOpcion('integracion')}"
+						action="#{sessionBean.navegar('integracion')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'integracion' and sessionBean.opcion eq 'integracion'}">
+							<i class="fa fa-users"></i>
+							<span><h:outputText value="#{res['menu.integracion.integracion']}" /></span>
+					</h:commandLink></li>
+					<li class="list-group-item"><h:commandLink
 						actionListener="#{sessionBean.setOpcion('simpson')}"
 						action="#{sessionBean.navegar('integracion')}" ajax="false"
 						disabled="#{sessionBean.currentPage eq 'integracion' and sessionBean.opcion eq 'simpson'}">

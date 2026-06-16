@@ -20,7 +20,7 @@ public class IntegracionService {
 
 	@Value("${application.paths.funciones}")
 	private String pathFunciones;
-	
+
 	@Value("${application.paths.integracion}")
 	private String pathIntegracion;
 
@@ -30,12 +30,9 @@ public class IntegracionService {
 
 	@Getter
 	private BigDecimal valor;
-	
+
 	@Getter
 	private BigDecimal[] valores;
-	
-	@Getter
-	private BigDecimal[] y;
 
 	@PostConstruct
 	public void initialize() {
@@ -54,18 +51,31 @@ public class IntegracionService {
 
 		calcService.passVariable("a", integracionDTO.getA());
 		calcService.passVariable("b", integracionDTO.getB());
-		calcService.passVariable("tolerancia", integracionDTO.getTolerancia());
-		
-		String cmd = "[valor,int,error]=integracion(a, b, tolerancia)";
-		
-		calcService.execute(cmd);
-		
-		String error = calcService.getString("error");
-		if (StringUtils.isNotBlank(error)) {
-			throw new Exception(error);
+		calcService.passVariable("iteraciones", integracionDTO.getIteraciones());
+
+		String cmd;
+		if ("simpson".equals(opcion)) {
+			calcService.passVariable("h", integracionDTO.getH());
+			cmd = "sum=simpson(a, b, iteraciones, h)";
+		} else {
+			calcService.passVariable("tolerancia", integracionDTO.getTolerancia());
+			cmd = "[valor, int, error]=integracion(a, b, tolerancia, iteraciones)";
 		}
-		
-		valor = calcService.getScalar("valor");
-		valores = calcService.getArray("int");
+
+		calcService.execute(cmd);
+
+		if ("integracion".equals(opcion)) {
+			String error = calcService.getString("error");
+			if (StringUtils.isNotBlank(error)) {
+				throw new Exception(error);
+			}
+		}
+
+		if ("integracion".equals(opcion)) {
+			valor = calcService.getScalar("valor");
+			valores = calcService.getArray("int");
+		} else {
+			valor = calcService.getScalar("sum");
+		}
 	}
 }

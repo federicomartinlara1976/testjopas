@@ -54,7 +54,10 @@ public class IntegracionBean implements Serializable {
 
 	public void calcular() {
 		try {
-			integracionService.calcular(integracionDTO, sessionBean.getOpcion());;
+			integracionService.calcular(integracionDTO, sessionBean.getOpcion());
+			
+			valor = integracionService.getValor();
+			valores = integracionService.getValores();
 		} catch (Exception e) {
 			log.error("ERROR:", e);
 			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
