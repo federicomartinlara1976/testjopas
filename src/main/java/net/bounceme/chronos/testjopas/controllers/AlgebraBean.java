@@ -45,7 +45,6 @@ public class AlgebraBean implements Serializable {
 	@Setter
 	private AlgebraDTO algebraDTO;
 	
-	@Getter
 	private BigDecimal[] c;
 	
 	@Getter
