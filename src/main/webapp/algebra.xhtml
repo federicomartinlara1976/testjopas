@@ -17,47 +17,53 @@
 
 	<ui:define name="content">
 		<p:outputPanel layout="block" styleClass="acerca ui-g dashboard">
-			<p:outputPanel layout="block" styleClass="ui-g-12">
-				<p:outputPanel layout="block"
-					styleClass="jumbotron ui-g-12 box shadow overview-box overview-box-1">
-					<h1>
-						<h:outputText value="#{res['menu.algebra']}" />
-					</h1>
-					<hr class="my-4" />
-					<p class="description">
-						<h:outputText value="#{res['menu.algebra.sistema']}" rendered="#{sessionBean.opcion eq 'sistemas'}"/>
-					</p>
-				</p:outputPanel>
+			<p:outputPanel styleClass="ui-g-12">
+				<p:toolbar id="toolbar">
+					<p:toolbarGroup align="left">
+						<h3>
+							<h:outputText value="#{res['menu.algebra']}" />
+						</h3>
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p class="description">
+							<h:outputText value="#{res['menu.algebra.sistema']}" rendered="#{sessionBean.opcion eq 'sistemas'}"/>
+						</p>
+					</p:toolbarGroup>
+				</p:toolbar>
 			</p:outputPanel>
-			
-			<p:outputPanel id="datosEntrada" layout="block" styleClass="ui-g-12">
-				<p:outputPanel layout="block"
-					styleClass="ui-g-12 box shadow overview-box">
-					<ui:include src="/algebra/datos-entrada.xhtml" />
-					
-					<p:outputPanel layout="block" id="botonera"
-						styleClass="botonera ui-g-12 ui-md-12 ui-lg-12">
+		
+			<p:panel id="datosEntrada" styleClass="ui-g-12 ui-md-12 ui-lg-12">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Datos de entrada
+	       		</f:facet>
 
-						<p:commandButton id="calcular" value="#{res['algebra.calcular']}"
-							actionListener="#{algebraBean.calcular}" process="@form" ajax="true" update="messages,resultados"
-							styleClass="btn btn-primary ui-g-2 ui-md-2 ui-lg-2"
-							icon="fa fa-save" />
-							
-						<p:commandButton id="reset" value="#{res['algebra.reset']}"
-							actionListener="#{algebraBean.reset}" process="@form" ajax="true" update="datosEntrada,resultados"
-							styleClass="btn btn-danger ui-g-2 ui-md-2 ui-lg-2"
-							icon="fa fa-refresh" />
-					</p:outputPanel>
-				</p:outputPanel>
-			</p:outputPanel>
+				<f:facet name="actions">
+					<p:commandButton icon="pi pi-save" process="@form" ajax="true"
+						update="messages resultados"
+						actionListener="#{algebraBean.calcular}"
+						styleClass="edit-button rounded-button ui-button-success" />
+
+					<p:commandButton icon="pi pi-replay" process="@form"
+						actionListener="#{algebraBean.reset}" immediate="true"
+						ajax="true" update="datosEntrada resultados"
+						styleClass="edit-button rounded-button ui-button-danger" />
+
+				</f:facet>
+				
+				<ui:include src="/algebra/datos-entrada.xhtml" />
+
+			</p:panel>
 			
-			<p:outputPanel id="resultados" layout="block" styleClass="ui-g-12">
-				<p:outputPanel layout="block"
-					rendered="#{algebraBean.c != null}"
-					styleClass="ui-g-12 box shadow overview-box">
-					<ui:include src="/algebra/datos-salida.xhtml" />
-				</p:outputPanel>
-			</p:outputPanel>
+			<p:panel id="resultados" styleClass="ui-g-12 ui-md-12 ui-lg-12">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Resultados
+	       		</f:facet>
+
+				<ui:include src="/algebra/datos-salida.xhtml" />
+			</p:panel>
+			
 		</p:outputPanel>	
 	</ui:define>
 

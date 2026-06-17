@@ -18,8 +18,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.controllers.models.ColumnModel;
-import net.bounceme.chronos.testjopas.controllers.models.FilaDiferencias;
-import net.bounceme.chronos.testjopas.controllers.models.TablaDiferencias;
+import net.bounceme.chronos.testjopas.controllers.models.Fila;
+import net.bounceme.chronos.testjopas.controllers.models.Tabla;
 import net.bounceme.chronos.testjopas.dto.InterpolacionDTO;
 import net.bounceme.chronos.testjopas.dto.PuntoDTO;
 import net.bounceme.chronos.testjopas.services.InterpolacionService;
@@ -59,7 +59,7 @@ public class InterpolacionBean implements Serializable {
 	private BigDecimal[] y;
 
 	@Getter
-	private TablaDiferencias tablaDiferencias;
+	private Tabla tablaDiferencias;
 	
 	@Getter
 	private List<Double> encabezados;
@@ -89,7 +89,7 @@ public class InterpolacionBean implements Serializable {
 
 	private void buildTablaDiferencias() {
 
-		tablaDiferencias = new TablaDiferencias();
+		tablaDiferencias = new Tabla();
 		tablaDiferencias.setFilas(new ArrayList<>());
 
 		// Determinar el máximo número de columnas, con la primera fila
@@ -99,7 +99,7 @@ public class InterpolacionBean implements Serializable {
 		// Usando Arrays.stream()
 		for (BigDecimal[] fila : dd) {
 		    maxCols = Math.max(maxCols, fila.length);
-		    FilaDiferencias filaObj = new FilaDiferencias();
+		    Fila filaObj = new Fila();
 		    Map<String, BigDecimal> valoresPorColumna = new LinkedHashMap<>();
 		    
 		    for (int i = 0; i < fila.length; i++) {

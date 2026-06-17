@@ -9,50 +9,54 @@
 
 	<ui:define name="content">
 		<p:outputPanel layout="block" styleClass="acerca ui-g dashboard">
-			<p:outputPanel layout="block" styleClass="ui-g-12">
-				<p:outputPanel layout="block"
-					styleClass="jumbotron ui-g-12 box shadow overview-box overview-box-1">
-					<h1>
-						<h:outputText value="#{res['menu.raiz']}" />
-					</h1>
-					<hr class="my-4" />
-					<p class="description">
-						<h:outputText value="#{res['menu.raiz.newton']}" rendered="#{sessionBean.opcion eq 'newton'}"/>
-						<h:outputText value="#{res['menu.raiz.secante']}" rendered="#{sessionBean.opcion eq 'secante'}"/>
-					</p>
-				</p:outputPanel>
+			<p:outputPanel styleClass="ui-g-12">
+				<p:toolbar id="toolbar">
+					<p:toolbarGroup align="left">
+						<h3>
+							<h:outputText value="#{res['menu.raiz']}" />
+						</h3>
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p class="description">
+							<h:outputText value="#{res['menu.raiz.newton']}"
+								rendered="#{sessionBean.opcion eq 'newton'}" />
+							<h:outputText value="#{res['menu.raiz.secante']}"
+								rendered="#{sessionBean.opcion eq 'secante'}" />
+						</p>
+					</p:toolbarGroup>
+				</p:toolbar>
 			</p:outputPanel>
-			
+
 			<p:panel id="datosEntrada" styleClass="ui-g-12 ui-md-12 ui-lg-6">
 				<f:facet name="header">
 					<i class="pi pi-send"></i>
 	             	Datos de entrada
 	       		</f:facet>
-	       		
-	       		<f:facet name="actions">
-		            <p:commandButton icon="pi pi-save" process="@form" 
-		            	ajax="true" update="messages resultados"
-		            	actionListener="#{raizBean.calcular}"
-						styleClass="edit-button rounded-button ui-button-success"/>
-						
-					<p:commandButton icon="pi pi-replay" process="@form" 
-		            	actionListener="#{raizBean.reset}" immediate="true" ajax="true" update="datosEntrada resultados"
-						styleClass="edit-button rounded-button ui-button-danger"/>
-		            
+
+				<f:facet name="actions">
+					<p:commandButton icon="pi pi-save" process="@form" ajax="true"
+						update="messages resultados" actionListener="#{raizBean.calcular}"
+						styleClass="edit-button rounded-button ui-button-success" />
+
+					<p:commandButton icon="pi pi-replay" process="@form"
+						actionListener="#{raizBean.reset}" immediate="true" ajax="true"
+						update="datosEntrada resultados"
+						styleClass="edit-button rounded-button ui-button-danger" />
+
 				</f:facet>
-				
+
 				<ui:include src="/raiz/datos-entrada.xhtml" />
 			</p:panel>
-			
+
 			<p:panel id="resultados" styleClass="ui-g-12 ui-md-12 ui-lg-6">
 				<f:facet name="header">
 					<i class="pi pi-send"></i>
 	             	Resultados
 	       		</f:facet>
-	       		
-	       		<ui:include src="/raiz/datos-salida.xhtml" />
+
+				<ui:include src="/raiz/datos-salida.xhtml" />
 			</p:panel>
-		</p:outputPanel>	
+		</p:outputPanel>
 	</ui:define>
 
 </ui:composition>

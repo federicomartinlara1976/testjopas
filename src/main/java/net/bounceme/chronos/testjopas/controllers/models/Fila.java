@@ -8,7 +8,7 @@ import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 
-public class FilaDiferencias implements Serializable {
+public class Fila implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

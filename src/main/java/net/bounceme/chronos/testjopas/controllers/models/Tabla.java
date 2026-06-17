@@ -6,13 +6,13 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
-public class TablaDiferencias implements Serializable {
+public class Tabla implements Serializable {
     
 	private static final long serialVersionUID = 1L;
 
 	@Getter
 	@Setter
-	private List<FilaDiferencias> filas;
+	private List<Fila> filas;
     
 	@Getter
 	@Setter
