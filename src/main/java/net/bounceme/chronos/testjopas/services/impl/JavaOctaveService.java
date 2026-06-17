@@ -41,20 +41,14 @@ public class JavaOctaveService implements CalcService {
 
 	@SneakyThrows
 	public void addPath(String path) {
-		StringBuilder sbComando = new StringBuilder();
-		sbComando.append("addpath('").append(path).append("')");
-
-		String cmd = sbComando.toString();
-		log.debug(cmd);
+		String cmd = String.format("addpath('%s')", path);
 		octave.eval(cmd);
 
 	}
 
 	@SneakyThrows
 	public void resetPath() {
-		StringBuilder sbComando = new StringBuilder();
-		sbComando.append("restoredefaultpath();");
-		octave.eval(sbComando.toString());
+		octave.eval("restoredefaultpath();");
 	}
 
 	@SneakyThrows
@@ -64,11 +58,8 @@ public class JavaOctaveService implements CalcService {
 
 	@SneakyThrows
 	public void execute(String cmd) {
-		StringBuilder sbComando = new StringBuilder();
-		sbComando.append(cmd);
-
-		log.debug("Ejecutar comando: {}", sbComando.toString());
-		octave.eval(sbComando.toString());
+		log.debug("Ejecutar comando: {}", cmd);
+		octave.eval(cmd);
 	}
 
 	/**
@@ -78,7 +69,8 @@ public class JavaOctaveService implements CalcService {
 	@SneakyThrows
 	public void passVariable(String name, BigDecimal value) {
 		log.debug("Pasando variable {} con valor {}", name, value.doubleValue());
-		octave.eval(name + " = " + value.toString());
+		String cmd = String.format("%s=%s", name, value.toString());
+		octave.eval(cmd);
 	}
 
 	/**
@@ -88,7 +80,8 @@ public class JavaOctaveService implements CalcService {
 	@SneakyThrows
 	public void passVariable(String name, Integer value) {
 		log.debug("Pasando variable {} con valor {}", name, value.doubleValue());
-		octave.eval(name + " = " + value.toString());
+		String cmd = String.format("%s=%s", name, value.toString());
+		octave.eval(cmd);
 	}
 
 	@Override

@@ -20,9 +20,6 @@ import net.bounceme.chronos.testjopas.dto.PuntoDTO;
 @Slf4j
 public class InterpolacionService {
 
-	@Value("${application.paths.funciones}")
-	private String pathFunciones;
-
 	@Value("${application.paths.interpolacion}")
 	private String pathInterpolacion;
 
@@ -44,7 +41,6 @@ public class InterpolacionService {
 		try {
 			calcService.clearEnvironment();
 			calcService.resetPath();
-			calcService.addPath(pathFunciones);
 			calcService.addPath(pathInterpolacion);
 		} catch (Exception e) {
 			log.error("ERROR: {}", e.getMessage());

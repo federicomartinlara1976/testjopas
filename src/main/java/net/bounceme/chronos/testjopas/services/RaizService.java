@@ -18,9 +18,6 @@ import net.bounceme.chronos.testjopas.dto.RaizDTO;
 @Slf4j
 public class RaizService {
 
-	@Value("${application.paths.funciones}")
-	private String pathFunciones;
-
 	@Value("${application.paths.raiz}")
 	private String pathRaiz;
 
@@ -42,7 +39,6 @@ public class RaizService {
 		try {
 			calcService.clearEnvironment();
 			calcService.resetPath();
-			calcService.addPath(pathFunciones);
 			calcService.addPath(pathRaiz);
 		} catch (Exception e) {
 			log.error("ERROR: {}", e.getMessage());

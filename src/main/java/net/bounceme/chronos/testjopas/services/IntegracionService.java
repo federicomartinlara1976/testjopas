@@ -18,9 +18,6 @@ import net.bounceme.chronos.testjopas.dto.IntegracionDTO;
 @Slf4j
 public class IntegracionService {
 
-	@Value("${application.paths.funciones}")
-	private String pathFunciones;
-
 	@Value("${application.paths.integracion}")
 	private String pathIntegracion;
 
@@ -39,7 +36,6 @@ public class IntegracionService {
 		try {
 			calcService.clearEnvironment();
 			calcService.resetPath();
-			calcService.addPath(pathFunciones);
 			calcService.addPath(pathIntegracion);
 		} catch (Exception e) {
 			log.error("ERROR: {}", e.getMessage());
