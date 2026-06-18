@@ -19,11 +19,11 @@
 			<p:tab title="#{res['menu.raiz']}">
 				<ul class="list-group">
 					<li class="list-group-item"><h:commandLink
-						actionListener="#{sessionBean.setOpcion('newton')}"
+						actionListener="#{sessionBean.setOpcion('biseccion')}"
 						action="#{sessionBean.navegar('raiz')}" ajax="false"
-						disabled="#{sessionBean.currentPage eq 'raiz' and sessionBean.opcion eq 'newton'}">
+						disabled="#{sessionBean.currentPage eq 'raiz' and sessionBean.opcion eq 'biseccion'}">
 							<i class="fa fa-book"></i>
-							<span><h:outputText value="#{res['menu.raiz.newton']}" /></span>
+							<span><h:outputText value="#{res['menu.raiz.biseccion']}" /></span>
 					</h:commandLink></li>
 					<li class="list-group-item"><h:commandLink
 						actionListener="#{sessionBean.setOpcion('secante')}"
@@ -31,6 +31,13 @@
 						disabled="#{sessionBean.currentPage eq 'raiz' and sessionBean.opcion eq 'secante'}">
 							<i class="fa fa-book"></i>
 							<span><h:outputText value="#{res['menu.raiz.secante']}" /></span>
+					</h:commandLink></li>
+					<li class="list-group-item"><h:commandLink
+						actionListener="#{sessionBean.setOpcion('newton')}"
+						action="#{sessionBean.navegar('raiz')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'raiz' and sessionBean.opcion eq 'newton'}">
+							<i class="fa fa-book"></i>
+							<span><h:outputText value="#{res['menu.raiz.newton']}" /></span>
 					</h:commandLink></li>
 				</ul>
 			</p:tab>

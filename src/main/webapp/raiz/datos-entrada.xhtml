@@ -11,7 +11,7 @@
         	<p:inputNumber id="puntoInicial" decimalPlaces="6" value="#{raizBean.raizDTO.puntoInicial}" />
 		</div>
 		<p:outputPanel styleClass="field ui-g-12 ui-md-12 ui-lg-6"
-			rendered="#{sessionBean.opcion eq 'secante'}">
+			rendered="#{sessionBean.opcion eq 'secante' or sessionBean.opcion eq 'biseccion'}">
 			<h:outputLabel
 				value="#{res['raiz.primeraAproximacion']}"
 				for="primeraAproximacion" />
@@ -21,15 +21,16 @@
 		<div class="field ui-g-12 ui-md-12 ui-lg-6">
 			<h:outputLabel
 				value="#{res['raiz.tolerancia']}" for="tolerancia" />
-			<p:inputNumber id="tolerancia" decimalPlaces="6"
+			<p:inputNumber id="tolerancia" decimalPlaces="10"
 				value="#{raizBean.raizDTO.tolerancia}" />
 		</div>
-		<div class="field ui-g-12 ui-md-12 ui-lg-6">
+		<p:outputPanel styleClass="field ui-g-12 ui-md-12 ui-lg-6"
+			rendered="#{sessionBean.opcion eq 'secante' or sessionBean.opcion eq 'newton'}">
 			<h:outputLabel
 				value="#{res['raiz.iteraciones']}" for="iteraciones"/>
 			<p:spinner id="iteraciones"
 				value="#{raizBean.raizDTO.iteraciones}" min="1" max="100" />
-		</div>
+		</p:outputPanel>
 	</div>
 
 </ui:composition>

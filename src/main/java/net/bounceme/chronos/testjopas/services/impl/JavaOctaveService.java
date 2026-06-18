@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,9 @@ import net.bounceme.chronos.utils.calc.dto.VectorDTO;
 @Slf4j
 public class JavaOctaveService implements CalcService {
 
+	@Value("${application.scale}")
+	private Integer scale;
+	
 	private OctaveEngine octave;
 
 	private OctaveDoubleToArray octaveDoubleToArray;
@@ -126,7 +130,7 @@ public class JavaOctaveService implements CalcService {
 	@Override
 	public BigDecimal getScalar(String name) {
 		Converter<OctaveDouble, BigDecimal> converter = s -> BigDecimal.valueOf(s.getData()[0])
-                .setScale(0, RoundingMode.HALF_UP);
+                .setScale(scale, RoundingMode.HALF_UP);
 		return converter.apply(octave.get(OctaveDouble.class, name));
 	}
 

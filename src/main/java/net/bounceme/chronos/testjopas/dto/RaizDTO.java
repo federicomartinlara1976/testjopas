@@ -15,24 +15,17 @@ public class RaizDTO implements Serializable {
 	
 	@Getter
 	@Setter
-	private BigDecimal puntoInicial;
+	private BigDecimal puntoInicial = BigDecimal.ZERO;
 	
 	@Getter
 	@Setter
-	private BigDecimal primeraAproximacion;
+	private BigDecimal primeraAproximacion = BigDecimal.ZERO;
 	
 	@Getter
 	@Setter
-	private BigDecimal tolerancia;
+	private BigDecimal tolerancia = BigDecimal.ZERO;
 	
 	@Getter
 	@Setter
-	private Integer iteraciones;
-
-	public RaizDTO() {
-		puntoInicial = BigDecimal.ZERO;
-		primeraAproximacion = BigDecimal.ZERO;
-		tolerancia = BigDecimal.ZERO;
-		iteraciones = 1;
-	}
+	private Integer iteraciones = 1;
 }

@@ -17,7 +17,8 @@
 	<p:dataView var="valor" value="#{raizBean.valores}" rows="5"
 		paginator="true" rowsPerPageTemplate="5,10,15" paginatorPosition="top"
 		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-		gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+		gridIcon="pi pi-th-large" listIcon="pi pi-bars"
+		rendered="#{sessionBean.opcion eq 'secante' or sessionBean.opcion eq 'newton'}">
 
 		<p:dataViewListItem>
 			<div class="product-list-item">
