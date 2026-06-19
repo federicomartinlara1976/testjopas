@@ -68,20 +68,19 @@ public class RaizService {
 	}
 
 	private void passVariables(RaizDTO raizDTO, String opcion) {
+		calcService.passVariable("tolerancia", raizDTO.getTolerancia());
+		
 		if ("biseccion".equals(opcion)) {
 			calcService.passVariable("a", raizDTO.getA());
 			calcService.passVariable("b", raizDTO.getB());
-			calcService.passVariable("tolerancia", raizDTO.getTolerancia());
 		}
 		else if ("secante".equals(opcion)) {
 			calcService.passVariable("puntoInicial", raizDTO.getPuntoInicial());
 			calcService.passVariable("primeraAproximacion", raizDTO.getPrimeraAproximacion());
-			calcService.passVariable("tolerancia", raizDTO.getTolerancia());
 			calcService.passVariable("iteraciones", raizDTO.getIteraciones());
 		}
 		else {
 			calcService.passVariable("puntoInicial", raizDTO.getPuntoInicial());
-			calcService.passVariable("tolerancia", raizDTO.getTolerancia());
 			calcService.passVariable("iteraciones", raizDTO.getIteraciones());
 		}
 	}
