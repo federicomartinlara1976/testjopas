@@ -816,19 +816,19 @@
 }
 
 .exception-body.error {
-    background: url("/springboot-ia-test/resources/images/bg-error.png") no-repeat;
+    background: url("/springboot-jopas-test/resources/images/bg-error.png") no-repeat;
     background-size: cover;
     background-position: center
 }
 
 .exception-body.access {
-    background: url("/springboot-ia-test/resources/images/bg-access.png") no-repeat;
+    background: url("/springboot-jopas-test/resources/images/bg-access.png") no-repeat;
     background-size: cover;
     background-position: center
 }
 
 .exception-body.notfound {
-    background: url("/springboot-ia-test/resources/images/bg-404.png") no-repeat;
+    background: url("/springboot-jopas-test/resources/images/bg-404.png") no-repeat;
     background-size: cover;
     background-position: center
 }
