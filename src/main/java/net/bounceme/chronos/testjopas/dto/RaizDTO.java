@@ -28,4 +28,12 @@ public class RaizDTO implements Serializable {
 	@Getter
 	@Setter
 	private Integer iteraciones = 1;
+	
+	@Getter
+	@Setter
+	private BigDecimal a = BigDecimal.ZERO;
+	
+	@Getter
+	@Setter
+	private BigDecimal b = BigDecimal.ZERO;
 }

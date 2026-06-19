@@ -48,27 +48,55 @@ public class RaizService {
 	@SneakyThrows
 	public void calcular(RaizDTO raizDTO, String opcion) {
 
-		calcService.passVariable("puntoInicial", raizDTO.getPuntoInicial());
-		calcService.passVariable("tolerancia", raizDTO.getTolerancia());
-		calcService.passVariable("iteraciones", raizDTO.getIteraciones());
-
-		if ("secante".equals(opcion)) {
-			calcService.passVariable("primeraAproximacion", raizDTO.getPrimeraAproximacion());
-		}
+		passVariables(raizDTO, opcion);
 
 		// Ejecuta el comando
-		String cmd = ("newton".equals(opcion)) ? "[x,sol,ni,error]=newtonRaphson(puntoInicial, tolerancia, iteraciones)"
-				: "[x,sol,ni,error]=secante(puntoInicial, primeraAproximacion, tolerancia, iteraciones)";
+		String cmd = StringUtils.EMPTY; 
+		if ("biseccion".equals(opcion)) {
+			cmd = "[sol,error,ni]=biseccion(a, b, tolerancia)";
+		}
+		else if ("secante".equals(opcion)) {
+			cmd = "[x,sol,ni,error]=secante(puntoInicial, primeraAproximacion, tolerancia, iteraciones)";
+		}
+		else {
+			cmd = "[x,sol,ni,error]=newtonRaphson(puntoInicial, tolerancia, iteraciones)";
+		}
 
 		calcService.execute(cmd);
 
-		// Las variables de salida son las que están definidas entre [] en el comando
-		String error = calcService.getString("error");
-		if (StringUtils.isNotBlank(error)) {
-			throw new Exception(error);
-		} else {
-			solucion = calcService.getScalar("sol");
-			iteraciones = calcService.getIntScalar("ni");
+		passResultado(opcion);
+	}
+
+	private void passVariables(RaizDTO raizDTO, String opcion) {
+		if ("biseccion".equals(opcion)) {
+			calcService.passVariable("a", raizDTO.getA());
+			calcService.passVariable("b", raizDTO.getB());
+			calcService.passVariable("tolerancia", raizDTO.getTolerancia());
+		}
+		else if ("secante".equals(opcion)) {
+			calcService.passVariable("puntoInicial", raizDTO.getPuntoInicial());
+			calcService.passVariable("primeraAproximacion", raizDTO.getPrimeraAproximacion());
+			calcService.passVariable("tolerancia", raizDTO.getTolerancia());
+			calcService.passVariable("iteraciones", raizDTO.getIteraciones());
+		}
+		else {
+			calcService.passVariable("puntoInicial", raizDTO.getPuntoInicial());
+			calcService.passVariable("tolerancia", raizDTO.getTolerancia());
+			calcService.passVariable("iteraciones", raizDTO.getIteraciones());
+		}
+	}
+	
+	@SneakyThrows
+	private void passResultado(String opcion) {
+		solucion = calcService.getScalar("sol");
+		iteraciones = calcService.getIntScalar("ni");
+		
+		if ("secante".equals(opcion) || "newton".equals(opcion)) {
+			String error = calcService.getString("error");
+			if (StringUtils.isNotBlank(error)) {
+				throw new Exception(error);
+			}
+			
 			valores = calcService.getArray("x");
 		}
 	}
