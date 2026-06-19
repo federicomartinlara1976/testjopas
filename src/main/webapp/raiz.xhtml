@@ -37,12 +37,11 @@
 
 				<f:facet name="actions">
 					<p:commandButton icon="pi pi-save" process="@form" ajax="true"
-						update="messages resultados" actionListener="#{raizBean.calcular}"
+						update="messages,resultados" actionListener="#{raizBean.calcular}"
 						styleClass="edit-button rounded-button ui-button-success" />
 
-					<p:commandButton icon="pi pi-replay" process="@form"
-						actionListener="#{raizBean.reset}" immediate="true" ajax="true"
-						update="datosEntrada resultados"
+					<p:commandButton icon="pi pi-replay" process="@form" ajax="true"
+						update="datosEntrada,resultados" actionListener="#{raizBean.reset}" 
 						styleClass="edit-button rounded-button ui-button-danger" />
 
 				</f:facet>

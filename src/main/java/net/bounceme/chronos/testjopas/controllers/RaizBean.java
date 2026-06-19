@@ -74,5 +74,6 @@ public class RaizBean implements Serializable {
 		
 		sol = null;
 		valores = new BigDecimal[0];
+		iteraciones = 0;
 	}
 }
