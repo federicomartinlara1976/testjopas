@@ -50,6 +50,15 @@ public class RaizBean implements Serializable {
 	
 	@Getter
 	private BigDecimal[] valores;
+	
+	@Getter
+	private String funcion;
+	
+	@Getter
+	private String derivada;
+	
+	@Getter
+	private String titulo;
 
 	@PostConstruct
 	public void initialize() {
@@ -75,5 +84,21 @@ public class RaizBean implements Serializable {
 		sol = null;
 		valores = new BigDecimal[0];
 		iteraciones = 0;
+	}
+	
+	public void obtenerFuncion() {
+		titulo = "Función";
+		// TODO - Obtenerla del fichero .m
+		funcion = "function y = f(x)\r\n"
+				+ "  y = x + exp(2*x);\r\n"
+				+ "endfunction";
+	}
+	
+	public void obtenerDerivada() {
+		titulo = "Derivada";
+		// TODO - Obtenerla del fichero .m
+		funcion = "function y = df(x)\r\n"
+				+ "  y = 1 + 2*exp(2*x);\r\n"
+				+ "endfunction";
 	}
 }

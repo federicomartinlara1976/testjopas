@@ -11,10 +11,6 @@
 		<chronos:title type="3" value="#{res['app.title']}" />
 	</ui:define>
 
-	<ui:define name="menu">
-		<ui:include src="/menu.xhtml" />
-	</ui:define>
-
 	<ui:define name="content">
 		<p:outputPanel layout="block" styleClass="acerca ui-g dashboard">
 			<p:outputPanel styleClass="ui-g-12">
@@ -43,13 +39,11 @@
 
 				<f:facet name="actions">
 					<p:commandButton icon="pi pi-save" process="@form" ajax="true"
-						update="messages resultados"
-						actionListener="#{interpolacionBean.calcular}"
+						actionListener="#{interpolacionBean.calcular}" update="messages,resultados"
 						styleClass="edit-button rounded-button ui-button-success" />
 
-					<p:commandButton icon="pi pi-replay" process="@form"
-						actionListener="#{interpolacionBean.reset}" immediate="true"
-						ajax="true" update="datosEntrada resultados"
+					<p:commandButton icon="pi pi-replay" process="@form" ajax="true"
+						actionListener="#{interpolacionBean.reset}" update="datosEntrada,resultados"
 						styleClass="edit-button rounded-button ui-button-danger" />
 
 				</f:facet>
