@@ -11,10 +11,6 @@
 		<chronos:title type="3" value="#{res['app.title']}" />
 	</ui:define>
 
-	<ui:define name="menu">
-		<ui:include src="/menu.xhtml" />
-	</ui:define>
-
 	<ui:define name="content">
 		<p:outputPanel layout="block"
 			styleClass="funcionalidades ui-g-12 box shadow overview-box">
@@ -44,11 +40,14 @@
 					<ul>
 						<li><h:outputText
 								value="Mediante los valores de una función dada" /></li>
-						<li><h:outputText value="Mediante los valores de una tabla" /></li>
+						<li><h:outputText 
+								value="Mediante los valores de una tabla" /></li>
 					</ul>
 				</p:tab>
 				<p:tab title="#{res['menu.integracion']}">
 					<ul>
+						<li><h:outputText
+								value="Integración mediante la fórmula básica" /></li>
 						<li><h:outputText
 								value="Integración mediante la fórmula de Simpson" /></li>
 					</ul>
