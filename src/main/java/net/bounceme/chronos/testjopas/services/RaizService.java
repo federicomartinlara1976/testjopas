@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.dto.RaizDTO;
+import net.bounceme.chronos.testjopas.util.FileHelper;
 
 @Service
 @Slf4j
@@ -101,16 +102,10 @@ public class RaizService {
 	}
 	
 	public String obtenerFuncion() {
-		// TODO - Obtenerla del fichero .m
-		return "function y = f(x)\r\n"
-				+ "  y = x + exp(2*x);\r\n"
-				+ "endfunction";
+		return FileHelper.leerFichero(pathRaiz + "/f.m");
 	}
 	
 	public String obtenerDerivada() {
-		// TODO - Obtenerla del fichero .m
-		return "function y = df(x)\r\n"
-				+ "  y = 1 + 2*exp(2*x);\r\n"
-				+ "endfunction";
+		return FileHelper.leerFichero(pathRaiz + "/df.m");
 	}
 }

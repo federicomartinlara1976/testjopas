@@ -15,6 +15,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.dto.InterpolacionDTO;
 import net.bounceme.chronos.testjopas.dto.PuntoDTO;
+import net.bounceme.chronos.testjopas.util.FileHelper;
 
 @Service
 @Slf4j
@@ -98,9 +99,6 @@ public class InterpolacionService {
 	}
 	
 	public String obtenerFuncion() {
-		// TODO - Obtenerla del fichero .m
-		return "function y = f(x) \r\n"
-				+ "	y = x + log(x);\r\n"
-				+ "endfunction";
+		return FileHelper.leerFichero(pathInterpolacion + "/f.m");
 	}
 }

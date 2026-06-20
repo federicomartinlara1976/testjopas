@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.dto.IntegracionDTO;
+import net.bounceme.chronos.testjopas.util.FileHelper;
 
 @Service
 @Slf4j
@@ -76,9 +77,6 @@ public class IntegracionService {
 	}
 	
 	public String obtenerFuncion() {
-		// TODO - Obtenerla del fichero .m
-		return "function y = f(x) \r\n"
-				+ "	y = exp(sqrt(x^2+1));\r\n"
-				+ "endfunction";
+		return FileHelper.leerFichero(pathIntegracion + "/f.m");
 	}
 }
