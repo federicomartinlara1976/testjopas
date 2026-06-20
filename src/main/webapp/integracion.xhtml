@@ -39,14 +39,19 @@
 
 				<f:facet name="actions">
 					<p:commandButton icon="pi pi-save" process="@form" ajax="true"
-						update="messages resultados"
+						update="messages,resultados"
 						actionListener="#{integracionBean.calcular}"
 						styleClass="edit-button rounded-button ui-button-success" />
 
-					<p:commandButton icon="pi pi-replay" process="@form"
-						actionListener="#{integracionBean.reset}" immediate="true"
-						ajax="true" update="datosEntrada resultados"
+					<p:commandButton icon="pi pi-replay" process="@form" ajax="true" 
+						update="datosEntrada,resultados"
+						actionListener="#{integracionBean.reset}"
 						styleClass="edit-button rounded-button ui-button-danger" />
+						
+					<p:commandButton title="Función" icon="pi pi-bars" process="@form" ajax="true"
+						update="functionDialog" actionListener="#{integracionBean.obtenerFuncion}"
+						oncomplete="PF('functionDialog').show()"
+						styleClass="edit-button rounded-button ui-button-success" />
 
 				</f:facet>
 
@@ -65,6 +70,23 @@
 
 		</p:outputPanel>
 
+		<p:dialog id="functionDialog" header="Función" showEffect="fade"
+			modal="true" widgetVar="functionDialog" responsive="true" position="center"
+			appendTo="@(form)">
+			<p:outputPanel id="function-content" class="ui-fluid">
+				<div class="field ui-g-12">
+					<p:outputLabel for="name">Código</p:outputLabel>
+					<p:inputTextarea id="name" readonly="true"
+						value="#{integracionBean.funcion}" />
+				</div>
+			</p:outputPanel>
+
+			<f:facet name="footer">
+				<p:commandButton value="Cancelar" icon="pi pi-times"
+					onclick="PF('functionDialog').hide()" class="ui-button-secondary"
+					type="button" />
+			</f:facet>
+		</p:dialog>
 	</ui:define>
 
 </ui:composition>

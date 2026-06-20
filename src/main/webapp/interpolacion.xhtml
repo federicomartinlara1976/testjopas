@@ -45,6 +45,12 @@
 					<p:commandButton icon="pi pi-replay" process="@form" ajax="true"
 						actionListener="#{interpolacionBean.reset}" update="datosEntrada,resultados"
 						styleClass="edit-button rounded-button ui-button-danger" />
+						
+					<p:commandButton title="Función" icon="pi pi-bars" process="@form" ajax="true"
+						rendered="#{sessionBean.opcion eq 'funcion'}"
+						update="functionDialog" actionListener="#{interpolacionBean.obtenerFuncion}"
+						oncomplete="PF('functionDialog').show()"
+						styleClass="edit-button rounded-button ui-button-success" />
 
 				</f:facet>
 
@@ -60,7 +66,26 @@
 
 				<ui:include src="/interpolacion/datos-salida.xhtml" />
 			</p:panel>
+			
 		</p:outputPanel>
+		
+		<p:dialog id="functionDialog" header="Función" showEffect="fade"
+			modal="true" widgetVar="functionDialog" responsive="true" position="center"
+			appendTo="@(form)">
+			<p:outputPanel id="function-content" class="ui-fluid">
+				<div class="field ui-g-12">
+					<p:outputLabel for="name">Código</p:outputLabel>
+					<p:inputTextarea id="name" readonly="true"
+						value="#{interpolacionBean.funcion}" />
+				</div>
+			</p:outputPanel>
+
+			<f:facet name="footer">
+				<p:commandButton value="Cancelar" icon="pi pi-times"
+					onclick="PF('functionDialog').hide()" class="ui-button-secondary"
+					type="button" />
+			</f:facet>
+		</p:dialog>
 	</ui:define>
 
 </ui:composition>

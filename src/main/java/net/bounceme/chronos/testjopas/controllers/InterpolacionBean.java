@@ -66,6 +66,9 @@ public class InterpolacionBean implements Serializable {
 	
 	@Getter
 	private List<ColumnModel> columns;
+	
+	@Getter
+	private String funcion;
 
 	@PostConstruct
 	public void initialize() {
@@ -158,5 +161,12 @@ public class InterpolacionBean implements Serializable {
 		for (int i = 0; i < interpolacionDTO.getNumeroPuntos(); i++) {
 			interpolacionDTO.getPuntos()[i] = new PuntoDTO();
 		}
+	}
+	
+	public void obtenerFuncion() {
+		// TODO - Obtenerla del fichero .m
+		funcion = "function y = f(x) \r\n"
+				+ "	y = x + log(x);\r\n"
+				+ "endfunction";
 	}
 }

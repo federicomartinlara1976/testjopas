@@ -36,13 +36,13 @@
 
 				<f:facet name="actions">
 					<p:commandButton icon="pi pi-save" process="@form" ajax="true"
-						update="messages resultados"
+						update="messages,resultados"
 						actionListener="#{algebraBean.calcular}"
 						styleClass="edit-button rounded-button ui-button-success" />
 
-					<p:commandButton icon="pi pi-replay" process="@form"
-						actionListener="#{algebraBean.reset}" immediate="true"
-						ajax="true" update="datosEntrada resultados"
+					<p:commandButton icon="pi pi-replay" process="@form" ajax="true" 
+						update="datosEntrada,resultados"
+						actionListener="#{algebraBean.reset}" 
 						styleClass="edit-button rounded-button ui-button-danger" />
 
 				</f:facet>

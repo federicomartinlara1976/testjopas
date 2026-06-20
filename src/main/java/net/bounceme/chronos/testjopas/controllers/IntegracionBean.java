@@ -47,6 +47,9 @@ public class IntegracionBean implements Serializable {
 	@Getter
 	private BigDecimal[] valores;
 	
+	@Getter
+	private String funcion;
+	
 	@PostConstruct
 	public void initialize() {
 		reset();
@@ -69,5 +72,12 @@ public class IntegracionBean implements Serializable {
 		
 		valor = null;
 		valores = new BigDecimal[0];
+	}
+	
+	public void obtenerFuncion() {
+		// TODO - Obtenerla del fichero .m
+		funcion = "function y = f(x) \r\n"
+				+ "	y = exp(sqrt(x^2+1));\r\n"
+				+ "endfunction";
 	}
 }
