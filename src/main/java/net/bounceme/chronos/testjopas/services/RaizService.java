@@ -108,4 +108,16 @@ public class RaizService {
 	public String obtenerDerivada() {
 		return FileHelper.leerFichero(pathRaiz + "/df.m");
 	}
+
+	public String obtenerCodigo(String opcion) {
+		if ("biseccion".equals(opcion)) {
+			return FileHelper.leerFichero(pathRaiz + "/biseccion.m");
+		}
+		else if ("secante".equals(opcion)) {
+			return FileHelper.leerFichero(pathRaiz + "/secante.m");
+		}
+		else {
+			return FileHelper.leerFichero(pathRaiz + "/newtonRaphson.m");
+		}
+	}
 }

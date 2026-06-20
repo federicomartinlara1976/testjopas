@@ -96,4 +96,9 @@ public class RaizBean implements Serializable {
 		// TODO - Obtenerla del fichero .m
 		funcion = raizService.obtenerDerivada();
 	}
+	
+	public void obtenerCodigo() {
+		titulo = "Código";
+		funcion = raizService.obtenerCodigo(sessionBean.getOpcion());
+	}
 }

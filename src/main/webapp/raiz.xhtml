@@ -54,6 +54,11 @@
 						update="functionDialog" actionListener="#{raizBean.obtenerDerivada}"
 						oncomplete="PF('functionDialog').show()"
 						styleClass="edit-button rounded-button ui-button-success" />
+						
+					<p:commandButton title="Código" icon="pi pi-bars" process="@form" ajax="true"
+						update="functionDialog" actionListener="#{raizBean.obtenerCodigo}"
+						oncomplete="PF('functionDialog').show()"
+						styleClass="edit-button rounded-button ui-button-success" />
 
 				</f:facet>
 
@@ -76,7 +81,8 @@
 			<p:outputPanel id="function-content" class="ui-fluid">
 				<div class="field ui-g-12">
 					<p:outputLabel for="name">Código</p:outputLabel>
-					<p:inputTextarea id="name" readonly="true"
+					<p:inputTextarea id="name" readonly="true" autoResize="false"
+						rows="20" cols="80" 
 						value="#{raizBean.funcion}" />
 				</div>
 			</p:outputPanel>
