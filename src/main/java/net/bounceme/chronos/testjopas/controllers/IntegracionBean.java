@@ -75,9 +75,6 @@ public class IntegracionBean implements Serializable {
 	}
 	
 	public void obtenerFuncion() {
-		// TODO - Obtenerla del fichero .m
-		funcion = "function y = f(x) \r\n"
-				+ "	y = exp(sqrt(x^2+1));\r\n"
-				+ "endfunction";
+		funcion = integracionService.obtenerFuncion();
 	}
 }

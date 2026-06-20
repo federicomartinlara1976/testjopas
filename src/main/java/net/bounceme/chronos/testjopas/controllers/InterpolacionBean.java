@@ -165,8 +165,6 @@ public class InterpolacionBean implements Serializable {
 	
 	public void obtenerFuncion() {
 		// TODO - Obtenerla del fichero .m
-		funcion = "function y = f(x) \r\n"
-				+ "	y = x + log(x);\r\n"
-				+ "endfunction";
+		funcion = interpolacionService.obtenerFuncion();
 	}
 }

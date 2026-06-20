@@ -74,4 +74,11 @@ public class IntegracionService {
 			valor = calcService.getScalar("sum");
 		}
 	}
+	
+	public String obtenerFuncion() {
+		// TODO - Obtenerla del fichero .m
+		return "function y = f(x) \r\n"
+				+ "	y = exp(sqrt(x^2+1));\r\n"
+				+ "endfunction";
+	}
 }

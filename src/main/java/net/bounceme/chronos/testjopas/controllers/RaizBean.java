@@ -88,17 +88,12 @@ public class RaizBean implements Serializable {
 	
 	public void obtenerFuncion() {
 		titulo = "Función";
-		// TODO - Obtenerla del fichero .m
-		funcion = "function y = f(x)\r\n"
-				+ "  y = x + exp(2*x);\r\n"
-				+ "endfunction";
+		funcion = raizService.obtenerFuncion();
 	}
 	
 	public void obtenerDerivada() {
 		titulo = "Derivada";
 		// TODO - Obtenerla del fichero .m
-		funcion = "function y = df(x)\r\n"
-				+ "  y = 1 + 2*exp(2*x);\r\n"
-				+ "endfunction";
+		funcion = raizService.obtenerDerivada();
 	}
 }

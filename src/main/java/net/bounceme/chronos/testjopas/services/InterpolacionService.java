@@ -96,4 +96,11 @@ public class InterpolacionService {
 	            .map(PuntoDTO::getValor)
 	            .toArray(BigDecimal[]::new);
 	}
+	
+	public String obtenerFuncion() {
+		// TODO - Obtenerla del fichero .m
+		return "function y = f(x) \r\n"
+				+ "	y = x + log(x);\r\n"
+				+ "endfunction";
+	}
 }

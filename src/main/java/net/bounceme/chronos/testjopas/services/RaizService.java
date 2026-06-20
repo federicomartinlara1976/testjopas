@@ -99,4 +99,18 @@ public class RaizService {
 			valores = calcService.getArray("x");
 		}
 	}
+	
+	public String obtenerFuncion() {
+		// TODO - Obtenerla del fichero .m
+		return "function y = f(x)\r\n"
+				+ "  y = x + exp(2*x);\r\n"
+				+ "endfunction";
+	}
+	
+	public String obtenerDerivada() {
+		// TODO - Obtenerla del fichero .m
+		return "function y = df(x)\r\n"
+				+ "  y = 1 + 2*exp(2*x);\r\n"
+				+ "endfunction";
+	}
 }
