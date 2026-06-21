@@ -44,21 +44,24 @@
 						update="datosEntrada,resultados" actionListener="#{raizBean.reset}" 
 						styleClass="edit-button rounded-button ui-button-danger" />
 						
-					<p:commandButton title="Función" icon="pi pi-chart-line" process="@form" ajax="true"
+					<p:commandButton id="btnVerFuncion" icon="pi pi-chart-line" process="@form" ajax="true"
 						update="functionDialog" actionListener="#{raizBean.obtenerFuncion}"
 						oncomplete="PF('functionDialog').show()"
 						styleClass="edit-button rounded-button ui-button-primary" />
+					<p:tooltip for="btnVerFuncion" value="Función" position="bottom"/>
 						
-					<p:commandButton title="Derivada" icon="pi pi-chart-line" process="@form" ajax="true"
+					<p:commandButton id="btnVerDerivada" icon="pi pi-chart-line" process="@form" ajax="true"
 						rendered="#{sessionBean.opcion eq 'newton'}"
 						update="functionDialog" actionListener="#{raizBean.obtenerDerivada}"
 						oncomplete="PF('functionDialog').show()"
 						styleClass="edit-button rounded-button ui-button-secondary" />
+					<p:tooltip for="btnVerDerivada" value="Derivada" position="bottom"/>
 						
-					<p:commandButton title="Código" icon="pi pi-bars" process="@form" ajax="true"
+					<p:commandButton id="btnVerCodigo" icon="pi pi-bars" process="@form" ajax="true"
 						update="functionDialog" actionListener="#{raizBean.obtenerCodigo}"
 						oncomplete="PF('functionDialog').show()"
 						styleClass="edit-button rounded-button ui-button-primary" />
+					<p:tooltip for="btnVerCodigo" value="Código" position="bottom"/>
 
 				</f:facet>
 

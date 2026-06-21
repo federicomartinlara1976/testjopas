@@ -48,15 +48,17 @@
 						actionListener="#{integracionBean.reset}"
 						styleClass="edit-button rounded-button ui-button-danger" />
 						
-					<p:commandButton title="Función" icon="pi pi-chart-line" process="@form" ajax="true"
+					<p:commandButton id="btnVerFuncion" icon="pi pi-chart-line" process="@form" ajax="true"
 						update="functionDialog" actionListener="#{integracionBean.obtenerFuncion}"
 						oncomplete="PF('functionDialog').show()"
 						styleClass="edit-button rounded-button ui-button-primary" />
+					<p:tooltip for="btnVerFuncion" value="Función" position="bottom"/>
 						
-					<p:commandButton title="Código" icon="pi pi-bars" process="@form" ajax="true"
+					<p:commandButton id="btnVerCodigo" icon="pi pi-bars" process="@form" ajax="true"
 						update="functionDialog" actionListener="#{integracionBean.obtenerCodigo}"
 						oncomplete="PF('functionDialog').show()"
 						styleClass="edit-button rounded-button ui-button-primary" />
+					<p:tooltip for="btnVerCodigo" value="Código" position="bottom"/>
 
 				</f:facet>
 
