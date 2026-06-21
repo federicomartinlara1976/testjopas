@@ -3,9 +3,10 @@ package net.bounceme.chronos.testjopas.services.utils;
 import java.io.PrintWriter;
 
 import org.apache.commons.collections4.Closure;
-import org.apache.commons.lang3.StringUtils;
 
+@SuppressWarnings("deprecation")
 public class WriterClosure implements Closure<String[]> {
+	
 	private PrintWriter pw;
 	private String separator;
 
@@ -16,13 +17,11 @@ public class WriterClosure implements Closure<String[]> {
 
 	@Override
 	public void execute(String[] input) {
-		String line = StringUtils.EMPTY;
-
-		for (String item : input) {
-			line += item + separator;
-		}
-
-		line = line.substring(0, line.length() - 1);
-		pw.println(line);
+		if (input == null || input.length == 0) {
+	        pw.println();
+	        return;
+	    }
+	    
+	    pw.println(String.join(separator, input));
 	}
 }

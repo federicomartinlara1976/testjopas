@@ -1,43 +1,28 @@
 package net.bounceme.chronos.testjopas.common;
 
-import net.bounceme.chronos.utils.common.Constantes;
+import lombok.Getter;
 
-public class TestJopasConstantes extends Constantes {
+public class TestJopasConstantes {
 
 	/**
 	 * The Enum Locales.
 	 */
 	public enum Paths {
 		
-		raiz("octave/met-num/raiz"), 
-		interpolacion("octave/met-num/interpolacion"), 
-		integracion("octave/met-num/integracion"),
-		algebra("octave/met-num/algebra"),
-		algoritmos("octave/met-num/algoritmos/dtw"),
-		utilidades("octave/utilidades"),
-		reglas(""),
-		funciones("octave/funciones");
+		RAIZ("octave/met-num/raiz"), 
+		INTERPOLACION("octave/met-num/interpolacion"), 
+		INTEGRACION("octave/met-num/integracion"),
+		ALGEBRA("octave/met-num/algebra"),
+		ALGORITMOS("octave/met-num/algoritmos/dtw"),
+		UTILIDADES("octave/utilidades"),
+		FUNCIONES("octave/funciones");
 		
 
-		/** The path. */
+		@Getter
 		private String path;
 
-		/**
-		 * Instantiates a new locales.
-		 *
-		 * @param locale the locale
-		 */
 		private Paths(String path) {
 			this.path = path;
-		}
-
-		/**
-		 * Value.
-		 *
-		 * @return the locale
-		 */
-		public String value() {
-			return path;
 		}
 	}
 

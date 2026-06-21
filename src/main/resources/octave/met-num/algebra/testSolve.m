@@ -6,4 +6,4 @@ tic1 = tic();
 c = solve(A, b);
 elapsed_1 = toc(tic1);
 
-fprintf("Resolución: %d\n", elapsed_1);
+fprintf("ResoluciÃ³n: %d\n", elapsed_1);

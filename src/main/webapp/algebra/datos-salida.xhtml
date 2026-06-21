@@ -5,22 +5,24 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<h3><h:outputText value="#{res['algebra.soluciones']}"/></h3>
-	
-	<table class="c100">
-		<tbody>
-			<ui:repeat value="#{algebraBean.c}" var="item" varStatus="st">
-			<tr>
-				<td>
-					<h:outputText value="x"/><h:outputText value="#{st.index+1}"/>
-				</td>
-				<td><h:outputText value="="/></td>
-				<td>
-					<h:outputText value="#{item}"/>
-				</td>
-			</tr>
-			</ui:repeat>
-		</tbody>
-	</table>
+	<p:dataTable id="tablaSoluciones"
+             value="#{algebraBean.tablaSoluciones.filas}" 
+             var="fila">
+    
+	    <p:columns value="#{algebraBean.columns}" 
+	               var="columna" 
+	               headerText="#{columna.header}">
+	               
+	     	<h:outputText rendered="#{columna.property eq 'index'}" value="#{algebraBean.tablaSoluciones.filas.indexOf(fila) + 1}">
+	            <f:convertNumber pattern="#0" />
+	        </h:outputText>
+	        
+	        <h:outputText rendered="#{columna.property ne 'index'}" value="#{fila.getValor(columna.property)}">
+	            <f:convertNumber pattern="#0.000000" />
+	        </h:outputText>
+	        
+	    </p:columns>
+	    
+	</p:dataTable>
 
 </ui:composition>

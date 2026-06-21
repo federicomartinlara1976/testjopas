@@ -5,30 +5,32 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<table class="c100">
-		<tbody>
-			<tr>
-				<td class="c20"><strong><h:outputLabel
-						value="#{res['integracion.a']}" for="limiteIzquierdo"
-						styleClass="label" /></strong></td>
-				<td><p:inputNumber id="limiteIzquierdo" decimalPlaces="6"
-						value="#{integracionBean.integracionDTO.a}" styleClass="c100" /></td>
-			</tr>
-			<tr>
-				<td class="c20"><strong><h:outputLabel
-						value="#{res['integracion.b']}" for="limiteDerecho"
-						styleClass="label" /></strong></td>
-				<td><p:inputNumber id="limiteDerecho" decimalPlaces="6"
-						value="#{integracionBean.integracionDTO.b}" styleClass="c100" /></td>
-			</tr>
-			<tr>
-				<td class="c20"><strong><h:outputLabel
-						value="#{res['integracion.tolerancia']}" for="tolerancia"
-						styleClass="label" /></strong></td>
-				<td><p:inputNumber id="tolerancia" decimalPlaces="6"
-						value="#{integracionBean.integracionDTO.tolerancia}" styleClass="c100" /></td>
-			</tr>
-		</tbody>
-	</table>
+	<div class="ui-g ui-fluid">
+		<div class="field ui-g-12 ui-md-12 ui-lg-6">
+			<h:outputLabel value="#{res['integracion.a']}" for="limiteIzquierdo"/>
+			<p:inputNumber id="limiteIzquierdo" decimalPlaces="6"
+				value="#{integracionBean.integracionDTO.a}" />
+		</div>
+		<div class="field ui-g-12 ui-md-12 ui-lg-6">
+			<h:outputLabel value="#{res['integracion.b']}" for="limiteDerecho"/>
+			<p:inputNumber id="limiteDerecho" decimalPlaces="6"
+				value="#{integracionBean.integracionDTO.b}" />
+		</div>
+		<div class="field ui-g-12 ui-md-12 ui-lg-6">
+			<h:outputLabel
+				value="#{res['integracion.iteraciones']}" for="iteraciones"/>
+			<p:spinner id="iteraciones"
+				value="#{integracionBean.integracionDTO.iteraciones}" min="1" max="100"/>
+		</div>
+		<div class="field ui-g-12 ui-md-12 ui-lg-6">
+			<h:outputLabel value="#{res['integracion.tolerancia']}" for="tolerancia" rendered="#{sessionBean.opcion eq 'integracion'}"/>
+			<p:inputNumber id="tolerancia" decimalPlaces="6"
+				value="#{integracionBean.integracionDTO.tolerancia}" rendered="#{sessionBean.opcion eq 'integracion'}"/>
+			<h:outputLabel
+				value="#{res['integracion.h']}" for="h" rendered="#{sessionBean.opcion eq 'simpson'}"/>
+			<p:inputNumber id="h" decimalPlaces="6"
+				value="#{integracionBean.integracionDTO.h}" rendered="#{sessionBean.opcion eq 'simpson'}"/>
+		</div>
+	</div>
 
 </ui:composition>

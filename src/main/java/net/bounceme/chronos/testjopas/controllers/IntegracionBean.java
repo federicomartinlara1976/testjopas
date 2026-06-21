@@ -3,108 +3,73 @@ package net.bounceme.chronos.testjopas.controllers;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
-
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import net.bounceme.chronos.logger.Log;
-import net.bounceme.chronos.logger.LogFactory;
-import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
-import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.dto.IntegracionDTO;
-import net.bounceme.chronos.testjopas.dto.RaizDTO;
-import net.bounceme.chronos.testjopas.exceptions.ServiceException;
-import net.bounceme.chronos.testjopas.services.utils.Utilidades;
-import net.bounceme.chronos.utils.jsf.controller.BaseBean;
+import net.bounceme.chronos.testjopas.services.IntegracionService;
+import net.bounceme.chronos.testjopas.util.JsfHelper;
 
 /**
  * The Class SessionBean.
  */
-@ManagedBean(name = IntegracionBean.NAME)
+@Component
+@Named
 @ViewScoped
-public class IntegracionBean extends BaseBean implements Serializable {
+@Slf4j
+public class IntegracionBean implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2350030970399677473L;
 
-	/** The Constant NAME. */
-	public static final String NAME = "integracionBean";
-	
-	/** The logger. */
-	private Log logger;
-
-	/** The appBean bean. */
-	@ManagedProperty(value = "#{appBean}")
-	private AppBean appBean;
-
-	/** The sessionBean bean. */
-	@ManagedProperty(value = "#{sessionBean}")
-	private SessionBean sessionBean;
+	@Autowired
+	private IntegracionService integracionService;
 	
 	@Autowired
-	private Utilidades utilidades;
+	private SessionBean sessionBean;
 
+	@Getter
+	@Setter
 	private IntegracionDTO integracionDTO;
 	
+	@Getter
 	private BigDecimal valor;
 	
+	@Getter
 	private BigDecimal[] valores;
 	
-	private String error;
-
+	@Getter
+	private String codigo;
+	
+	@Getter
+	private String titulo;
+	
+	@Getter
+	private String icono;
+	
 	@PostConstruct
 	public void initialize() {
-		try {
-			logger = LogFactory.getInstance().getLogger(IntegracionBean.class, "LOG4J");
-			
-			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
-					.getSessionAttribute("path");
-
-			initializePaths(paths);
-		} catch (ServiceException e) {
-			logger.error("ERROR:", e);
-			this.addErrorMessage(e);
-		}
-	}
-	
-	private void initializePaths(TestJopasConstantes.Paths paths) throws ServiceException {
-		appBean.getCalcService().clearEnvironment();
-		appBean.getCalcService().resetPath();
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.funciones.value()));
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(paths.value()));
-
 		reset();
 	}
 
 	public void calcular() {
 		try {
-			appBean.getCalcService().passVariable("a", integracionDTO.getA());
-			appBean.getCalcService().passVariable("b", integracionDTO.getB());
-			appBean.getCalcService().passVariable("tolerancia", integracionDTO.getTolerancia());
+			integracionService.calcular(integracionDTO, sessionBean.getOpcion());
 			
-			String cmd = "[valor,int,error]=integracion(a, b, tolerancia)";
-			
-			appBean.getCalcService().execute(cmd);
-			
-			// Las variables de salida son las que están definidas entre [] en el comando
-			error = appBean.getCalcService().getString("error");
-			if (StringUtils.isNotBlank(error)) {
-				throw new Exception(error);
-			}
-			else {
-				valor = appBean.getCalcService().getScalar("valor");
-				valores = appBean.getCalcService().getArray("int");
-			}
-
+			valor = integracionService.getValor();
+			valores = integracionService.getValores();
 		} catch (Exception e) {
-			logger.error("ERROR:", e);
-			this.addErrorMessage(e);
+			log.error("ERROR:", e);
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
 		}
 	}
 	
@@ -113,62 +78,17 @@ public class IntegracionBean extends BaseBean implements Serializable {
 		
 		valor = null;
 		valores = new BigDecimal[0];
-		error = StringUtils.EMPTY;
 	}
-
-	/**
-	 * @return the appBean
-	 */
-	public AppBean getAppBean() {
-		return appBean;
+	
+	public void obtenerFuncion() {
+		titulo = "Función";
+		icono = "pi pi-chart-line";
+		codigo = integracionService.obtenerFuncion();
 	}
-
-	/**
-	 * @param appBean the appBean to set
-	 */
-	public void setAppBean(AppBean appBean) {
-		this.appBean = appBean;
-	}
-
-	/**
-	 * @return the sessionBean
-	 */
-	public SessionBean getSessionBean() {
-		return sessionBean;
-	}
-
-	/**
-	 * @param sessionBean the sessionBean to set
-	 */
-	public void setSessionBean(SessionBean sessionBean) {
-		this.sessionBean = sessionBean;
-	}
-
-	/**
-	 * @return the integracionDTO
-	 */
-	public IntegracionDTO getIntegracionDTO() {
-		return integracionDTO;
-	}
-
-	/**
-	 * @param integracionDTO the integracionDTO to set
-	 */
-	public void setIntegracionDTO(IntegracionDTO integracionDTO) {
-		this.integracionDTO = integracionDTO;
-	}
-
-	/**
-	 * @return the valor
-	 */
-	public BigDecimal getValor() {
-		return valor;
-	}
-
-	/**
-	 * @return the valores
-	 */
-	public BigDecimal[] getValores() {
-		return valores;
+	
+	public void obtenerCodigo() {
+		titulo = "Código";
+		icono = "pi pi-bars";
+		codigo = integracionService.obtenerCodigo(sessionBean.getOpcion());
 	}
 }

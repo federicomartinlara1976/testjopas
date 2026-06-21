@@ -6,61 +6,99 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:chronos="http://chronos.componentes.jsf/composite"
 	template="/WEB-INF/templates/template.xhtml">
-	
+
 	<ui:define name="title">
-		<chronos:title type="3" value="#{res['app.title']}" />	
-	</ui:define>
-	
-	<ui:define name="menu">
-		<ui:include src="/menu.xhtml" />	
+		<chronos:title type="3" value="#{res['app.title']}" />
 	</ui:define>
 
 	<ui:define name="content">
 		<p:outputPanel layout="block" styleClass="acerca ui-g dashboard">
-			<p:outputPanel layout="block" styleClass="ui-g-12">
-				<p:outputPanel layout="block"
-					styleClass="jumbotron ui-g-12 box shadow overview-box overview-box-1">
-					<h1>
-						<h:outputText value="#{res['menu.interpolacion']}" />
-					</h1>
-					<hr class="my-4" />
-					<p class="description">
-						<h:outputText value="#{res['menu.interpolacion.funcion']}" rendered="#{sessionBean.opcion eq 'funcion'}"/>
-						<h:outputText value="#{res['menu.interpolacion.tabla']}" rendered="#{sessionBean.opcion eq 'tabla'}"/>
-					</p>
-				</p:outputPanel>
+			<p:outputPanel styleClass="ui-g-12">
+				<p:toolbar id="toolbar">
+					<p:toolbarGroup align="left">
+						<h3>
+							<h:outputText value="#{res['menu.interpolacion']}" />
+						</h3>
+					</p:toolbarGroup>
+					<p:toolbarGroup align="right">
+						<p class="description">
+							<h:outputText value="#{res['menu.interpolacion.funcion']}"
+								rendered="#{sessionBean.opcion eq 'funcion'}" />
+							<h:outputText value="#{res['menu.interpolacion.tabla']}"
+								rendered="#{sessionBean.opcion eq 'tabla'}" />
+						</p>
+					</p:toolbarGroup>
+				</p:toolbar>
 			</p:outputPanel>
-			
-			<p:outputPanel id="datosEntrada" layout="block" styleClass="ui-g-12">
-				<p:outputPanel layout="block"
-					styleClass="ui-g-12 box shadow overview-box">
-					<ui:include src="/interpolacion/datos-entrada.xhtml" />
-					
-					<p:outputPanel layout="block" id="botonera"
-						styleClass="botonera ui-g-12 ui-md-12 ui-lg-12">
 
-						<p:commandButton id="calcular" value="#{res['interpolacion.calcular']}"
-							actionListener="#{interpolacionBean.calcular}" process="@form" ajax="true" update="messages,resultados"
-							styleClass="btn btn-primary ui-g-2 ui-md-2 ui-lg-2"
-							icon="fa fa-save" />
-							
-						<p:commandButton id="reset" value="#{res['interpolacion.reset']}"
-							actionListener="#{interpolacionBean.reset}" process="@form" ajax="true" update="datosEntrada,resultados"
-							styleClass="btn btn-danger ui-g-2 ui-md-2 ui-lg-2"
-							icon="fa fa-refresh" />
+			<p:panel id="datosEntrada" styleClass="ui-g-12 ui-md-12 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Datos de entrada
+	       		</f:facet>
 
-					</p:outputPanel>
-				</p:outputPanel>
-			</p:outputPanel>
+				<f:facet name="actions">
+					<p:commandButton icon="pi pi-play" process="@form" ajax="true"
+						actionListener="#{interpolacionBean.calcular}" update="messages,resultados"
+						styleClass="edit-button rounded-button ui-button-success" />
+
+					<p:commandButton icon="pi pi-replay" process="@form" ajax="true"
+						actionListener="#{interpolacionBean.reset}" update="datosEntrada,resultados"
+						styleClass="edit-button rounded-button ui-button-danger" />
+						
+					<p:commandButton title="Función" icon="pi pi-chart-line" process="@form" ajax="true"
+						rendered="#{sessionBean.opcion eq 'funcion'}"
+						update="functionDialog" actionListener="#{interpolacionBean.obtenerFuncion}"
+						oncomplete="PF('functionDialog').show()"
+						styleClass="edit-button rounded-button ui-button-primary" />
+						
+					<p:commandButton title="Código" icon="pi pi-bars" process="@form" ajax="true"
+						update="functionDialog" actionListener="#{interpolacionBean.obtenerCodigo}"
+						oncomplete="PF('functionDialog').show()"
+						styleClass="edit-button rounded-button ui-button-primary" />
+
+				</f:facet>
+
+				<ui:include src="/interpolacion/datos-entrada.xhtml" />
+
+			</p:panel>
+
+			<p:panel id="resultados" styleClass="ui-g-12 ui-md-12 ui-lg-6">
+				<f:facet name="header">
+					<i class="pi pi-send"></i>
+	             	Resultados
+	       		</f:facet>
+
+				<ui:include src="/interpolacion/datos-salida.xhtml" />
+			</p:panel>
 			
-			<p:outputPanel id="resultados" layout="block" styleClass="ui-g-12">
-				<p:outputPanel layout="block"
-					rendered="#{interpolacionBean.sp != null}"
-					styleClass="ui-g-12 box shadow overview-box">
-					<ui:include src="/interpolacion/datos-salida.xhtml" />
-				</p:outputPanel>
+		</p:outputPanel>
+		
+		<p:dialog id="functionDialog" showEffect="fade"
+			modal="true" closable="false" closeOnEscape="true"  
+			widgetVar="functionDialog" responsive="true" position="center"
+			appendTo="@(form)">
+			<f:facet name="header">
+				<h5>
+					<i class="#{interpolacionBean.icono}"></i>
+					<h:outputText value="#{interpolacionBean.titulo}"/>
+				</h5>	
+			</f:facet>
+			
+			<p:outputPanel id="function-content" class="ui-fluid">
+				<div class="field ui-g-12">
+					<p:inputTextarea id="codigo" readonly="true" autoResize="false"
+						rows="20" cols="80" 
+						value="#{interpolacionBean.codigo}" />
+				</div>
 			</p:outputPanel>
-		</p:outputPanel>	
+
+			<f:facet name="footer">
+				<p:commandButton value="Cancelar" icon="pi pi-times"
+					onclick="PF('functionDialog').hide()" class="ui-button-secondary"
+					type="button" />
+			</f:facet>
+		</p:dialog>
 	</ui:define>
 
 </ui:composition>
