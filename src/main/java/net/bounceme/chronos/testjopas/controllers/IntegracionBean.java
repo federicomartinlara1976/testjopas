@@ -53,6 +53,9 @@ public class IntegracionBean implements Serializable {
 	@Getter
 	private String titulo;
 	
+	@Getter
+	private String icono;
+	
 	@PostConstruct
 	public void initialize() {
 		reset();
@@ -79,11 +82,13 @@ public class IntegracionBean implements Serializable {
 	
 	public void obtenerFuncion() {
 		titulo = "Función";
+		icono = "pi pi-chart-line";
 		codigo = integracionService.obtenerFuncion();
 	}
 	
 	public void obtenerCodigo() {
 		titulo = "Código";
+		icono = "pi pi-bars";
 		codigo = integracionService.obtenerCodigo(sessionBean.getOpcion());
 	}
 }

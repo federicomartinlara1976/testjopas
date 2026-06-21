@@ -56,6 +56,9 @@ public class RaizBean implements Serializable {
 	
 	@Getter
 	private String titulo;
+	
+	@Getter
+	private String icono;
 
 	@PostConstruct
 	public void initialize() {
@@ -85,16 +88,19 @@ public class RaizBean implements Serializable {
 	
 	public void obtenerFuncion() {
 		titulo = "Función";
+		icono = "pi pi-chart-line";
 		codigo = raizService.obtenerFuncion();
 	}
 	
 	public void obtenerDerivada() {
 		titulo = "Derivada";
+		icono = "pi pi-chart-line";
 		codigo = raizService.obtenerDerivada();
 	}
 	
 	public void obtenerCodigo() {
 		titulo = "Código";
+		icono = "pi pi-bars";
 		codigo = raizService.obtenerCodigo(sessionBean.getOpcion());
 	}
 }

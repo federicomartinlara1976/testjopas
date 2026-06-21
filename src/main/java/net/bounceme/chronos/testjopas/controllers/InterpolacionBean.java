@@ -72,6 +72,9 @@ public class InterpolacionBean implements Serializable {
 	
 	@Getter
 	private String titulo;
+	
+	@Getter
+	private String icono;
 
 	@PostConstruct
 	public void initialize() {
@@ -168,11 +171,13 @@ public class InterpolacionBean implements Serializable {
 	
 	public void obtenerFuncion() {
 		titulo = "Función";
+		icono = "pi pi-chart-line";
 		codigo = interpolacionService.obtenerFuncion();
 	}
 	
 	public void obtenerCodigo() {
 		titulo = "Código";
+		icono = "pi pi-bars";
 		codigo = interpolacionService.obtenerCodigo(sessionBean.getOpcion());
 	}
 }

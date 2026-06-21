@@ -38,7 +38,7 @@
 	       		</f:facet>
 
 				<f:facet name="actions">
-					<p:commandButton icon="pi pi-save" process="@form" ajax="true"
+					<p:commandButton icon="pi pi-play" process="@form" ajax="true"
 						actionListener="#{interpolacionBean.calcular}" update="messages,resultados"
 						styleClass="edit-button rounded-button ui-button-success" />
 
@@ -46,16 +46,16 @@
 						actionListener="#{interpolacionBean.reset}" update="datosEntrada,resultados"
 						styleClass="edit-button rounded-button ui-button-danger" />
 						
-					<p:commandButton title="Función" icon="pi pi-bars" process="@form" ajax="true"
+					<p:commandButton title="Función" icon="pi pi-chart-line" process="@form" ajax="true"
 						rendered="#{sessionBean.opcion eq 'funcion'}"
 						update="functionDialog" actionListener="#{interpolacionBean.obtenerFuncion}"
 						oncomplete="PF('functionDialog').show()"
-						styleClass="edit-button rounded-button ui-button-success" />
+						styleClass="edit-button rounded-button ui-button-primary" />
 						
 					<p:commandButton title="Código" icon="pi pi-bars" process="@form" ajax="true"
 						update="functionDialog" actionListener="#{interpolacionBean.obtenerCodigo}"
 						oncomplete="PF('functionDialog').show()"
-						styleClass="edit-button rounded-button ui-button-success" />
+						styleClass="edit-button rounded-button ui-button-primary" />
 
 				</f:facet>
 
@@ -74,9 +74,17 @@
 			
 		</p:outputPanel>
 		
-		<p:dialog id="functionDialog" header="#{interpolacionBean.titulo}" showEffect="fade"
-			modal="true" widgetVar="functionDialog" responsive="true" position="center"
+		<p:dialog id="functionDialog" showEffect="fade"
+			modal="true" closable="false" closeOnEscape="true"  
+			widgetVar="functionDialog" responsive="true" position="center"
 			appendTo="@(form)">
+			<f:facet name="header">
+				<h5>
+					<i class="#{interpolacionBean.icono}"></i>
+					<h:outputText value="#{interpolacionBean.titulo}"/>
+				</h5>	
+			</f:facet>
+			
 			<p:outputPanel id="function-content" class="ui-fluid">
 				<div class="field ui-g-12">
 					<p:inputTextarea id="codigo" readonly="true" autoResize="false"
