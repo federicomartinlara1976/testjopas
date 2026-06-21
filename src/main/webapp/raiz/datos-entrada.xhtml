@@ -5,51 +5,37 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<table class="c100">
-		<tbody>
-			<tr>
-				<td class="c20"><strong><h:outputLabel
-						value="#{res['raiz.puntoInicial']}" for="puntoInicial"
-						styleClass="label" /></strong></td>
-				<td><p:inputNumber id="puntoInicial" decimalPlaces="6"
-						value="#{raizBean.raizDTO.puntoInicial}" styleClass="c100" /></td>
-			</tr>
-		</tbody>
-	</table>
-
-	<p:outputPanel layout="block" rendered="#{sessionBean.opcion eq 'secante'}">
-		<table class="c100">
-			<tbody>
-				<tr>
-					<td class="c20"><strong><h:outputLabel
-							value="#{res['raiz.primeraAproximacion']}"
-							for="primeraAproximacion" styleClass="label" /></strong></td>
-					<td><p:inputNumber id="primeraAproximacion" decimalPlaces="6"
-							value="#{raizBean.raizDTO.primeraAproximacion}" styleClass="c100" />
-					</td>
-				</tr>
-			</tbody>
-		</table>
+	<p:outputPanel styleClass="ui-g ui-fluid" rendered="#{sessionBean.opcion eq 'biseccion'}">
+		<div class="field ui-g-12 ui-md-12 ui-lg-6">
+			<p:outputLabel value="#{res['raiz.a']}" for="inputA"/>
+        	<p:inputNumber id="inputA" decimalPlaces="6" value="#{raizBean.raizDTO.a}" />
+		</div>
+		<div class="field ui-g-12 ui-md-12 ui-lg-6">
+			<h:outputLabel value="#{res['raiz.b']}" for="inputB" />
+			<p:inputNumber id="inputB" decimalPlaces="6" value="#{raizBean.raizDTO.b}" />
+		</div>
 	</p:outputPanel>
-
-	<table class="c100">
-		<tbody>
-			<tr>
-				<td class="c20"><strong><h:outputLabel
-						value="#{res['raiz.tolerancia']}" for="tolerancia"
-						styleClass="label" /></strong></td>
-				<td><p:inputNumber id="tolerancia" decimalPlaces="6"
-						value="#{raizBean.raizDTO.tolerancia}" styleClass="c100" /></td>
-			</tr>
-
-			<tr>
-				<td class="c20"><strong><h:outputLabel
-						value="#{res['raiz.iteraciones']}" for="iteraciones"
-						styleClass="label" /></strong></td>
-				<td><p:spinner id="iteraciones"
-						value="#{raizBean.raizDTO.iteraciones}" min="1" max="100" /></td>
-			</tr>
-		</tbody>
-	</table>
+	
+	<p:outputPanel styleClass="ui-g ui-fluid" rendered="#{sessionBean.opcion eq 'secante' or sessionBean.opcion eq 'newton'}">
+		<div class="field ui-g-12 ui-md-12 ui-lg-6">
+			<p:outputLabel value="#{res['raiz.puntoInicial']}" for="puntoInicial"/>
+        	<p:inputNumber id="puntoInicial" decimalPlaces="6" value="#{raizBean.raizDTO.puntoInicial}" />
+		</div>
+		<p:outputPanel styleClass="field ui-g-12 ui-md-12 ui-lg-6" rendered="#{sessionBean.opcion eq 'secante'}">
+			<h:outputLabel value="#{res['raiz.primeraAproximacion']}" for="primeraAproximacion" />
+			<p:inputNumber id="primeraAproximacion" decimalPlaces="6" value="#{raizBean.raizDTO.primeraAproximacion}" />
+		</p:outputPanel>
+	</p:outputPanel>
+	
+	<p:outputPanel class="ui-g ui-fluid">
+		<div class="field ui-g-12 ui-md-12 ui-lg-6">
+			<h:outputLabel value="#{res['raiz.tolerancia']}" for="tolerancia" />
+			<p:inputNumber id="tolerancia" decimalPlaces="10" value="#{raizBean.raizDTO.tolerancia}" />
+		</div>
+		<p:outputPanel styleClass="field ui-g-12 ui-md-12 ui-lg-6" rendered="#{sessionBean.opcion eq 'secante' or sessionBean.opcion eq 'newton'}">
+			<h:outputLabel value="#{res['raiz.iteraciones']}" for="iteraciones"/>
+			<p:spinner id="iteraciones" value="#{raizBean.raizDTO.iteraciones}" min="1" max="100" />
+		</p:outputPanel>
+	</p:outputPanel>
 
 </ui:composition>

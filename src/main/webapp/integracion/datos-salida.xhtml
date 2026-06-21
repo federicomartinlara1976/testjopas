@@ -5,20 +5,23 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<p><h:outputText value="#{res['integracion.valor']}"/><strong><h:outputText value="#{integracionBean.valor}"/></strong></p>
+	<p>
+		<h:outputText value="#{res['integracion.valor']}"/>
+		<strong>
+			<h:outputText value="#{integracionBean.valor}">
+				<f:convertNumber pattern="#0.000000" />
+			</h:outputText>
+		</strong>
+	</p>
 	
-	<h3><h:outputText value="#{res['integracion.valores']}"/></h3>
+	<p:outputPanel rendered="#{sessionBean.opcion eq 'integracion'}">
+		<h5><h:outputText value="#{res['integracion.valores']}"/></h5>
 	
-	<table class="c100">
-		<tbody>
-			<tr>
-				<ui:repeat value="#{integracionBean.valores}" var="item">
-				<td>
-					<h:outputText value="#{item}"/>
-				</td>
-				</ui:repeat>
-			</tr>
-		</tbody>
-	</table>
+		<p:dataTable var="item" value="#{integracionBean.valores}">
+			<p:column headerText="Valor">
+				<h:outputText value="#{item}" />
+			</p:column>
+		</p:dataTable>
+	</p:outputPanel>
 
 </ui:composition>

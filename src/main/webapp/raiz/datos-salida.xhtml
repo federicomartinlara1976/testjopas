@@ -4,14 +4,29 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
-	<p><h:outputText value="#{res['raiz.solucion']}"/><strong><h:outputText value="#{raizBean.sol}"/></strong></p>
-	<p><h:outputText value="#{res['raiz.itRealizadas']}"/><strong><h:outputText value="#{raizBean.iteraciones}"/></strong></p>
-		
-	<p:dataTable var="valor" value="#{raizBean.valores}" rendered="#{not empty raizBean.valores}">
-	    <p:column headerText="#{res['raiz.valorIteracion']}">
-		<h:outputText value="#{valor}" />
-	    </p:column>
-	</p:dataTable>
+
+	<p>
+		<h:outputText value="#{res['raiz.solucion']}" />
+		<strong><h:outputText value="#{raizBean.sol}" /></strong>
+	</p>
+	<p>
+		<h:outputText value="#{res['raiz.itRealizadas']}" />
+		<strong><h:outputText value="#{raizBean.iteraciones}" /></strong>
+	</p>
+
+	<p:dataView var="valor" value="#{raizBean.valores}" rows="5"
+		paginator="true" rowsPerPageTemplate="5,10,15" paginatorPosition="top"
+		paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		gridIcon="pi pi-th-large" listIcon="pi pi-bars"
+		rendered="#{sessionBean.opcion eq 'secante' or sessionBean.opcion eq 'newton'}">
+
+		<p:dataViewListItem>
+			<div class="product-list-item">
+				<div class="product-list-detail">
+					<div class="product-name">#{valor}</div>
+				</div>
+			</div>
+		</p:dataViewListItem>
+	</p:dataView>
 
 </ui:composition>

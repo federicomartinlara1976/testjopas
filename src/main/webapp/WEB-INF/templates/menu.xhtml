@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<p:outputPanel layout="block" styleClass="menu">
+		<ul class="list-group">
+			<li class="list-group-item"><h:commandLink
+					action="#{sessionBean.navegar('inicio')}" ajax="false"
+					disabled="#{sessionBean.currentPage eq 'inicio'}">
+					<i class="fa fa-home"></i>
+					<span><h:outputText value="#{res['menu.inicio']}" /></span>
+				</h:commandLink></li>
+		</ul>
+
+		<p:accordionPanel activeIndex="-1">
+			<p:tab title="#{res['menu.raiz']}">
+				<ul class="list-group">
+					<li class="list-group-item"><h:commandLink
+						actionListener="#{sessionBean.setOpcion('biseccion')}"
+						action="#{sessionBean.navegar('raiz')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'raiz' and sessionBean.opcion eq 'biseccion'}">
+							<i class="fa fa-book"></i>
+							<span><h:outputText value="#{res['menu.raiz.biseccion']}" /></span>
+					</h:commandLink></li>
+					<li class="list-group-item"><h:commandLink
+						actionListener="#{sessionBean.setOpcion('secante')}"
+						action="#{sessionBean.navegar('raiz')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'raiz' and sessionBean.opcion eq 'secante'}">
+							<i class="fa fa-book"></i>
+							<span><h:outputText value="#{res['menu.raiz.secante']}" /></span>
+					</h:commandLink></li>
+					<li class="list-group-item"><h:commandLink
+						actionListener="#{sessionBean.setOpcion('newton')}"
+						action="#{sessionBean.navegar('raiz')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'raiz' and sessionBean.opcion eq 'newton'}">
+							<i class="fa fa-book"></i>
+							<span><h:outputText value="#{res['menu.raiz.newton']}" /></span>
+					</h:commandLink></li>
+				</ul>
+			</p:tab>
+			<p:tab title="#{res['menu.interpolacion']}">
+				<ul class="list-group">
+					<li class="list-group-item"><h:commandLink
+						actionListener="#{sessionBean.setOpcion('funcion')}"	
+						action="#{sessionBean.navegar('interpolacion')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'interpolacion' and sessionBean.opcion eq 'funcion'}">
+							<i class="fa fa-users"></i>
+							<span><h:outputText value="#{res['menu.interpolacion.funcion']}" /></span>
+					</h:commandLink></li>
+					<li class="list-group-item"><h:commandLink
+						actionListener="#{sessionBean.setOpcion('tabla')}"
+						action="#{sessionBean.navegar('interpolacion')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'interpolacion' and sessionBean.opcion eq 'tabla'}">
+							<i class="fa fa-users"></i>
+							<span><h:outputText value="#{res['menu.interpolacion.tabla']}" /></span>
+					</h:commandLink></li>
+				</ul>
+			</p:tab>
+			<p:tab title="#{res['menu.integracion']}">
+				<ul class="list-group">
+					<li class="list-group-item"><h:commandLink
+						actionListener="#{sessionBean.setOpcion('integracion')}"
+						action="#{sessionBean.navegar('integracion')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'integracion' and sessionBean.opcion eq 'integracion'}">
+							<i class="fa fa-users"></i>
+							<span><h:outputText value="#{res['menu.integracion.integracion']}" /></span>
+					</h:commandLink></li>
+					<li class="list-group-item"><h:commandLink
+						actionListener="#{sessionBean.setOpcion('simpson')}"
+						action="#{sessionBean.navegar('integracion')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'integracion' and sessionBean.opcion eq 'simpson'}">
+							<i class="fa fa-users"></i>
+							<span><h:outputText value="#{res['menu.integracion.simpson']}" /></span>
+					</h:commandLink></li>
+				</ul>
+			</p:tab>
+			<p:tab title="#{res['menu.algebra']}">
+				<ul class="list-group">
+					<li class="list-group-item"><h:commandLink
+						actionListener="#{sessionBean.setOpcion('sistemas')}"
+						action="#{sessionBean.navegar('algebra')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'algebra' and sessionBean.opcion eq 'sistemas'}">
+							<i class="fa fa-users"></i>
+							<span><h:outputText value="#{res['menu.algebra.sistema']}" /></span>
+					</h:commandLink></li>
+				</ul>
+			</p:tab>
+		</p:accordionPanel>
+	</p:outputPanel>
+    
+</ui:composition>

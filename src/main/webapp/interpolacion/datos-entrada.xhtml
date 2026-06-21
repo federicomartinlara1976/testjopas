@@ -5,68 +5,45 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<table class="c100">
-		<tbody>
-			<tr>
-				<td class="c20"><h:outputLabel
-						value="#{res['interpolacion.puntoInterpolar']}" for="puntoInterpolar"
-						styleClass="label" /></td>
-				<td><p:inputNumber id="puntoInterpolar"
-						value="#{interpolacionBean.interpolacionDTO.puntoInterpolar}" styleClass="c100" /></td>
-			</tr>
-			<tr>
-				<td class="c20"><h:outputLabel
-						value="#{res['interpolacion.numeroPuntos']}" for="numeroPuntos"
-						styleClass="label" /></td>
-				<td>
-					<p:spinner id="numeroPuntos" value="#{interpolacionBean.interpolacionDTO.numeroPuntos}"
-						min="1" max="100">
-                		<p:ajax process="@this" listener="#{interpolacionBean.cambiarPuntos}" update="panelPuntos"/>
-            		</p:spinner></td>
-			</tr>
-		</tbody>
-	</table>
-	
-	<p:outputPanel id="panelPuntos" layout="block" rendered="#{interpolacionBean.interpolacionDTO.numeroPuntos gt 0}">
-		<table class="c50">
-			<thead>
-				<tr>
-					<th></th>
-					<th><h:outputText value="#{res['interpolacion.x']}"/></th>
-					<th>
-						<h:outputText value="#{res['interpolacion.fx']}" rendered="#{sessionBean.opcion eq 'funcion'}"/>
-						<h:outputText value="#{res['interpolacion.valor']}" rendered="#{sessionBean.opcion eq 'tabla'}"/>
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<ui:repeat var="punto" value="#{interpolacionBean.interpolacionDTO.puntos}" varStatus="st">
-				<tr>
-					<td><h:outputText value="#{res['interpolacion.punto']}"/> #{st.index+1}</td>
-					<td>
-						<p:inputNumber decimalPlaces="6"
-							value="#{interpolacionBean.interpolacionDTO.puntos[st.index].punto}" 
-							rendered="#{sessionBean.opcion eq 'funcion'}"
-							styleClass="c100">
-							<p:ajax event="change" process="@this" listener="#{interpolacionBean.calcularValor(st.index)}" update="panelPuntos"/>
-						</p:inputNumber>
-						
-						<p:inputNumber decimalPlaces="6"
-							value="#{interpolacionBean.interpolacionDTO.puntos[st.index].punto}" 
-							rendered="#{sessionBean.opcion eq 'tabla'}"
-							styleClass="c100"/>
-					</td>
-					<td>
-						<h:outputText value="#{interpolacionBean.interpolacionDTO.puntos[st.index].valor}" rendered="#{sessionBean.opcion eq 'funcion'}"/>
-						<p:inputNumber decimalPlaces="6"
-							value="#{interpolacionBean.interpolacionDTO.puntos[st.index].valor}" 
-							rendered="#{sessionBean.opcion eq 'tabla'}"
-							styleClass="c100"/>	
-					</td>
-				</tr>
-				</ui:repeat>
-			</tbody>
-		</table>
-	</p:outputPanel>
+	<div class="ui-g ui-fluid">
+		<div class="field ui-g-12 ui-md-12 ui-lg-6">
+			<h:outputLabel value="#{res['interpolacion.puntoInterpolar']}"
+				for="puntoInterpolar" />
+			<p:inputNumber id="puntoInterpolar"
+				value="#{interpolacionBean.interpolacionDTO.puntoInterpolar}" />
+		</div>
+		<div class="field ui-g-12 ui-md-12 ui-lg-6">
+			<h:outputLabel value="#{res['interpolacion.numeroPuntos']}"
+				for="numeroPuntos" />
+			<p:spinner id="numeroPuntos"
+				value="#{interpolacionBean.interpolacionDTO.numeroPuntos}" min="1"
+				max="100">
+				<p:ajax process="@this"
+					listener="#{interpolacionBean.cambiarPuntos}" update="datosEntrada" />
+			</p:spinner>
+		</div>
 
+		<ui:repeat var="punto"
+			value="#{interpolacionBean.interpolacionDTO.puntos}" varStatus="st">
+
+			<div class="field ui-g-12 ui-md-12 ui-lg-6">
+				<p:inputNumber decimalPlaces="6"
+					value="#{interpolacionBean.interpolacionDTO.puntos[st.index].punto}"
+					rendered="#{sessionBean.opcion eq 'funcion'}">
+					<p:ajax event="change" process="@this"
+						listener="#{interpolacionBean.calcularValor(st.index)}"
+						update="datosEntrada" />
+				</p:inputNumber>
+
+				<p:inputNumber decimalPlaces="6"
+					value="#{interpolacionBean.interpolacionDTO.puntos[st.index].punto}"
+					rendered="#{sessionBean.opcion eq 'tabla'}" />
+			</div>
+			<div class="field ui-g-12 ui-md-12 ui-lg-6">
+				<p:inputNumber decimalPlaces="6"
+					value="#{interpolacionBean.interpolacionDTO.puntos[st.index].valor}"
+					disabled="#{sessionBean.opcion eq 'funcion'}" />
+			</div>
+		</ui:repeat>
+	</div>
 </ui:composition>

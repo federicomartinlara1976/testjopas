@@ -2,92 +2,73 @@ package net.bounceme.chronos.testjopas.controllers;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-
-import javax.annotation.PostConstruct;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import net.bounceme.chronos.logger.Log;
-import net.bounceme.chronos.logger.LogFactory;
-import net.bounceme.chronos.testjopas.common.TestJopasConstantes;
-import net.bounceme.chronos.testjopas.common.TestJopasConstantes.Paths;
+import jakarta.annotation.PostConstruct;
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import net.bounceme.chronos.testjopas.controllers.models.ColumnModel;
+import net.bounceme.chronos.testjopas.controllers.models.Fila;
+import net.bounceme.chronos.testjopas.controllers.models.Tabla;
 import net.bounceme.chronos.testjopas.dto.AlgebraDTO;
-import net.bounceme.chronos.testjopas.exceptions.ServiceException;
-import net.bounceme.chronos.testjopas.services.utils.Utilidades;
-import net.bounceme.chronos.utils.jsf.controller.BaseBean;
+import net.bounceme.chronos.testjopas.services.AlgebraService;
+import net.bounceme.chronos.testjopas.util.JsfHelper;
 
 /**
  * The Class SessionBean.
  */
-@ManagedBean(name = AlgebraBean.NAME)
+@Component
+@Named
 @ViewScoped
-public class AlgebraBean extends BaseBean implements Serializable {
+@Slf4j
+public class AlgebraBean implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2350030970399677473L;
-
-	/** The Constant NAME. */
-	public static final String NAME = "algebraBean";
-
-	/** The logger. */
-	private Log logger;
-
-	/** The app bean. */
-	@ManagedProperty(value = "#{appBean}")
-	private AppBean appBean;
-
-	/** The app bean. */
-	@ManagedProperty(value = "#{sessionBean}")
-	private SessionBean sessionBean;
 	
 	@Autowired
-	private Utilidades utilidades;
+	private AlgebraService algebraService;
 
+	@Getter
+	@Setter
 	private AlgebraDTO algebraDTO;
 	
 	private BigDecimal[] c;
+	
+	@Getter
+	private Tabla tablaSoluciones;
+	
+	@Getter
+	private List<ColumnModel> columns;
+	
+	@Getter
+	private String codigo;
 
 	@PostConstruct
 	public void initialize() {
-		try {
-			logger = LogFactory.getInstance().getLogger(AlgebraBean.class, "LOG4J");
-
-			TestJopasConstantes.Paths paths = (TestJopasConstantes.Paths) this.getJsfHelper()
-					.getSessionAttribute("path");
-
-			initializePaths(paths);
-		} catch (ServiceException e) {
-			logger.error("ERROR:", e);
-			this.addErrorMessage(e);
-		}
-	}
-	
-	private void initializePaths(TestJopasConstantes.Paths paths) throws ServiceException {
-		appBean.getCalcService().clearEnvironment();
-		appBean.getCalcService().resetPath();
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(Paths.funciones.value()));
-		appBean.getCalcService().addPath(utilidades.getPathFromResource(paths.value()));
-
 		reset();
 	}
 
 	public void calcular() {
 		try {
-			appBean.getCalcService().passVariable("A", algebraDTO.getMatrizCoeficientes());
-			appBean.getCalcService().passVariable("b", algebraDTO.getTerminos());
-			
-			String cmd = "c=solve(A, b)";
-			appBean.getCalcService().execute(cmd);
-				
-			c = appBean.getCalcService().getArray("c");
-		} catch (ServiceException e) {
-			logger.error("ERROR:", e);
-			this.addErrorMessage(e);
+			algebraService.calcular(algebraDTO);
+			c = algebraService.getC();
+			buildTabla();
+		} catch (Exception e) {
+			log.error("ERROR:", e);
+			JsfHelper.writeMessage(FacesMessage.SEVERITY_ERROR, "Error", "Ocurrió un error.");
 		}
 	}
 
@@ -100,47 +81,33 @@ public class AlgebraBean extends BaseBean implements Serializable {
 		Integer n = algebraDTO.getNumeroCoeficientes();
 		algebraDTO = new AlgebraDTO(n);
 	}
+	
+	private void buildTabla() {
 
-	/**
-	 * @return the appBean
-	 */
-	public AppBean getAppBean() {
-		return appBean;
+		tablaSoluciones = new Tabla();
+		tablaSoluciones.setFilas(new ArrayList<>());
+
+		// Determinar el máximo número de columnas, con la primera fila
+		tablaSoluciones.setMaxColumnas(1);
+		
+		// Usando Arrays.stream()
+		for (BigDecimal solucion : c) {
+		    Fila filaObj = new Fila();
+		    Map<String, BigDecimal> valoresPorColumna = new LinkedHashMap<>();
+		    
+		    valoresPorColumna.put("col0", solucion);  // Mantener como BigDecimal
+		    
+		    filaObj.setValoresPorColumna(valoresPorColumna);
+		    tablaSoluciones.getFilas().add(filaObj);
+		}
+		
+		// Construir columnas
+	    columns = new ArrayList<>();
+	    columns.add(new ColumnModel("x", "index"));
+	    columns.add(new ColumnModel("valor", "col0"));
 	}
-
-	/**
-	 * @param appBean the appBean to set
-	 */
-	public void setAppBean(AppBean appBean) {
-		this.appBean = appBean;
-	}
-
-	public SessionBean getSessionBean() {
-		return sessionBean;
-	}
-
-	public void setSessionBean(SessionBean sessionBean) {
-		this.sessionBean = sessionBean;
-	}
-
-	/**
-	 * @return the algebraDTO
-	 */
-	public AlgebraDTO getAlgebraDTO() {
-		return algebraDTO;
-	}
-
-	/**
-	 * @param algebraDTO the algebraDTO to set
-	 */
-	public void setAlgebraDTO(AlgebraDTO algebraDTO) {
-		this.algebraDTO = algebraDTO;
-	}
-
-	/**
-	 * @return the c
-	 */
-	public BigDecimal[] getC() {
-		return c;
+	
+	public void obtenerCodigo() {
+		codigo = algebraService.obtenerCodigo();
 	}
 }
