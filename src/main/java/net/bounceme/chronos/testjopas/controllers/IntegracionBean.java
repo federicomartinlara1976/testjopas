@@ -48,7 +48,10 @@ public class IntegracionBean implements Serializable {
 	private BigDecimal[] valores;
 	
 	@Getter
-	private String funcion;
+	private String codigo;
+	
+	@Getter
+	private String titulo;
 	
 	@PostConstruct
 	public void initialize() {
@@ -75,6 +78,12 @@ public class IntegracionBean implements Serializable {
 	}
 	
 	public void obtenerFuncion() {
-		funcion = integracionService.obtenerFuncion();
+		titulo = "Función";
+		codigo = integracionService.obtenerFuncion();
+	}
+	
+	public void obtenerCodigo() {
+		titulo = "Código";
+		codigo = integracionService.obtenerCodigo(sessionBean.getOpcion());
 	}
 }

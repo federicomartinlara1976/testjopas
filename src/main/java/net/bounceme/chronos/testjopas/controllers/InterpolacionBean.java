@@ -68,7 +68,10 @@ public class InterpolacionBean implements Serializable {
 	private List<ColumnModel> columns;
 	
 	@Getter
-	private String funcion;
+	private String codigo;
+	
+	@Getter
+	private String titulo;
 
 	@PostConstruct
 	public void initialize() {
@@ -164,7 +167,12 @@ public class InterpolacionBean implements Serializable {
 	}
 	
 	public void obtenerFuncion() {
-		// TODO - Obtenerla del fichero .m
-		funcion = interpolacionService.obtenerFuncion();
+		titulo = "Función";
+		codigo = interpolacionService.obtenerFuncion();
+	}
+	
+	public void obtenerCodigo() {
+		titulo = "Código";
+		codigo = interpolacionService.obtenerCodigo(sessionBean.getOpcion());
 	}
 }

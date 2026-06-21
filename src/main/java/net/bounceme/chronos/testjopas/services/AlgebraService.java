@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.dto.AlgebraDTO;
+import net.bounceme.chronos.testjopas.util.FileHelper;
 
 @Service
 @Slf4j
@@ -47,5 +48,9 @@ public class AlgebraService {
 		calcService.execute(cmd);
 			
 		c = calcService.getArray("c");
+	}
+	
+	public String obtenerCodigo() {
+		return FileHelper.leerFichero(pathAlgebra + "/solve.m");
 	}
 }

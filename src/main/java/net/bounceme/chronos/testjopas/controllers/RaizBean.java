@@ -52,10 +52,7 @@ public class RaizBean implements Serializable {
 	private BigDecimal[] valores;
 	
 	@Getter
-	private String funcion;
-	
-	@Getter
-	private String derivada;
+	private String codigo;
 	
 	@Getter
 	private String titulo;
@@ -88,17 +85,16 @@ public class RaizBean implements Serializable {
 	
 	public void obtenerFuncion() {
 		titulo = "Función";
-		funcion = raizService.obtenerFuncion();
+		codigo = raizService.obtenerFuncion();
 	}
 	
 	public void obtenerDerivada() {
 		titulo = "Derivada";
-		// TODO - Obtenerla del fichero .m
-		funcion = raizService.obtenerDerivada();
+		codigo = raizService.obtenerDerivada();
 	}
 	
 	public void obtenerCodigo() {
 		titulo = "Código";
-		funcion = raizService.obtenerCodigo(sessionBean.getOpcion());
+		codigo = raizService.obtenerCodigo(sessionBean.getOpcion());
 	}
 }

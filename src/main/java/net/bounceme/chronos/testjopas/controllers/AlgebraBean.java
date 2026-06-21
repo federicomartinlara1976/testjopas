@@ -52,6 +52,9 @@ public class AlgebraBean implements Serializable {
 	
 	@Getter
 	private List<ColumnModel> columns;
+	
+	@Getter
+	private String codigo;
 
 	@PostConstruct
 	public void initialize() {
@@ -102,5 +105,9 @@ public class AlgebraBean implements Serializable {
 	    columns = new ArrayList<>();
 	    columns.add(new ColumnModel("x", "index"));
 	    columns.add(new ColumnModel("valor", "col0"));
+	}
+	
+	public void obtenerCodigo() {
+		codigo = algebraService.obtenerCodigo();
 	}
 }

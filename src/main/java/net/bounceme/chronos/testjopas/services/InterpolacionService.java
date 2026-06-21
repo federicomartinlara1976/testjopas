@@ -101,4 +101,13 @@ public class InterpolacionService {
 	public String obtenerFuncion() {
 		return FileHelper.leerFichero(pathInterpolacion + "/f.m");
 	}
+	
+	public String obtenerCodigo(String opcion) {
+		if ("funcion".equals(opcion)) {
+			return FileHelper.leerFichero(pathInterpolacion + "/interpoladorFuncion.m");
+		}
+		else {
+			return FileHelper.leerFichero(pathInterpolacion + "/interpoladorTablaValores.m");
+		}
+	}
 }

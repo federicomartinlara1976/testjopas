@@ -79,4 +79,13 @@ public class IntegracionService {
 	public String obtenerFuncion() {
 		return FileHelper.leerFichero(pathIntegracion + "/f.m");
 	}
+	
+	public String obtenerCodigo(String opcion) {
+		if ("simpson".equals(opcion)) {
+			return FileHelper.leerFichero(pathIntegracion + "/simpson.m");
+		}
+		else {
+			return FileHelper.leerFichero(pathIntegracion + "/integracion.m");
+		}
+	}
 }

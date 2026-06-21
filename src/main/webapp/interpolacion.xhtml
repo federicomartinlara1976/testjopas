@@ -51,6 +51,11 @@
 						update="functionDialog" actionListener="#{interpolacionBean.obtenerFuncion}"
 						oncomplete="PF('functionDialog').show()"
 						styleClass="edit-button rounded-button ui-button-success" />
+						
+					<p:commandButton title="Código" icon="pi pi-bars" process="@form" ajax="true"
+						update="functionDialog" actionListener="#{interpolacionBean.obtenerCodigo}"
+						oncomplete="PF('functionDialog').show()"
+						styleClass="edit-button rounded-button ui-button-success" />
 
 				</f:facet>
 
@@ -69,14 +74,14 @@
 			
 		</p:outputPanel>
 		
-		<p:dialog id="functionDialog" header="Función" showEffect="fade"
+		<p:dialog id="functionDialog" header="#{interpolacionBean.titulo}" showEffect="fade"
 			modal="true" widgetVar="functionDialog" responsive="true" position="center"
 			appendTo="@(form)">
 			<p:outputPanel id="function-content" class="ui-fluid">
 				<div class="field ui-g-12">
-					<p:outputLabel for="name">Código</p:outputLabel>
-					<p:inputTextarea id="name" readonly="true"
-						value="#{interpolacionBean.funcion}" />
+					<p:inputTextarea id="codigo" readonly="true" autoResize="false"
+						rows="20" cols="80" 
+						value="#{interpolacionBean.codigo}" />
 				</div>
 			</p:outputPanel>
 

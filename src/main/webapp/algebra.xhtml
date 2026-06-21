@@ -44,6 +44,11 @@
 						update="datosEntrada,resultados"
 						actionListener="#{algebraBean.reset}" 
 						styleClass="edit-button rounded-button ui-button-danger" />
+						
+					<p:commandButton title="Código" icon="pi pi-bars" process="@form" ajax="true"
+						update="functionDialog" actionListener="#{algebraBean.obtenerCodigo}"
+						oncomplete="PF('functionDialog').show()"
+						styleClass="edit-button rounded-button ui-button-success" />
 
 				</f:facet>
 				
@@ -61,6 +66,24 @@
 			</p:panel>
 			
 		</p:outputPanel>	
+		
+		<p:dialog id="functionDialog" header="Código" showEffect="fade"
+			modal="true" widgetVar="functionDialog" responsive="true" position="center"
+			appendTo="@(form)">
+			<p:outputPanel id="function-content" class="ui-fluid">
+				<div class="field ui-g-12">
+					<p:inputTextarea id="codigo" readonly="true" autoResize="false"
+						rows="20" cols="80" 
+						value="#{algebraBean.codigo}" />
+				</div>
+			</p:outputPanel>
+
+			<f:facet name="footer">
+				<p:commandButton value="Cancelar" icon="pi pi-times"
+					onclick="PF('functionDialog').hide()" class="ui-button-secondary"
+					type="button" />
+			</f:facet>
+		</p:dialog>
 	</ui:define>
 
 </ui:composition>
