@@ -40,6 +40,9 @@ public class AlgebraBean implements Serializable {
 	
 	@Autowired
 	private AlgebraService algebraService;
+	
+	@Autowired
+	private SessionBean sessionBean;
 
 	@Getter
 	@Setter
@@ -63,7 +66,7 @@ public class AlgebraBean implements Serializable {
 
 	public void calcular() {
 		try {
-			algebraService.calcular(algebraDTO);
+			algebraService.calcular(algebraDTO, sessionBean.getOpcion());
 			c = algebraService.getC();
 			buildTabla();
 		} catch (Exception e) {
@@ -108,6 +111,6 @@ public class AlgebraBean implements Serializable {
 	}
 	
 	public void obtenerCodigo() {
-		codigo = algebraService.obtenerCodigo();
+		codigo = algebraService.obtenerCodigo(sessionBean.getOpcion());
 	}
 }

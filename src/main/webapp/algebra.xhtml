@@ -23,6 +23,7 @@
 					<p:toolbarGroup align="right">
 						<p class="description">
 							<h:outputText value="#{res['menu.algebra.sistema']}" rendered="#{sessionBean.opcion eq 'sistemas'}"/>
+							<h:outputText value="#{res['menu.algebra.gauss']}" rendered="#{sessionBean.opcion eq 'gauss'}"/>
 						</p>
 					</p:toolbarGroup>
 				</p:toolbar>
@@ -35,7 +36,7 @@
 	       		</f:facet>
 
 				<f:facet name="actions">
-					<p:commandButton icon="pi pi-save" process="@form" ajax="true"
+					<p:commandButton icon="pi pi-play" process="@form" ajax="true"
 						update="messages,resultados"
 						actionListener="#{algebraBean.calcular}"
 						styleClass="edit-button rounded-button ui-button-success" />

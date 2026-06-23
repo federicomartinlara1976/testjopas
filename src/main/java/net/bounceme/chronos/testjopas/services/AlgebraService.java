@@ -27,6 +27,9 @@ public class AlgebraService {
 
 	@Getter
 	private BigDecimal[] c;
+	
+	@Getter
+	private BigDecimal[] p;
 
 	@PostConstruct
 	public void initialize() {
@@ -40,17 +43,35 @@ public class AlgebraService {
 	}
 
 	@SneakyThrows
-	public void calcular(AlgebraDTO algebraDTO) {
+	public void calcular(AlgebraDTO algebraDTO, String opcion) {
 		calcService.passVariable("A", algebraDTO.getMatrizCoeficientes());
 		calcService.passVariable("b", algebraDTO.getTerminos());
 		
-		String cmd = "c=solve(A, b)";
+		String cmd;
+		
+		if ("sistemas".equals(opcion)) {
+			cmd = "c=solve(A, b)";
+		}
+		else {
+			cmd = "[x, p] = gausspiv(A, b)";
+		}
+		
 		calcService.execute(cmd);
-			
-		c = calcService.getArray("c");
+		
+		if ("sistemas".equals(opcion)) {
+			c = calcService.getArray("c");
+		} else {
+			c = calcService.getArray("x");
+			p = calcService.getArray("p");
+		}
 	}
 	
-	public String obtenerCodigo() {
-		return FileHelper.leerFichero(pathAlgebra + "/solve.m");
+	public String obtenerCodigo(String opcion) {
+		if ("sistemas".equals(opcion)) {
+			return FileHelper.leerFichero(pathAlgebra + "/solve.m");
+		}
+		else {
+			return FileHelper.leerFichero(pathAlgebra + "/gausspiv.m");
+		}
 	}
 }

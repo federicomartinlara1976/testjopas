@@ -30,14 +30,14 @@
 					var="fila" varStatus="stf">
 					<tr>
 						<ui:repeat value="#{fila}" var="columna" varStatus="stc">
-							<td><p:inputNumber decimalPlaces="2"
+							<td><p:inputNumber decimalPlaces="6"
 									value="#{algebraBean.algebraDTO.matrizCoeficientes[stf.index][stc.index]}"
 									styleClass="c100" /> <h:outputText value="x" />
 								<h:outputText value="#{stc.index+1}" /></td>
 							<td><h:outputText value="+" rendered="#{!stc.last}" /> <h:outputText
 									value="=" rendered="#{stc.last}" /></td>
 						</ui:repeat>
-						<td><p:inputNumber decimalPlaces="2"
+						<td><p:inputNumber decimalPlaces="6"
 								value="#{algebraBean.algebraDTO.terminos[stf.index]}"
 								styleClass="c100" /></td>
 					</tr>

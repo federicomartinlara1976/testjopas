@@ -86,6 +86,13 @@
 							<i class="fa fa-users"></i>
 							<span><h:outputText value="#{res['menu.algebra.sistema']}" /></span>
 					</h:commandLink></li>
+					<li class="list-group-item"><h:commandLink
+						actionListener="#{sessionBean.setOpcion('gauss')}"
+						action="#{sessionBean.navegar('algebra')}" ajax="false"
+						disabled="#{sessionBean.currentPage eq 'algebra' and sessionBean.opcion eq 'gauss'}">
+							<i class="fa fa-users"></i>
+							<span><h:outputText value="#{res['menu.algebra.gauss']}" /></span>
+					</h:commandLink></li>
 				</ul>
 			</p:tab>
 		</p:accordionPanel>
