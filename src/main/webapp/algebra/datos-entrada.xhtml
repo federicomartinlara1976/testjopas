@@ -6,44 +6,70 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<div class="ui-g ui-fluid">
-		<div class="field ui-g-12 ui-md-12 ui-lg-3">
-			<h:outputLabel value="#{res['algebra.numeroCoeficientes']}"
-				for="numeroCoeficientes" />
-			<p:spinner id="numeroCoeficientes"
-				value="#{algebraBean.algebraDTO.numeroCoeficientes}" min="2"
-				max="10">
-				<p:ajax process="@this"
-					listener="#{algebraBean.cambiarCoeficientes}"
-					update="panelCoeficientes" />
-			</p:spinner>
+		<div class="field ui-g-12 ui-md-12 ui-lg-12">
+			<div class="ui-g-12 ui-md-12 ui-lg-3">
+				<h:outputLabel value="#{res['algebra.numeroCoeficientes']}"
+					for="numeroCoeficientes" />
+				<p:spinner id="numeroCoeficientes"
+					value="#{algebraBean.algebraDTO.numeroCoeficientes}" min="2"
+					max="10" buttons="horizontal">
+					<p:ajax process="@form"
+						event="valueChange"
+						listener="#{algebraBean.cambiarCoeficientes}"
+						update="panelCoeficientes,panelValoresIniciales" />
+				</p:spinner>
+			</div>
 		</div>
-	</div>
 
-	<p:outputPanel id="panelCoeficientes" layout="block"
-		rendered="#{algebraBean.algebraDTO.numeroCoeficientes gt 0}">
-		<h5>
-			<h:outputText value="#{res['algebra.sistema']}" />
-		</h5>
-		<table class="c100 sistema">
-			<tbody>
-				<ui:repeat value="#{algebraBean.algebraDTO.matrizCoeficientes}"
-					var="fila" varStatus="stf">
-					<tr>
-						<ui:repeat value="#{fila}" var="columna" varStatus="stc">
+		<p:outputPanel id="panelCoeficientes" layout="block"
+			styleClass="ui-g-12 ui-md-12 ui-lg-6"
+			rendered="#{algebraBean.algebraDTO.numeroCoeficientes gt 0}">
+			<h5>
+				<h:outputText value="#{res['algebra.sistema']}" />
+			</h5>
+			<table class="c100 sistema">
+				<th colspan="#{algebraBean.algebraDTO.numeroCoeficientes}">A</th>
+				<th colspan="1">b</th>
+				<tbody>
+					<ui:repeat value="#{algebraBean.algebraDTO.matrizCoeficientes}"
+						var="fila" varStatus="stf">
+						<tr>
+							<ui:repeat value="#{fila}" var="columna" varStatus="stc">
+								<td>
+									<p:inputNumber decimalPlaces="6"
+										value="#{algebraBean.algebraDTO.matrizCoeficientes[stf.index][stc.index]}"
+										styleClass="c100" />
+								</td>
+							</ui:repeat>
 							<td><p:inputNumber decimalPlaces="6"
-									value="#{algebraBean.algebraDTO.matrizCoeficientes[stf.index][stc.index]}"
-									styleClass="c100" /> <h:outputText value="x" />
-								<h:outputText value="#{stc.index+1}" /></td>
-							<td><h:outputText value="+" rendered="#{!stc.last}" /> <h:outputText
-									value="=" rendered="#{stc.last}" /></td>
-						</ui:repeat>
-						<td><p:inputNumber decimalPlaces="6"
-								value="#{algebraBean.algebraDTO.terminos[stf.index]}"
-								styleClass="c100" /></td>
-					</tr>
-				</ui:repeat>
-			</tbody>
-		</table>
-	</p:outputPanel>
+									value="#{algebraBean.algebraDTO.terminos[stf.index]}"
+									styleClass="c100" /></td>
+						</tr>
+					</ui:repeat>
+				</tbody>
+			</table>
+		</p:outputPanel>
+
+		<p:outputPanel id="panelValoresIniciales" layout="block"
+			styleClass="ui-g-12 ui-md-12 ui-lg-6"
+			rendered="#{sessionBean.opcion eq 'gradconj'}">
+			<h5>
+				<h:outputText value="#{res['algebra.valoresIniciales']}" />
+			</h5>
+			<table class="c100 sistema">
+				<th colspan="1">x0</th>
+				<tbody>
+					<ui:repeat value="#{algebraBean.algebraDTO.matrizCoeficientes}"
+						var="fila" varStatus="stf">
+						<tr>
+							<td><p:inputNumber decimalPlaces="6"
+									value="#{algebraBean.algebraDTO.valoresIniciales[stf.index]}"
+									styleClass="c100" /></td>
+						</tr>
+					</ui:repeat>
+				</tbody>
+			</table>
+		</p:outputPanel>
+	</div>
 
 </ui:composition>

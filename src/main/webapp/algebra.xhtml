@@ -24,6 +24,8 @@
 						<p class="description">
 							<h:outputText value="#{res['menu.algebra.sistema']}" rendered="#{sessionBean.opcion eq 'sistemas'}"/>
 							<h:outputText value="#{res['menu.algebra.gauss']}" rendered="#{sessionBean.opcion eq 'gauss'}"/>
+							<h:outputText value="#{res['menu.algebra.factorizacionlu']}" rendered="#{sessionBean.opcion eq 'factorizacionlu'}"/>
+							<h:outputText value="#{res['menu.algebra.gradconj']}" rendered="#{sessionBean.opcion eq 'gradconj'}"/>
 						</p>
 					</p:toolbarGroup>
 				</p:toolbar>
@@ -55,7 +57,6 @@
 				</f:facet>
 				
 				<ui:include src="/algebra/datos-entrada.xhtml" />
-
 			</p:panel>
 			
 			<p:panel id="resultados" styleClass="ui-g-12 ui-md-12 ui-lg-12">

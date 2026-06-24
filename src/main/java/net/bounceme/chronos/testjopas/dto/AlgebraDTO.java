@@ -24,20 +24,20 @@ public class AlgebraDTO implements Serializable {
 	@Getter
 	@Setter
 	private BigDecimal[] terminos;
+	
+	@Getter
+	@Setter
+	private BigDecimal[] valoresIniciales;
 
 	public AlgebraDTO() {
 		numeroCoeficientes = 2;
-		initialize();
-	}
-	
-	public AlgebraDTO(Integer numeroCoeficientes) {
-		this.numeroCoeficientes = numeroCoeficientes;
-		initialize();
+		resetVars();
 	}
 
-	private void initialize() {
+	public void resetVars() {
 		matrizCoeficientes = new BigDecimal[numeroCoeficientes][numeroCoeficientes];
 		terminos = new BigDecimal[numeroCoeficientes];
+		valoresIniciales = new BigDecimal[numeroCoeficientes];
 		
 		for (int i=0;i<numeroCoeficientes;i++) {
 			for (int j=0;j<numeroCoeficientes;j++) {
@@ -45,6 +45,7 @@ public class AlgebraDTO implements Serializable {
 			}
 			
 			terminos[i] = BigDecimal.ZERO;
+			valoresIniciales[i] = BigDecimal.ZERO; 
 		}
 	}
 }

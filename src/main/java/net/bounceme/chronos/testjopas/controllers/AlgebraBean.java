@@ -81,8 +81,8 @@ public class AlgebraBean implements Serializable {
 	}
 	
 	public void cambiarCoeficientes() {
-		Integer n = algebraDTO.getNumeroCoeficientes();
-		algebraDTO = new AlgebraDTO(n);
+		log.info("Número de coeficientes: {}", algebraDTO.getNumeroCoeficientes());
+		algebraDTO.resetVars();
 	}
 	
 	private void buildTabla() {
