@@ -2,90 +2,22 @@ package net.bounceme.chronos.testjopas.services;
 
 import java.math.BigDecimal;
 
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import jakarta.annotation.PostConstruct;
-import lombok.Getter;
 import lombok.SneakyThrows;
-import lombok.extern.slf4j.Slf4j;
 import net.bounceme.chronos.testjopas.dto.IntegracionDTO;
-import net.bounceme.chronos.testjopas.util.FileHelper;
 
-@Service
-@Slf4j
-public class IntegracionService {
+public interface IntegracionService {
 
-	@Value("${application.paths.integracion}")
-	private String pathIntegracion;
+	BigDecimal getValor();
 
-	@Autowired
-	@Qualifier("javaOctaveService")
-	private transient CalcService calcService;
+	BigDecimal[] getValores();
 
-	@Getter
-	private BigDecimal valor;
+	void initialize();
 
-	@Getter
-	private BigDecimal[] valores;
+	void calcular(IntegracionDTO integracionDTO, String opcion);
 
-	@PostConstruct
-	public void initialize() {
-		try {
-			calcService.clearEnvironment();
-			calcService.resetPath();
-			calcService.addPath(pathIntegracion);
-		} catch (Exception e) {
-			log.error("ERROR: {}", e.getMessage());
-		}
-	}
+	String obtenerFuncion();
 
-	@SneakyThrows
-	public void calcular(IntegracionDTO integracionDTO, String opcion) {
+	String obtenerCodigo(String opcion);
 
-		calcService.passVariable("a", integracionDTO.getA());
-		calcService.passVariable("b", integracionDTO.getB());
-		calcService.passVariable("iteraciones", integracionDTO.getIteraciones());
-
-		String cmd;
-		if ("simpson".equals(opcion)) {
-			calcService.passVariable("h", integracionDTO.getH());
-			cmd = "sum=simpson(a, b, iteraciones, h)";
-		} else {
-			calcService.passVariable("tolerancia", integracionDTO.getTolerancia());
-			cmd = "[valor, int, error]=integracion(a, b, tolerancia, iteraciones)";
-		}
-
-		calcService.execute(cmd);
-
-		if ("integracion".equals(opcion)) {
-			String error = calcService.getString("error");
-			if (StringUtils.isNotBlank(error)) {
-				throw new Exception(error);
-			}
-		}
-
-		if ("integracion".equals(opcion)) {
-			valor = calcService.getScalar("valor");
-			valores = calcService.getArray("int");
-		} else {
-			valor = calcService.getScalar("sum");
-		}
-	}
-	
-	public String obtenerFuncion() {
-		return FileHelper.leerFichero(pathIntegracion + "/f.m");
-	}
-	
-	public String obtenerCodigo(String opcion) {
-		if ("simpson".equals(opcion)) {
-			return FileHelper.leerFichero(pathIntegracion + "/simpson.m");
-		}
-		else {
-			return FileHelper.leerFichero(pathIntegracion + "/integracion.m");
-		}
-	}
 }
